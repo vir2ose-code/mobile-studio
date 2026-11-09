@@ -117,6 +117,9 @@
                         <button id="btn-loop" class="rack-btn btn-loop is-active" onclick="toggleLoop()" title="Loop Pattern">
                             <span class="btn-symbol">🔁</span> LOOP
                         </button>
+                        <button id="btn-toggle-eq" class="rack-btn btn-eq is-active" onclick="toggleEqualizer()" title="Mischpult / Equalizer einblenden">
+                            EQUALIZER
+                        </button>
                     </div>
 
                     <div class="rack-badge-group">
@@ -161,15 +164,10 @@
                         </div>
                     </div>
 
-                    <div class="sub-control-item">
+                    <div class="sub-control-item swing-item">
                         <span class="sub-label">SWING:</span>
-                        <input type="range" id="swing-slider" min="0" max="60" value="0" class="mini-range" oninput="setSwing(this.value)">
+                        <input type="range" id="swing-slider" min="0" max="60" value="0" class="fader-range swing-fader" oninput="setSwing(this.value)">
                         <span id="swing-val" class="sub-val">0%</span>
-                    </div>
-
-                    <div class="sub-control-item">
-                        <span class="sub-label">VOL:</span>
-                        <input type="range" id="master-vol" min="0" max="100" value="85" class="mini-range" oninput="setMasterVolume(this.value)">
                     </div>
 
                     <div class="sub-tools-group">
@@ -188,6 +186,40 @@
                 <!-- 10-Track Matrix -->
                 <div class="sequencer-matrix" id="sequencer-matrix">
                     <!-- Tracks rendered dynamically -->
+                </div>
+
+                <!-- ──────────────── Hardware Mischpult-Anlage (Equalizer / Mixer Screen 4) ──────────────── -->
+                <div class="sequencer-mixer-panel is-open" id="sequencer-mixer-panel">
+                    <div class="mixer-channels-grid" id="mixer-channels-grid">
+                        <!-- 10 Track Fader Strips rendered dynamically -->
+                    </div>
+                    <div class="mixer-master-column">
+                        <div class="master-meter-container" title="Stereo Peak VU-Meter">
+                            <div class="vu-meter-strip" id="vu-meter-l">
+                                <div class="vu-led red"></div>
+                                <div class="vu-led red"></div>
+                                <div class="vu-led yellow"></div>
+                                <div class="vu-led yellow"></div>
+                                <div class="vu-led green"></div>
+                                <div class="vu-led green"></div>
+                                <div class="vu-led green"></div>
+                                <div class="vu-led green"></div>
+                            </div>
+                            <div class="vu-meter-strip" id="vu-meter-r">
+                                <div class="vu-led red"></div>
+                                <div class="vu-led red"></div>
+                                <div class="vu-led yellow"></div>
+                                <div class="vu-led yellow"></div>
+                                <div class="vu-led green"></div>
+                                <div class="vu-led green"></div>
+                                <div class="vu-led green"></div>
+                                <div class="vu-led green"></div>
+                            </div>
+                        </div>
+                        <div class="master-fader-wrap" title="Master Volume Fader">
+                            <input type="range" id="mixer-master-slider" class="mixer-v-fader master-v-fader" orient="vertical" min="0" max="100" value="85" oninput="setMasterVolume(this.value)">
+                        </div>
+                    </div>
                 </div>
 
             </div>

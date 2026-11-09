@@ -174,10 +174,12 @@
     // ──────────────── Web Audio Context & Graph ────────────────
     let audioCtx = null;
     let masterGain = null;
+    let analyserNode = null;
     let bus1Gain = null;
     let bus2Gain = null;
     let bus3Gain = null;
     let sph3rePanner = null;
+    const trackVolumes = Array(10).fill(0.85); // Channel faders (Screen 4)
 
     function getAudioContext() {
         if (!audioCtx) {
@@ -187,6 +189,11 @@
             // Master Gain
             masterGain = audioCtx.createGain();
             masterGain.gain.value = 0.85;
+
+            // Stereo VU-Meter Analyser Node
+            analyserNode = audioCtx.createAnalyser();
+            analyserNode.fftSize = 64;
+            analyserNode.smoothingTimeConstant = 0.75;
 
             // 3D Binaural Panner for V-SPH3RE
             if (audioCtx.createPanner) {
@@ -213,7 +220,8 @@
             bus3Gain = audioCtx.createGain(); // Melodic & FX Bus
             bus3Gain.connect(sph3rePanner || masterGain);
 
-            masterGain.connect(audioCtx.destination);
+            masterGain.connect(analyserNode);
+            analyserNode.connect(audioCtx.destination);
         }
         if (audioCtx.state === 'suspended') {
             audioCtx.resume();
@@ -412,13 +420,19 @@
         const source = ctx.createBufferSource();
         source.buffer = buffer;
 
+        // Individual Channel Fader Gain (Screen 4 Hardware Mischpult)
+        const trackGain = ctx.createGain();
+        const vol = trackVolumes[trackIdx] !== undefined ? trackVolumes[trackIdx] : 0.85;
+        trackGain.gain.setValueAtTime(vol, time);
+
         // Bus Routing
         const busName = TRACK_CONFIG[trackIdx].bus;
         let dest = bus1Gain;
         if (busName === 'BUS 2') dest = bus2Gain;
         if (busName === 'BUS 3') dest = bus3Gain;
 
-        source.connect(dest);
+        source.connect(trackGain);
+        trackGain.connect(dest);
         source.start(time);
     }
 
@@ -1213,6 +1227,101 @@ startxref
         }, 2200);
     }
 
+    // ──────────────── Hardware Equalizer / Mischpult (Screen 3 & 4) ────────────────
+    window.toggleEqualizer = function () {
+        const mixer = document.getElementById('sequencer-mixer-panel');
+        const eqBtn = document.getElementById('btn-toggle-eq');
+        if (!mixer) return;
+        const isOpen = mixer.classList.toggle('is-open');
+        if (eqBtn) eqBtn.classList.toggle('is-active', isOpen);
+    };
+
+    window.setTrackVolume = function (trackIdx, val) {
+        trackVolumes[trackIdx] = Math.max(0, Math.min(1.0, val / 100.0));
+    };
+
+    function renderMixerFaders() {
+        const grid = document.getElementById('mixer-channels-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        TRACK_CONFIG.forEach((track, idx) => {
+            const strip = document.createElement('div');
+            strip.className = 'mixer-channel-strip';
+
+            const slotBg = document.createElement('div');
+            slotBg.className = 'fader-slot-bg';
+
+            const slotLine = document.createElement('div');
+            slotLine.className = 'fader-slot-line';
+            slotBg.appendChild(slotLine);
+
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.className = 'mixer-v-fader';
+            slider.setAttribute('orient', 'vertical');
+            slider.min = '0';
+            slider.max = '100';
+            slider.value = '85';
+            slider.title = `${track.name} Fader`;
+            slider.oninput = (e) => {
+                window.setTrackVolume(idx, e.target.value);
+            };
+            slotBg.appendChild(slider);
+
+            const label = document.createElement('span');
+            label.className = 'fader-label-tag';
+            label.style.color = track.color;
+            label.textContent = track.name.split(' ')[0]; // KICK, SNARE, etc.
+
+            strip.appendChild(slotBg);
+            strip.appendChild(label);
+            grid.appendChild(strip);
+        });
+    }
+
+    function startVuMeterLoop() {
+        const ledsL = document.querySelectorAll('#vu-meter-l .vu-led');
+        const ledsR = document.querySelectorAll('#vu-meter-r .vu-led');
+        if (!ledsL.length || !ledsR.length) return;
+
+        const dataArray = new Uint8Array(32);
+
+        function draw() {
+            requestAnimationFrame(draw);
+            if (!analyserNode || !isPlaying) {
+                ledsL.forEach(l => l.classList.remove('active'));
+                ledsR.forEach(r => r.classList.remove('active'));
+                return;
+            }
+
+            analyserNode.getByteFrequencyData(dataArray);
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+                sum += dataArray[i];
+            }
+            const avg = sum / dataArray.length;
+            const level = Math.min(8, Math.floor((avg / 130) * 8));
+
+            for (let i = 0; i < 8; i++) {
+                const ledIdx = 7 - i; // 7 is bottom green, 0 is top red
+                if (i < level) {
+                    ledsL[ledIdx].classList.add('active');
+                    const rLevel = Math.max(0, level + (Math.random() > 0.4 ? 0 : -1));
+                    if (i < rLevel) {
+                        ledsR[ledIdx].classList.add('active');
+                    } else {
+                        ledsR[ledIdx].classList.remove('active');
+                    }
+                } else {
+                    ledsL[ledIdx].classList.remove('active');
+                    ledsR[ledIdx].classList.remove('active');
+                }
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+
     // ──────────────── Sequencer & Groovebox Mode Switching ────────────────
     window.openSequencerMode = function () {
         const seqSection = document.getElementById('sequencer');
@@ -1263,7 +1372,9 @@ startxref
     window.addEventListener('DOMContentLoaded', () => {
         renderStepRuler();
         renderMatrixPads();
+        renderMixerFaders();
         loadAllKitSamples();
+        startVuMeterLoop();
 
         // Restore In-Page Lyrics from localStorage
         const inpageInput = document.getElementById('inpage-lyrics-input');
