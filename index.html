@@ -95,38 +95,6 @@
             <h2 class="hero-brand-subtitle">Sample Sounds Beats</h2>
         </section>
 
-        <!-- ──────────────── 16 STEP SEQUENCER Launcher Button ──────────────── -->
-        <div class="sequencer-launch-wrapper" id="sequencer-launch-wrap">
-            <button class="btn-launch-sequencer" onclick="openSequencerMode()" title="16 STEP SEQUENCER öffnen">
-                <img src="SMARTPHONE_TABLET_ASSETS/16_step_sequencer_tight.png" alt="16 STEP SEQUENCER" class="btn-sequencer-img">
-            </button>
-        </div>
-
-        <!-- ──────────────── In-Page LYRICS Glass Notepad (Screen 1 Portrait) ──────────────── -->
-        <section class="lyrics-card-section" id="lyrics-section">
-            <div class="lyrics-glass-box">
-                <div class="lyrics-header-row">
-                    <div class="lyrics-badge">
-                        <span class="lyrics-title">LYRICS</span>
-                        <span class="lyrics-pencil">✎</span>
-                    </div>
-                </div>
-                <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Type your text here..." spellcheck="false"></textarea>
-                <div class="lyrics-toolbar-row">
-                    <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
-                        <span>📋</span> <span data-i18n="lyrics_copy">Kopieren</span>
-                    </button>
-                    <button class="btn-lyrics-tool" onclick="downloadInpageLyrics()" title="Als .txt speichern">
-                        <span>💾</span> <span data-i18n="lyrics_save">Speichern</span>
-                    </button>
-                    <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
-                        <span>✕</span> <span data-i18n="lyrics_clear">Leeren</span>
-                    </button>
-                    <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
-                </div>
-            </div>
-        </section>
-
         <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack ──────────────── -->
         <section id="sequencer" class="sequencer-rack-section">
             <div class="beatcloud-chassis" id="beatcloud-chassis">
@@ -152,7 +120,7 @@
                     </div>
 
                     <div class="rack-badge-group">
-                        <button id="btn-toggle-lyrics" class="rack-btn btn-lyrics-toggle" onclick="toggleLyricsMode()" title="Zu Lyrics wechseln">
+                        <button id="btn-toggle-lyrics" class="rack-btn btn-lyrics-toggle" onclick="toggleLyricsMode()" title="Lyrics unter dem Sequenzer aufklappen">
                             <span class="btn-symbol">✎</span> LYRICS
                         </button>
                         <span class="badge-main">BEATCLOUD</span>
@@ -174,6 +142,7 @@
                     <div class="sub-control-item">
                         <span class="sub-label">PRESET:</span>
                         <select id="preset-select" class="sub-select" onchange="loadPreset(this.value)">
+                            <option value="initial_kick" selected>Init Kick (4/4)</option>
                             <option value="groove_1">LoFi Deep Groove</option>
                             <option value="trap_bounce">Urban Trap Banger</option>
                             <option value="organic_afro">Organic Percussion</option>
@@ -218,6 +187,37 @@
 
                 <!-- 10-Track Matrix -->
                 <div class="sequencer-matrix" id="sequencer-matrix">
+                    <!-- Tracks rendered dynamically -->
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ──────────────── In-Page LYRICS Glass Notepad (Unfolds Under Sequencer) ──────────────── -->
+        <section class="lyrics-card-section" id="lyrics-section">
+            <div class="lyrics-glass-box">
+                <div class="lyrics-header-row">
+                    <div class="lyrics-badge">
+                        <span class="lyrics-title">LYRICS</span>
+                        <span class="lyrics-pencil">✎</span>
+                    </div>
+                    <button class="btn-close-lyrics" onclick="toggleLyricsMode()" title="Lyrics schließen">✕</button>
+                </div>
+                <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Type your text here..." spellcheck="false"></textarea>
+                <div class="lyrics-toolbar-row">
+                    <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
+                        <span>📋</span> <span data-i18n="lyrics_copy">Copy</span>
+                    </button>
+                    <button class="btn-lyrics-tool btn-pdf-tool" onclick="downloadLyricsPdf()" title="Als PDF speichern & herunterladen">
+                        <span>📄</span> <span data-i18n="lyrics_save_pdf">Save (PDF)</span>
+                    </button>
+                    <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
+                        <span>✕</span> <span data-i18n="lyrics_clear">Clear</span>
+                    </button>
+                    <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
+                </div>
+            </div>
+        </section>
                     <!-- Tracks rendered dynamically -->
                 </div>
 

@@ -23,6 +23,7 @@
             'note_btn_download': 'Als .txt Speichern',
             'lyrics_copy': 'Kopieren',
             'lyrics_save': 'Speichern',
+            'lyrics_save_pdf': 'Save (PDF)',
             'lyrics_clear': 'Leeren'
         },
         'en': {
@@ -39,6 +40,7 @@
             'note_btn_download': 'Save as .txt',
             'lyrics_copy': 'Copy',
             'lyrics_save': 'Save',
+            'lyrics_save_pdf': 'Save (PDF)',
             'lyrics_clear': 'Clear'
         },
         'pl': {
@@ -55,6 +57,7 @@
             'note_btn_download': 'Zapisz jako .txt',
             'lyrics_copy': 'Kopiuj',
             'lyrics_save': 'Zapisz',
+            'lyrics_save_pdf': 'Zapisz (PDF)',
             'lyrics_clear': 'Wyczyść'
         },
         'es': {
@@ -71,6 +74,7 @@
             'note_btn_download': 'Guardar como .txt',
             'lyrics_copy': 'Copiar',
             'lyrics_save': 'Guardar',
+            'lyrics_save_pdf': 'Guardar (PDF)',
             'lyrics_clear': 'Borrar'
         }
     };
@@ -104,6 +108,18 @@
 
     // Presets definitions (10 tracks x 16 steps: 1 = active, 0 = inactive)
     const PRESETS = {
+        'initial_kick': [
+            [1,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0], // KICK 909: Steps 1, 5, 9, 13 (Screen 2)
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Snare
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Clap
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Cl Hat
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Op Hat
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Conga 1
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Conga 2
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Cowbell
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Cymbal
+            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]  // Sub 808
+        ],
         'groove_1': [
             [1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,1,0], // Kick
             [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0], // Snare
@@ -332,8 +348,8 @@
     let scheduleAheadTime = 0.1; // seconds
     let timerID = null;
 
-    // Track state: 10 rows x 16 steps
-    let patternMatrix = JSON.parse(JSON.stringify(PRESETS['groove_1']));
+    // Track state: 10 rows x 16 steps (Default: Kick on 1, 5, 9, 13)
+    let patternMatrix = JSON.parse(JSON.stringify(PRESETS['initial_kick']));
     const trackMute = Array(10).fill(false);
     const trackSolo = Array(10).fill(false);
 
@@ -1079,15 +1095,101 @@
         });
     };
 
-    window.downloadInpageLyrics = function () {
+    // Direct PDF Generation & Download (Pure Client-Side PDF-1.4 Compliant)
+    window.downloadLyricsPdf = function () {
         const input = document.getElementById('inpage-lyrics-input');
-        const text = input ? input.value : '';
-        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const text = input ? input.value.trim() : '';
+        if (!text) {
+            alert('Bitte schreibe zuerst einige Zeilen in dein Lyrics-Pad!');
+            return;
+        }
+
+        const dateStr = new Date().toLocaleDateString('de-DE', {
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit'
+        });
+
+        const escapePdf = str => str.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+        
+        // Wrap lines at 72 chars to guarantee clean PDF rendering
+        const rawLines = text.split('\n');
+        const wrappedLines = [];
+        rawLines.forEach(line => {
+            if (line.length <= 72) {
+                wrappedLines.push(line);
+            } else {
+                const words = line.split(' ');
+                let cur = '';
+                words.forEach(w => {
+                    if ((cur + ' ' + w).trim().length <= 72) {
+                        cur = (cur + ' ' + w).trim();
+                    } else {
+                        wrappedLines.push(cur);
+                        cur = w;
+                    }
+                });
+                if (cur) wrappedLines.push(cur);
+            }
+        });
+
+        const textOps = [
+            'BT',
+            '/F1 18 Tf',
+            '50 780 Td',
+            '(' + escapePdf('MOBILE STUDIO PRO - LYRICS') + ') Tj',
+            '/F1 10 Tf',
+            '0 -20 Td',
+            '(' + escapePdf('Songwriting & Beat Notation | Waldemar Krucinski - vir2ose sound (' + dateStr + ')') + ') Tj',
+            '0 -10 Td',
+            '(' + escapePdf('------------------------------------------------------------------------------------------------------') + ') Tj',
+            '/F2 11 Tf',
+            '0 -24 Td'
+        ];
+
+        let currentY = 726;
+        for (let i = 0; i < wrappedLines.length; i++) {
+            if (currentY < 60) break;
+            textOps.push('(' + escapePdf(wrappedLines[i]) + ') Tj');
+            textOps.push('0 -16 Td');
+            currentY -= 16;
+        }
+        textOps.push('ET');
+
+        const streamContent = textOps.join('\n');
+        const streamLen = streamContent.length;
+
+        const pdfData = 
+`%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >> endobj
+4 0 obj << /Length ${streamLen} >>
+stream
+${streamContent}
+endstream
+endobj
+5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+6 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000244 00000 n 
+0000000300 00000 n 
+0000000378 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+450
+%%EOF`;
+
+        const blob = new Blob([pdfData], { type: 'application/pdf' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `vir2ose_lyrics_${Date.now()}.txt`;
+        a.download = `vir2ose_lyrics_${Date.now()}.pdf`;
         a.click();
-        showLyricsStatus('Gespeichert ✓');
+        showLyricsStatus('PDF gespeichert ✓');
     };
 
     window.clearInpageLyrics = function () {
@@ -1113,36 +1215,29 @@
 
     // ──────────────── Sequencer & Groovebox Mode Switching ────────────────
     window.openSequencerMode = function () {
-        const seqChassis = document.getElementById('beatcloud-chassis');
         const seqSection = document.getElementById('sequencer');
-        
-        // If on mobile or tablet, toggle full-screen groovebox chassis
-        if (window.innerWidth <= 960) {
-            document.body.classList.toggle('groovebox-mode');
-            if (document.body.classList.contains('groovebox-mode')) {
-                // Try requesting orientation or full screen if available
-                if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock('landscape').catch(() => {});
-                }
-            }
-        }
-        
-        // Scroll smoothly to sequencer
         if (seqSection) {
             seqSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
 
+    // Toggle Lyrics Unfold UNDER Sequencer (Screen 3)
     window.toggleLyricsMode = function () {
-        // Exit groovebox full-screen if active
-        document.body.classList.remove('groovebox-mode');
         const lyricsSection = document.getElementById('lyrics-section');
-        const input = document.getElementById('inpage-lyrics-input');
-        if (lyricsSection) {
-            lyricsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const lyricsBtn = document.getElementById('btn-toggle-lyrics');
+        if (!lyricsSection) return;
+
+        const isOpen = lyricsSection.classList.toggle('is-open');
+        if (lyricsBtn) {
+            lyricsBtn.classList.toggle('is-active', isOpen);
         }
-        if (input) {
-            setTimeout(() => input.focus(), 300);
+
+        if (isOpen) {
+            lyricsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            const input = document.getElementById('inpage-lyrics-input');
+            if (input) {
+                setTimeout(() => input.focus(), 250);
+            }
         }
     };
 

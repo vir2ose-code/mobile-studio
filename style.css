@@ -79,20 +79,24 @@ body.mobile-studio-body {
     z-index: 1;
 }
 
-/* ──────────────── Top Header Bar (Screen 1 & Mockup Style) ──────────────── */
+/* ──────────────── Top Header Bar (Subtle, Slim & Clean) ──────────────── */
 .app-header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(6, 7, 9, 0.75);
+    background: rgba(6, 7, 9, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(163, 143, 90, 0.25);
-    padding: 6px 20px;
+    border-bottom: 1px solid rgba(163, 143, 90, 0.2);
+    padding: 3px 18px;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .header-main-row {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -105,13 +109,13 @@ body.mobile-studio-body {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 6px;
+    gap: 3.5px;
+    padding: 4px;
 }
 
 .hamburger-menu span {
     display: block;
-    width: 22px;
+    width: 18px;
     height: 1.5px;
     background: var(--gold);
     border-radius: 2px;
@@ -125,16 +129,17 @@ body.mobile-studio-body {
 }
 
 .header-brand-logo {
-    height: 38px;
+    height: 24px;
     width: auto;
-    max-width: 190px;
+    max-width: 140px;
     object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.25));
-    transition: transform 0.2s ease;
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.2));
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .header-brand-logo:hover {
-    transform: scale(1.03);
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 12px rgba(163, 143, 90, 0.4));
 }
 
 .header-v-logo {
@@ -377,26 +382,47 @@ body.mobile-studio-body {
     filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.9));
 }
 
-/* ──────────────── In-Page LYRICS Glass Notepad (Screen 1 Portrait) ──────────────── */
+/* ──────────────── In-Page LYRICS Glass Notepad (Opens Under Sequencer) ──────────────── */
 .lyrics-card-section {
     width: 100%;
     max-width: 790px;
-    margin: 0 auto 24px;
-    display: flex;
+    margin: 16px auto 30px;
+    display: none; /* Collapsed until touched */
     justify-content: center;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lyrics-card-section.is-open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInSlideDown 0.35s ease forwards;
+}
+
+@keyframes fadeInSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .lyrics-glass-box {
     width: 100%;
-    max-width: 600px;
-    background: rgba(22, 25, 33, 0.42);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1.2px solid rgba(163, 143, 90, 0.38);
+    max-width: 680px;
+    background: rgba(24, 20, 15, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.2px solid rgba(163, 143, 90, 0.42);
     border-radius: 14px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 
                 inset 0 0 30px rgba(0, 0, 0, 0.5), 
-                0 0 20px rgba(163, 143, 90, 0.15);
+                0 0 25px rgba(163, 143, 90, 0.18);
     padding: 16px 20px 14px;
     display: flex;
     flex-direction: column;
@@ -413,7 +439,7 @@ body.mobile-studio-body {
 
 .lyrics-header-row {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
 }
@@ -445,9 +471,26 @@ body.mobile-studio-body {
     filter: drop-shadow(0 0 6px rgba(163, 143, 90, 0.5));
 }
 
+.btn-close-lyrics {
+    background: none;
+    border: none;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 2px 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-close-lyrics:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
 .lyrics-glass-input {
     width: 100%;
-    min-height: 240px;
+    min-height: 220px;
     background: transparent;
     border: none;
     outline: none;
@@ -456,7 +499,7 @@ body.mobile-studio-body {
     font-size: 0.98rem;
     line-height: 1.65;
     resize: vertical;
-    padding: 4px 2px;
+    padding: 6px 2px;
 }
 
 .lyrics-glass-input::placeholder {
@@ -468,43 +511,65 @@ body.mobile-studio-body {
 .lyrics-toolbar-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid rgba(163, 143, 90, 0.18);
+    border-top: 1px solid rgba(163, 143, 90, 0.2);
 }
 
+/* Warm Brown-Gold Button Styling */
 .btn-lyrics-tool {
-    background: rgba(18, 20, 26, 0.85);
-    border: 1px solid rgba(163, 143, 90, 0.35);
-    color: #e2e8f0;
+    background: linear-gradient(180deg, #322515 0%, #1e160c 100%);
+    border: 1px solid rgba(163, 143, 90, 0.45);
+    color: #e5d7ba;
     font-family: "Segoe UI Historic", "Segoe UI", sans-serif;
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 1px;
-    padding: 5px 12px;
+    letter-spacing: 0.8px;
+    padding: 6px 14px;
     border-radius: 4px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition: all 0.2s ease;
 }
 
 .btn-lyrics-tool:hover {
-    background: rgba(163, 143, 90, 0.2);
+    background: linear-gradient(180deg, #44321c 0%, #291d10 100%);
     border-color: var(--gold);
-    color: #fff;
+    color: #ffffff;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 10px rgba(163, 143, 90, 0.35);
+}
+
+.btn-lyrics-tool:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.btn-lyrics-tool.btn-pdf-tool {
+    background: linear-gradient(180deg, #3d2c17 0%, #251b0d 100%);
+    border-color: rgba(199, 180, 131, 0.6);
+    color: #f7edd8;
+}
+
+.btn-lyrics-tool.btn-pdf-tool:hover {
+    background: linear-gradient(180deg, #523b1f 0%, #352613 100%);
+    border-color: #ffd700;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7), 0 0 14px rgba(199, 180, 131, 0.5);
 }
 
 .lyrics-status {
     margin-left: auto;
-    font-size: 0.72rem;
-    color: var(--gold);
+    font-size: 0.74rem;
+    color: var(--gold-light);
     opacity: 0;
     transition: opacity 0.3s ease;
     letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
 .lyrics-status.show {
@@ -517,11 +582,22 @@ body.mobile-studio-body {
     border-color: rgba(163, 143, 90, 0.4) !important;
     color: var(--gold-light) !important;
     margin-right: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .btn-lyrics-toggle:hover {
     background: rgba(163, 143, 90, 0.25) !important;
+    border-color: var(--gold) !important;
     color: #fff !important;
+    box-shadow: 0 0 10px rgba(163, 143, 90, 0.3);
+}
+
+.btn-lyrics-toggle.is-active {
+    background: linear-gradient(180deg, #44321c 0%, #291d10 100%) !important;
+    border-color: var(--gold) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(163, 143, 90, 0.5);
 }
 
 /* ──────────────── BEATCLOUD Sequencer Rack Chassis (Screen 1 Proportions) ──────────────── */

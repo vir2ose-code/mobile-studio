@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026.3';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.4';
 const urlsToCache = [
     './',
     './index.html',
