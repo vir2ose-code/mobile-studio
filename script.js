@@ -20,7 +20,10 @@
             'nav_contact': 'KONTAKT',
             'header_studio': 'STUDIO HANNOVER',
             'note_hint': 'Schreibe deine neuen Lyrics & Ideen...',
-            'note_btn_download': 'Als .txt Speichern'
+            'note_btn_download': 'Als .txt Speichern',
+            'lyrics_copy': 'Kopieren',
+            'lyrics_save': 'Speichern',
+            'lyrics_clear': 'Leeren'
         },
         'en': {
             'nav_studio': 'STUDIO & BEATCLOUD',
@@ -33,7 +36,10 @@
             'nav_contact': 'CONTACT',
             'header_studio': 'STUDIO HANNOVER',
             'note_hint': 'Write your new lyrics & concepts...',
-            'note_btn_download': 'Save as .txt'
+            'note_btn_download': 'Save as .txt',
+            'lyrics_copy': 'Copy',
+            'lyrics_save': 'Save',
+            'lyrics_clear': 'Clear'
         },
         'pl': {
             'nav_studio': 'STUDIO & BEATCLOUD',
@@ -46,7 +52,10 @@
             'nav_contact': 'KONTAKT',
             'header_studio': 'STUDIO HANNOVER',
             'note_hint': 'Napisz swój tekst lub pomysł...',
-            'note_btn_download': 'Zapisz jako .txt'
+            'note_btn_download': 'Zapisz jako .txt',
+            'lyrics_copy': 'Kopiuj',
+            'lyrics_save': 'Zapisz',
+            'lyrics_clear': 'Wyczyść'
         },
         'es': {
             'nav_studio': 'ESTUDIO & BEATCLOUD',
@@ -59,7 +68,10 @@
             'nav_contact': 'CONTACTO',
             'header_studio': 'STUDIO HANNOVER',
             'note_hint': 'Escribe tus nuevas letras e ideas...',
-            'note_btn_download': 'Guardar como .txt'
+            'note_btn_download': 'Guardar como .txt',
+            'lyrics_copy': 'Copiar',
+            'lyrics_save': 'Guardar',
+            'lyrics_clear': 'Borrar'
         }
     };
 
@@ -1041,7 +1053,7 @@
         alert('Rendering 16-Bar Offline WAV Master...\nDein vir2ose Beat wird vorbereitet!');
     };
 
-    // ──────────────── UI Overlays & Handlers ────────────────
+    // ──────────────── UI Overlays & In-Page Lyrics Handlers ────────────────
     window.toggleDrawer = function () {
         const drawer = document.getElementById('nav-drawer');
         const overlay = document.getElementById('drawer-overlay');
@@ -1052,6 +1064,86 @@
     window.toggleNotepad = function () {
         const overlay = document.getElementById('lyrics-overlay');
         if (overlay) overlay.classList.toggle('active');
+    };
+
+    // In-Page Lyrics Functions (Screen 1 Portrait & iPad)
+    window.copyInpageLyrics = function () {
+        const input = document.getElementById('inpage-lyrics-input');
+        if (!input) return;
+        navigator.clipboard.writeText(input.value).then(() => {
+            showLyricsStatus('Kopiert ✓');
+        }).catch(() => {
+            input.select();
+            document.execCommand('copy');
+            showLyricsStatus('Kopiert ✓');
+        });
+    };
+
+    window.downloadInpageLyrics = function () {
+        const input = document.getElementById('inpage-lyrics-input');
+        const text = input ? input.value : '';
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `vir2ose_lyrics_${Date.now()}.txt`;
+        a.click();
+        showLyricsStatus('Gespeichert ✓');
+    };
+
+    window.clearInpageLyrics = function () {
+        const input = document.getElementById('inpage-lyrics-input');
+        if (!input) return;
+        if (input.value.trim() && !confirm('Möchtest du den gesamten Text wirklich leeren?')) {
+            return;
+        }
+        input.value = '';
+        localStorage.removeItem('vir2ose_inpage_lyrics');
+        showLyricsStatus('Geleert ✓');
+    };
+
+    function showLyricsStatus(msg) {
+        const status = document.getElementById('lyrics-status');
+        if (!status) return;
+        status.textContent = msg;
+        status.classList.add('show');
+        setTimeout(() => {
+            status.classList.remove('show');
+        }, 2200);
+    }
+
+    // ──────────────── Sequencer & Groovebox Mode Switching ────────────────
+    window.openSequencerMode = function () {
+        const seqChassis = document.getElementById('beatcloud-chassis');
+        const seqSection = document.getElementById('sequencer');
+        
+        // If on mobile or tablet, toggle full-screen groovebox chassis
+        if (window.innerWidth <= 960) {
+            document.body.classList.toggle('groovebox-mode');
+            if (document.body.classList.contains('groovebox-mode')) {
+                // Try requesting orientation or full screen if available
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(() => {});
+                }
+            }
+        }
+        
+        // Scroll smoothly to sequencer
+        if (seqSection) {
+            seqSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
+    window.toggleLyricsMode = function () {
+        // Exit groovebox full-screen if active
+        document.body.classList.remove('groovebox-mode');
+        const lyricsSection = document.getElementById('lyrics-section');
+        const input = document.getElementById('inpage-lyrics-input');
+        if (lyricsSection) {
+            lyricsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (input) {
+            setTimeout(() => input.focus(), 300);
+        }
     };
 
     window.downloadLyrics = function () {
@@ -1077,6 +1169,24 @@
         renderStepRuler();
         renderMatrixPads();
         loadAllKitSamples();
+
+        // Restore In-Page Lyrics from localStorage
+        const inpageInput = document.getElementById('inpage-lyrics-input');
+        if (inpageInput) {
+            const savedLyrics = localStorage.getItem('vir2ose_inpage_lyrics');
+            if (savedLyrics) {
+                inpageInput.value = savedLyrics;
+            }
+            // Autosave on keystroke with debounce
+            let saveTimeout;
+            inpageInput.addEventListener('input', () => {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    localStorage.setItem('vir2ose_inpage_lyrics', inpageInput.value);
+                    showLyricsStatus('Gespeichert ✓');
+                }, 800);
+            });
+        }
 
         const savedLang = localStorage.getItem('vir2ose_lang');
         if (savedLang && translations[savedLang]) {

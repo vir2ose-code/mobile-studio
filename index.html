@@ -65,8 +65,7 @@
 
             <div class="header-center">
                 <a href="index.html" class="logo-link">
-                    <img src="NEUE_ASSETS_26/V_logo.png" alt="vir2ose logo" class="header-v-logo">
-                    <span class="header-studio-name" data-i18n="header_studio">STUDIO HANNOVER</span>
+                    <img src="SMARTPHONE_TABLET_ASSETS/Logo_Kopfzeile_tight.png" alt="VIR2OSESOUND" class="header-v-logo-img">
                 </a>
             </div>
 
@@ -84,26 +83,53 @@
     <!-- Main Content Area -->
     <main class="studio-main-container">
 
-        <!-- Hero Branding Section (Screen 2 Layout & Typography) -->
-        <section class="hero-brand-section">
+        <!-- Hero Branding Section (Screen 1 & 2 Proportions & Typography) -->
+        <section class="hero-brand-section" id="brand-hero">
             <div class="hero-brand-title-wrap">
-                <h1 class="hero-brand-title">MOBILE STUDIO</h1>
+                <h1 class="hero-brand-title">MOBILE STUDIO PRO</h1>
                 <div class="hero-brand-subscript">
                     <span class="subscript-lead">powered by</span> 
                     <span class="silver-brushed-name">Waldemar Krucinski</span>
                 </div>
             </div>
-            <h2 class="hero-brand-categories">
-                <span class="cat-silver">SAMPLE</span> 
-                <span class="cat-gold">SOUNDDESIGN</span> 
-                <span class="cat-silver">BEATS</span>
-            </h2>
-            <h3 class="hero-brand-tagline">SHAPING THE FUTURE TOGETHER</h3>
+            <h2 class="hero-brand-subtitle">Sample Sounds Beats</h2>
         </section>
 
-        <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack (Screen 1 Proportions) ──────────────── -->
+        <!-- ──────────────── 16 STEP SEQUENCER Launcher Button ──────────────── -->
+        <div class="sequencer-launch-wrapper" id="sequencer-launch-wrap">
+            <button class="btn-launch-sequencer" onclick="openSequencerMode()" title="16 STEP SEQUENCER öffnen">
+                <img src="SMARTPHONE_TABLET_ASSETS/16_step_sequencer_tight.png" alt="16 STEP SEQUENCER" class="btn-sequencer-img">
+            </button>
+        </div>
+
+        <!-- ──────────────── In-Page LYRICS Glass Notepad (Screen 1 Portrait) ──────────────── -->
+        <section class="lyrics-card-section" id="lyrics-section">
+            <div class="lyrics-glass-box">
+                <div class="lyrics-header-row">
+                    <div class="lyrics-badge">
+                        <span class="lyrics-title">LYRICS</span>
+                        <span class="lyrics-pencil">✎</span>
+                    </div>
+                </div>
+                <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Type your text here..." spellcheck="false"></textarea>
+                <div class="lyrics-toolbar-row">
+                    <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
+                        <span>📋</span> <span data-i18n="lyrics_copy">Kopieren</span>
+                    </button>
+                    <button class="btn-lyrics-tool" onclick="downloadInpageLyrics()" title="Als .txt speichern">
+                        <span>💾</span> <span data-i18n="lyrics_save">Speichern</span>
+                    </button>
+                    <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
+                        <span>✕</span> <span data-i18n="lyrics_clear">Leeren</span>
+                    </button>
+                    <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack ──────────────── -->
         <section id="sequencer" class="sequencer-rack-section">
-            <div class="beatcloud-chassis">
+            <div class="beatcloud-chassis" id="beatcloud-chassis">
                 
                 <!-- Sequencer Top Header / Transport Bar -->
                 <div class="rack-header-bar">
@@ -126,6 +152,9 @@
                     </div>
 
                     <div class="rack-badge-group">
+                        <button id="btn-toggle-lyrics" class="rack-btn btn-lyrics-toggle" onclick="toggleLyricsMode()" title="Zu Lyrics wechseln">
+                            <span class="btn-symbol">✎</span> LYRICS
+                        </button>
                         <span class="badge-main">BEATCLOUD</span>
                         <span class="badge-author">by vir2osesound</span>
                     </div>
@@ -192,33 +221,6 @@
                     <!-- Tracks rendered dynamically -->
                 </div>
 
-            </div>
-        </section>
-
-        <!-- ──────────────── Hardware Modules: V-CHOPPER & V-SPH3RE (Screen 3 Layout) ──────────────── -->
-        <section class="hardware-modules-section">
-            <div class="modules-grid-wrap">
-                <!-- V-CHOPPER Module Card -->
-                <div class="hardware-module-card" onclick="openChopperModal()" title="V-CHOPPER öffnen">
-                    <div class="module-card-preview">
-                        <img src="NEUE_ASSETS_26/v_chopper_logo.png" alt="V-CHOPPER Badge" class="module-logo-badge">
-                        <div class="module-screen-wrap">
-                            <img src="NEUE_ASSETS_26/V_Chopper.png" alt="V-CHOPPER Preview" class="module-preview-screen">
-                        </div>
-                    </div>
-                    <div class="module-card-title">V-CHOPPER</div>
-                </div>
-
-                <!-- V-SPH3RE Module Card -->
-                <div class="hardware-module-card" onclick="openSph3reModal()" title="V-SPH3RE 3D öffnen">
-                    <div class="module-card-preview">
-                        <div class="module-screen-wrap">
-                            <img src="NEUE_ASSETS_26/V_SPH3RE.png" alt="V-SPH3RE Preview" class="module-preview-screen">
-                        </div>
-                        <img src="NEUE_ASSETS_26/v_sph3re_logo.jpg" alt="V-SPH3RE Badge" class="module-logo-badge">
-                    </div>
-                    <div class="module-card-title">V-SPH3RE</div>
-                </div>
             </div>
         </section>
 

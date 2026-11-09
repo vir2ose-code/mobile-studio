@@ -1,10 +1,10 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.3';
 const urlsToCache = [
     './',
     './index.html',
     './fonts/fonts.css',
-    './style.css?v=2026',
-    './script.js?v=2026',
+    './style.css?v=2026.2',
+    './script.js?v=2026.2',
     './about.html',
     './portfolio.html',
     './services.html',
@@ -16,6 +16,13 @@ const urlsToCache = [
     './EN.jpg',
     './PL.png',
     './ES.png',
+    './SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp',
+    './SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.png',
+    './SMARTPHONE_TABLET_ASSETS/Logo_Kopfzeile_tight.png',
+    './SMARTPHONE_TABLET_ASSETS/16_step_sequencer_tight.png',
+    './SMARTPHONE_TABLET_ASSETS/Lyrics_Glass_tight.png',
+    './SMARTPHONE_TABLET_ASSETS/Quer_Clean.png',
+    './SMARTPHONE_TABLET_ASSETS/Quer_Komplett.png',
     './NEUE_ASSETS_26/Landig_Background_Clean.png',
     './NEUE_ASSETS_26/V_logo.png',
     './NEUE_ASSETS_26/golden_head.png',
