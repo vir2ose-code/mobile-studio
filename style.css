@@ -666,6 +666,19 @@ body.mobile-studio-body {
     transition: transform 0.1s ease;
 }
 
+.fader-range.swing-fader::-moz-range-thumb {
+    width: 24px;
+    height: 14px;
+    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob_for_swing.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+}
+
 .fader-range.swing-fader::-webkit-slider-thumb:hover {
     transform: scale(1.08);
 }
@@ -748,6 +761,19 @@ body.mobile-studio-body {
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
     transition: transform 0.1s ease;
+}
+
+.mixer-v-fader::-moz-range-thumb {
+    width: 26px;
+    height: 14px;
+    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob_for_mixer.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .mixer-v-fader::-webkit-slider-thumb:hover {
@@ -848,6 +874,17 @@ body.mobile-studio-body {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
+    filter: drop-shadow(0 0 5px rgba(163, 143, 90, 0.5));
+}
+
+.master-v-fader::-moz-range-thumb {
+    width: 28px;
+    height: 16px;
+    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob_for_mixer.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
     filter: drop-shadow(0 0 5px rgba(163, 143, 90, 0.5));
 }
 
