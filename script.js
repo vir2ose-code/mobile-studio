@@ -585,16 +585,6 @@
 
             meta.appendChild(nameBtn);
             meta.appendChild(controls);
-            clearBtn.onclick = () => {
-                patternMatrix[trackIdx] = Array(16).fill(0);
-                renderMatrixPads();
-            };
-
-            controls.appendChild(busBtn);
-            controls.appendChild(clearBtn);
-
-            meta.appendChild(nameBtn);
-            meta.appendChild(controls);
 
             // 16 Step Pads
             const padsWrap = document.createElement('div');
