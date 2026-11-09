@@ -3,35 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIR2OSE | SOUND STUDIO HANNOVER</title>
-    <link rel="icon" type="image/png" href="logo.ping.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>MOBILE STUDIO | Waldemar Krucinski - vir2ose sound</title>
+    <link rel="icon" type="image/png" href="NEUE_ASSETS_26/V_logo.png">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#07070a">
     <meta name="description"
-        content="Sound Studio Hannover – Sample, Sounddesign, Beats. Shaping the future together. Powered by Waldemar Krucinski.">
+        content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=82">
-    <!-- Wavesurfer.js for Audio Visualization -->
-    <script src="https://unpkg.com/wavesurfer.js@7" defer></script>
-    <!-- MailerLite Universal -->
-    <script>
-        (function (w, d, e, u, f, l, n) {
-            w[f] = w[f] || function () {
-                (w[f].q = w[f].q || [])
-                    .push(arguments);
-            }, l = d.createElement(e), l.async = 1, l.src = u,
-                n = d.getElementsByTagName(e)[0], n.parentNode.insertBefore(l, n);
-        })
-            (window, document, 'script', 'https://assets.mailerlite.com/js/universal.js', 'ml');
-        ml('account', '2170312');
-    </script>
-    <!-- End MailerLite Universal -->
+    <link rel="stylesheet" href="style.css?v=2026">
 </head>
 
-<body>
+<body class="mobile-studio-body">
     <div id="mouse-light"></div>
-    <audio id="preview-audio" style="display: none;" crossorigin="anonymous"></audio>
 
     <!-- Lyrics Notepad Overlay -->
     <div id="lyrics-overlay" class="lyrics-overlay">
@@ -39,7 +23,7 @@
             <button class="close-notepad" onclick="toggleNotepad()" aria-label="Close Notepad">×</button>
             <div class="notepad-header">
                 <span class="animated-pencil">✎</span>
-                <span class="notepad-hint" data-i18n="note_hint">Schreibe deine neuen Lyrics...</span>
+                <span class="notepad-hint" data-i18n="note_hint">Schreibe deine neuen Lyrics & Ideen...</span>
             </div>
             <textarea id="lyrics-text" class="lyrics-textarea" placeholder="..." spellcheck="false"></textarea>
             <div class="notepad-footer">
@@ -50,12 +34,6 @@
         </div>
     </div>
 
-    <!-- Particle Canvas Background -->
-    <canvas id="particles-canvas"></canvas>
-
-    <!-- Animated 3D Gradient Overlay -->
-    <div class="gradient-3d"></div>
-
     <!-- Navigation Drawer -->
     <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
     <div id="nav-drawer" class="nav-drawer">
@@ -63,295 +41,423 @@
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
-            <a href="#studio" onclick="toggleDrawer()" data-i18n="nav_studio">STUDIO</a>
+            <a href="#sequencer" onclick="toggleDrawer()" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="javascript:void(0)" onclick="openSph3reModal(); toggleDrawer();" data-i18n="nav_sph3re">V-SPH3RE 3D ENGINE</a>
+            <a href="javascript:void(0)" onclick="openChopperModal(); toggleDrawer();" data-i18n="nav_chopper">V-CHOPPER SLICER</a>
+            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
             <a href="about.html" data-i18n="nav_about">ABOUT</a>
             <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
-            <a href="contact.html" data-i18n="nav_contact">CONTACT</a>
+            <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
         </nav>
     </div>
 
+    <!-- Top Navigation Header -->
     <header class="app-header" id="header">
         <div class="header-main-row">
             <div class="header-left">
-                <div class="hamburger-menu" onclick="toggleDrawer()">
+                <button class="hamburger-menu" onclick="toggleDrawer()" aria-label="Menü öffnen">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
+
             <div class="header-center">
                 <a href="index.html" class="logo-link">
-                    <img src="LOGO HERO PAGE TRANSPARENT NEW.png" alt="Golden Mirror Studio" class="logo-img" id="logo-premium">
+                    <img src="NEUE_ASSETS_26/V_logo.png" alt="vir2ose logo" class="header-v-logo">
+                    <span class="header-studio-name" data-i18n="header_studio">STUDIO HANNOVER</span>
                 </a>
             </div>
 
             <div class="header-right">
+                <div class="header-tools-nav">
+                    <button class="btn-tool-pill" onclick="openSph3reModal()" title="3D Spatial Audio Engine">
+                        <span class="tool-dot dot-sph3re"></span> V-SPH3RE 3D
+                    </button>
+                    <button class="btn-tool-pill" onclick="openChopperModal()" title="Transient & Sample Slicer">
+                        <span class="tool-dot dot-chopper"></span> V-CHOPPER
+                    </button>
+                </div>
                 <div class="language-switcher">
-                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')">
-                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')">
-                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')">
-                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')">
+                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
+                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
+                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')" title="Polski">
+                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')" title="Español">
                 </div>
             </div>
         </div>
-
     </header>
 
-    <!-- Elegant Audio Wave Background -->
-    <div class="visualizer">
-        <canvas id="wave-canvas"></canvas>
-    </div>
-    <div class="mirror-container">
-        <!-- Column 1: Prompt Engine (Left) -->
-        <div class="mirror-column side-column left-side">
-            <section class="generator-section">
-                <div id="prompt-generator-container" class="glass-panel-generator">
-                    <h2 class="generator-title">
-                        <span class="highlight">VIR2OSE</span> <span data-i18n="gen_title">AI-PROMPT ENGINE</span>
-                    </h2>
-                    <p class="generator-subtitle" data-i18n="gen_subtitle">Konfiguriere deine Klang-Vision für die
-                        KI-Generierung.</p>
+    <!-- Main Content Area -->
+    <main class="studio-main-container">
 
-                    <div class="input-group-gen">
-                        <label data-i18n="gen_label_style">KLANG-CHARAKTER (STYLE)</label>
-                        <select id="genre">
-                            <option value="Rock" data-i18n="gen_opt_rock">Rock</option>
-                            <option value="Cinematic Orchestral" data-i18n="gen_opt_dark">Cinematic</option>
-                            <option value="Pop Music" data-i18n="gen_opt_pop">POP</option>
-                            <option value="Lofi Hiphop" data-i18n="gen_opt_lofi">Lofi Hiphop</option>
-                            <option value="EDM" data-i18n="gen_opt_edm">EDM</option>
-                            <option value="Cyberpunk" data-i18n="gen_opt_industrial">Cyberpunk</option>
-                            <option value="Soul R&B" data-i18n="gen_opt_soul">Soul</option>
-                            <option value="Drill Rap" data-i18n="gen_opt_drill">Drill</option>
-                            <option value="Reggaeton" data-i18n="gen_opt_reggaeton">Reggaeton</option>
-                            <option value="House Music" data-i18n="gen_opt_house">House</option>
-                            <option value="Heavy Metal" data-i18n="gen_opt_metal">Metal</option>
-                            <option value="Hip-Hop" data-i18n="gen_opt_hiphop">Hip-Hop</option>
-                            <option value="K-POP" data-i18n="gen_opt_kpop">K-POP</option>
-                            <option value="Reggae" data-i18n="gen_opt_reggae">Reggae</option>
-                            <option value="Meditation Music" data-i18n="gen_opt_meditation">Meditation</option>
-                        </select>
-                    </div>
+        <!-- Hero Branding Section -->
+        <section class="hero-brand-section">
+            <h1 class="hero-brand-title">MOBILE STUDIO</h1>
+            <p class="hero-brand-subscript"><em>powered by Waldemar Krucinski</em></p>
+            <h2 class="hero-brand-categories">
+                SAMPLE <span class="gold-accent">SOUNDDESIGN</span> BEATS
+            </h2>
+            <h3 class="hero-brand-tagline">SHAPING THE FUTURE TOGETHER</h3>
+        </section>
 
-                    <div class="input-group-gen">
-                        <label data-i18n="gen_label_mood">ATMOSPHÄRE (MOOD)</label>
-                        <select id="vibe">
-                            <option value="warm and nostalgic analog" data-i18n="gen_opt_analog">Warm & Analog</option>
-                            <option value="ethereal and crystal clear" data-i18n="gen_opt_clear">Ätherisch & Klar</option>
-                            <option value="ominous and heavy-weighted" data-i18n="gen_opt_heavy">Düster & Schwer</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group-gen">
-                        <label data-i18n="gen_label_tempo">TEMPO (BPM)</label>
-                        <input type="text" id="tempo" placeholder="z.B. 120" class="custom-input">
-                    </div>
-                    <div class="input-group-gen">
-                        <label data-i18n="gen_label_tonart">TONART (KEY)</label>
-                        <input type="text" id="tonart" placeholder="z.B. C-Moll" class="custom-input">
-                    </div>
-                    <div class="input-group-gen">
-                        <label data-i18n="gen_label_takt">TAKT</label>
-                        <input type="text" id="takt" placeholder="z.B. 4/4" class="custom-input">
-                    </div>
-
-                    <button onclick="applyConfiguration()" class="btn btn-primary btn-gen" data-i18n="gen_btn_apply">
-                        ÜBERNEHMEN & WEITER
-                    </button>
-                </div>
-            </section>
-        </div>
-
-        <!-- Column 2: Studio Headline (Center) -->
-        <div class="mirror-column center-column">
-            <main class="hero">
-                <div class="hero-content">
-                    <p class="powered-by"><span data-i18n="powered_by">powered by</span> Waldemar Krucinski</p>
-                    <div class="titles-wrapper">
-                        <h1 class="title-main" data-i18n="title_main">SOUND STUDIO HANNOVER</h1>
-                        <h2 class="title-sub" data-i18n="title_sub">SAMPLE SOUNDDESIGN BEATS</h2>
-                    </div>
-                    <h3 class="title-tagline" data-i18n="title_tagline">SHAPING THE FUTURE TOGETHER</h3>
-                    <div class="cta-group">
-                        <a href="portfolio.html" class="btn btn-primary" data-i18n="btn_explore">EXPLORE OUR WORK</a>
-                        <a href="contact.html" class="btn btn-secondary" data-i18n="btn_project">START A PROJECT</a>
-                    </div>
-                </div>
-            </main>
-        </div>
-
-        <!-- Column 3: AI-Sound Engine (Right) -->
-        <div class="mirror-column side-column right-side">
-            <section class="generator-section">
-                <div id="prompt-generator-container-2" class="glass-panel-generator">
-                    <h2 class="generator-title">
-                        <span class="highlight">VIR2OSE</span> <span data-i18n="gen_title_2">AI-Sound Engine</span>
-                    </h2>
-                    <p class="generator-subtitle" data-i18n="gen_subtitle_2">Generiere exklusive Sound-Variationen in
-                        Echtzeit.</p>
-
-                    <div id="status-display" class="status-display" style="padding: 10px 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: auto;">
-                        <p id="status-text" data-i18n="gen_status_ready" style="font-size: 0.85rem; margin: 0; padding-bottom: 5px; opacity: 0.8;">Bereit für die Generierung...</p>
-                        
-                        <!-- AI GENERATOR LOADER -->
-                        <div id="loader-container" class="loader-container">
-                            <div class="dot-spinner">
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                                <div class="dot-spinner__dot"></div>
-                            </div>
-                        </div>
-
-                        <div id="waveform-container" class="waveform-container" style="display: none; width: 100%;">
-                            <div id="waveform"></div>
-                        </div>
-                    </div>
-
-                    <textarea id="summary-text" style="display: none; width: 100%; height: 80px; padding: 15px; margin-bottom: 20px; background: rgba(0,0,0,0.6); color: var(--gold); border-radius: 8px; border: 1px solid rgba(255,215,0,0.5); font-family: inherit; font-size: 0.95rem; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); resize: vertical; margin-top: 10px;"></textarea>
-
-                    <button onclick="startSoundGeneration()" class="btn btn-primary btn-gen"
-                        data-i18n="gen_btn_generate_2">
-                        GENERATE SOUND
-                    </button>
-
-                    <!-- NEW CONTROLS: Play/Pause & EQ -->
-                    <div id="player-controls" class="player-controls" style="display: flex;">
-                        <button id="btn-play-pause-ui" class="btn-play-pause-ui" onclick="toggleWaveformPlayback()">
-                            <span id="play-pause-icon" style="font-size: 1.2rem; transform: translateY(1px);">▶</span>
-                            <span>PLAY / PAUSE</span>
+        <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack ──────────────── -->
+        <section id="sequencer" class="sequencer-rack-section">
+            <div class="beatcloud-chassis">
+                
+                <!-- Sequencer Top Header / Transport Bar -->
+                <div class="rack-header-bar">
+                    <div class="transport-group">
+                        <button id="btn-play" class="rack-btn btn-play" onclick="sequencerPlay()" title="Start Sequencer">
+                            <span class="btn-symbol">▶</span> PLAY
                         </button>
-                        
-                        <div class="scrubber-controls" style="flex: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; padding-top: 8px;">
-                            <input type="range" id="audio-scrubber" min="0" max="100" value="0" class="scrubber-slider">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gold); margin-top: 5px; opacity: 0.8;">
-                                <span id="scrubber-time-current">0:00</span>
-                                <span id="scrubber-time-total">0:00</span>
+                        <button id="btn-stop" class="rack-btn btn-stop" onclick="sequencerStop()" title="Stop Sequencer">
+                            <span class="btn-symbol">■</span> STOP
+                        </button>
+                        <button id="btn-pause" class="rack-btn btn-pause" onclick="sequencerPause()" title="Pause Sequencer">
+                            <span class="btn-symbol">❚❚</span> PAUSE
+                        </button>
+                        <button id="btn-ff" class="rack-btn btn-ff" onclick="sequencerClearAll()" title="Clear Grid">
+                            <span class="btn-symbol">▷▷</span> CLEAR
+                        </button>
+                        <button id="btn-loop" class="rack-btn btn-loop is-active" onclick="toggleLoop()" title="Loop Pattern">
+                            <span class="btn-symbol">🔁</span> LOOP
+                        </button>
+                    </div>
+
+                    <div class="center-controls-group">
+                        <!-- Sound Set Selector -->
+                        <div class="rack-control-item">
+                            <label for="kit-select" class="rack-label">SOUND SET</label>
+                            <select id="kit-select" class="rack-select" onchange="changeSoundKit(this.value)">
+                                <option value="LoFi_Retro" selected>LoFi_Retro</option>
+                                <option value="Organic">Organic</option>
+                                <option value="Urban_Trap">Urban_Trap</option>
+                            </select>
+                        </div>
+
+                        <!-- Pattern Presets -->
+                        <div class="rack-control-item">
+                            <label for="preset-select" class="rack-label">PRESET</label>
+                            <select id="preset-select" class="rack-select" onchange="loadPreset(this.value)">
+                                <option value="groove_1">LoFi Deep Groove</option>
+                                <option value="trap_bounce">Urban Trap Banger</option>
+                                <option value="organic_afro">Organic Percussion</option>
+                                <option value="house_4x4">House Peak</option>
+                                <option value="empty">Blank (Custom)</option>
+                            </select>
+                        </div>
+
+                        <!-- BPM -->
+                        <div class="rack-control-item">
+                            <label for="tempo-input" class="rack-label">BPM: <span id="bpm-val">120</span></label>
+                            <div class="bpm-stepper">
+                                <button class="bpm-btn" onclick="adjustBPM(-1)">-</button>
+                                <input type="number" id="tempo-input" min="50" max="220" value="120" onchange="setBPM(this.value)">
+                                <button class="bpm-btn" onclick="adjustBPM(1)">+</button>
+                                <button class="bpm-tap-btn" onclick="tapTempo()" title="Tap Tempo">TAP</button>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="result-box-2" class="result-box" style="display: none; opacity: 0; text-align: center; margin-top: 10px;">
-                        <p id="generated-prompt-2" class="generated-prompt" style="display: none;"></p>
-                        <div class="result-actions" style="display: flex; justify-content: center;">
-                            <a id="download-btn" href="#" download style="color: var(--gold); font-size: 0.75rem; text-decoration: none; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 2px; letter-spacing: 1px; transition: all 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'; this.style.borderColor='var(--gold)';" onmouseout="this.style.opacity='0.7'; this.style.borderColor='rgba(255,215,0,0.3)';" data-i18n="gen_download_2">
-                                ⬇ SOUND DOWNLOADEN
-                            </a>
+                        <!-- Swing -->
+                        <div class="rack-control-item">
+                            <label for="swing-slider" class="rack-label">SWING: <span id="swing-val">0%</span></label>
+                            <input type="range" id="swing-slider" min="0" max="60" value="0" class="rack-range" oninput="setSwing(this.value)">
+                        </div>
+
+                        <!-- Master Volume -->
+                        <div class="rack-control-item">
+                            <label for="master-vol" class="rack-label">MASTER</label>
+                            <input type="range" id="master-vol" min="0" max="100" value="85" class="rack-range" oninput="setMasterVolume(this.value)">
                         </div>
                     </div>
 
-                    <!-- Download Confirmation Toast -->
-                    <div id="download-toast" class="download-toast">
-                        <span class="toast-icon">✔</span> <span data-i18n="gen_download_success">Beat erfolgreich
-                            gespeichert!</span>
+                    <div class="rack-badge-group">
+                        <div class="rack-badge-title">
+                            <span class="badge-main">BEATCLOUD</span>
+                            <span class="badge-author">by vir2osesound</span>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <!-- Mobile-Only Lyrics Button (Chronological UX Flow) -->
-        <div class="mobile-lyrics-container" style="padding: 0 15px;">
-            <a href="#" class="btn btn-secondary contact-btn" data-i18n="btn_project">LYRICS & NOTIZEN SCHREIBEN</a>
+                <!-- 16-Step Indicator Header Bar -->
+                <div class="step-ruler-bar">
+                    <div class="track-header-spacer">TRACKS / ROUTING</div>
+                    <div class="step-numbers-grid" id="step-ruler">
+                        <!-- Step numbers 1 to 16 dynamically rendered or grouped into bars -->
+                    </div>
+                </div>
+
+                <!-- 16-Track Matrix -->
+                <div class="sequencer-matrix" id="sequencer-matrix">
+                    <!-- 16 Tracks generated dynamically with distinct color tags, routing, controls & pads -->
+                </div>
+
+                <!-- Bottom Status / Hint Bar -->
+                <div class="rack-footer-bar">
+                    <div class="footer-hint">
+                        <span class="pulse-indicator">●</span> 
+                        <span id="audio-engine-status">Audio Engine Ready (Web Audio 100% Offline)</span>
+                    </div>
+                    <div class="footer-actions">
+                        <button class="btn-footer-tool" onclick="randomizePattern()">🎲 RANDOMIZE</button>
+                        <button class="btn-footer-tool" onclick="openSph3reModal()">🪐 3D V-SPH3RE</button>
+                        <button class="btn-footer-tool" onclick="openChopperModal()">🎛️ V-CHOPPER</button>
+                        <button class="btn-footer-tool" onclick="exportWavBeat()" title="Export current loop as audio">💾 EXPORT WAV</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Brief Studio Features / Philosophy -->
+        <section class="studio-info-strip">
+            <div class="info-card">
+                <div class="info-card-icon">🎚️</div>
+                <h3>16-Spur Offline Engine</h3>
+                <p>Nativ im Browser berechnetes Web-Audio mit latenzfreiem Lookahead-Scheduling. Volle Performance im Flugzeug, Zug oder Studio.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">🪐</div>
+                <h3>V-SPH3RE 3D Audio</h3>
+                <p>Binaurales 3D-Klangfeld mit HRTF-Algorithmen, Woodworth-ITD, Kopfschatten-ILD und synchronisierter Auto-Motion.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">✂️</div>
+                <h3>V-CHOPPER Slicer</h3>
+                <p>Chop, Slice & Pitch-Shaping direkt auf der Audiospur. Drag & Drop eigener Samples mit unbegrenzter kreativer Freiheit.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ──────────────── Modal: V-SPH3RE 3D Immersive Audio Engine ──────────────── -->
+    <div id="sph3re-modal" class="studio-modal">
+        <div class="modal-backdrop" onclick="closeSph3reModal()"></div>
+        <div class="modal-window sph3re-window">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <img src="NEUE_ASSETS_26/V_logo.png" alt="logo" class="modal-mini-logo">
+                    <div>
+                        <h2>V-SPH3RE | 3D Immersive Audio Engine</h2>
+                        <p class="modal-subtitle">V-SPH3RE - Binaural & Multichannel Core</p>
+                    </div>
+                </div>
+                <button class="btn-close-modal" onclick="closeSph3reModal()">✕</button>
+            </div>
+
+            <div class="sph3re-top-toolbar">
+                <div class="format-buttons">
+                    <button class="btn-format" onclick="setSph3reMode('7.1.4')">7.1.4 IMMERSIVE</button>
+                    <button class="btn-format" onclick="setSph3reMode('5.1')">5.1 SURROUND</button>
+                    <button class="btn-format is-active" onclick="setSph3reMode('binaural')">BINAURAL 3D</button>
+                </div>
+
+                <div class="motion-controls">
+                    <select id="sph3re-motion-type" class="rack-select" onchange="setMotionType(this.value)">
+                        <option value="static">[ OFF / Static ]</option>
+                        <option value="circle_cw">Circle CW (Uhrzeigersinn)</option>
+                        <option value="circle_ccw">Circle CCW (Gegen-Uhrzeigersinn)</option>
+                        <option value="figure_8">Figure 8 (Unendlichkeitsschleife)</option>
+                        <option value="pendulum">Pendulum (L &lt;-&gt; R)</option>
+                    </select>
+
+                    <select id="sph3re-motion-speed" class="rack-select" onchange="setMotionSpeed(this.value)">
+                        <option value="0.5">1/2 Bar</option>
+                        <option value="1" selected>1 Bar</option>
+                        <option value="2">2 Bars</option>
+                        <option value="4">4 Bars</option>
+                    </select>
+
+                    <button id="btn-auto-motion" class="btn-format" onclick="toggleAutoMotion()">
+                        AUTO MOTION
+                    </button>
+                </div>
+            </div>
+
+            <!-- Radar & Controls Core -->
+            <div class="sph3re-core-stage">
+                
+                <!-- Radar Polar Grid -->
+                <div class="radar-container" id="sph3re-radar">
+                    <div class="radar-circle radar-r3"></div>
+                    <div class="radar-circle radar-r2"></div>
+                    <div class="radar-circle radar-r1"></div>
+                    <div class="radar-axis axis-x"></div>
+                    <div class="radar-axis axis-y"></div>
+
+                    <!-- Labels -->
+                    <span class="radar-label label-front">0° FRONT (3.0m)</span>
+                    <span class="radar-label label-left">-90° L</span>
+                    <span class="radar-label label-right">+90° R</span>
+                    <span class="radar-label label-rear">180° REAR</span>
+
+                    <!-- Golden Head Center Silhouette -->
+                    <img src="NEUE_ASSETS_26/golden_head.png" alt="Listener Head" class="radar-listener-head">
+
+                    <!-- Interactive Sound Source Puck -->
+                    <div id="sph3re-puck" class="radar-sound-puck" style="transform: translate(0px, -70px);">
+                        <span class="puck-glow"></span>
+                        <span class="puck-dot"></span>
+                        <span class="puck-tag">BUS 1</span>
+                    </div>
+                </div>
+
+                <!-- Sliders & Compass Side Panel -->
+                <div class="sph3re-side-controls">
+                    
+                    <!-- Azimuth 360 Compass Dial -->
+                    <div class="compass-widget">
+                        <div class="compass-title">AZIMUTH (360° COMPASS)</div>
+                        <div class="compass-dial" id="compass-dial">
+                            <div class="compass-needle" id="compass-needle"></div>
+                            <span class="compass-n">0°</span>
+                            <span class="compass-e">R</span>
+                            <span class="compass-s">180°</span>
+                            <span class="compass-w">L</span>
+                        </div>
+                        <div class="compass-readout" id="compass-readout">0.0°</div>
+                    </div>
+
+                    <!-- 3 Vertical Faders -->
+                    <div class="faders-row">
+                        <div class="fader-col">
+                            <span class="fader-label" style="color: #ffd700;">ELEVATION (Z)</span>
+                            <input type="range" id="fader-elevation" min="-90" max="90" value="0" class="vertical-slider" oninput="updateElevation(this.value)">
+                            <span class="fader-val" id="val-elevation">0.0°</span>
+                        </div>
+                        <div class="fader-col">
+                            <span class="fader-label" style="color: #00e676;">ROOM SIZE</span>
+                            <input type="range" id="fader-room" min="50" max="300" value="100" class="vertical-slider" oninput="updateRoomSize(this.value)">
+                            <span class="fader-val" id="val-room">1.00x</span>
+                        </div>
+                        <div class="fader-col">
+                            <span class="fader-label" style="color: #b388ff;">3D SPREAD</span>
+                            <input type="range" id="fader-spread" min="0" max="100" value="100" class="vertical-slider" oninput="updateSpread(this.value)">
+                            <span class="fader-val" id="val-spread">100%</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bottom Parameter Readout Bar -->
+            <div class="sph3re-readout-bar">
+                <div class="param-item">
+                    <span class="p-title">AZIMUTH</span>
+                    <span class="p-val" id="readout-azimuth">0.0° FRONT</span>
+                </div>
+                <div class="param-item">
+                    <span class="p-title">ELEVATION (Z)</span>
+                    <span class="p-val" id="readout-elevation">+0.0°</span>
+                </div>
+                <div class="param-item">
+                    <span class="p-title">DISTANCE</span>
+                    <span class="p-val" id="readout-distance">1.00 m</span>
+                </div>
+                <div class="param-item">
+                    <span class="p-title">ROOM SIZE</span>
+                    <span class="p-val" id="readout-room">1.00x</span>
+                </div>
+                <div class="param-item">
+                    <span class="p-title">WOODWORTH ITD</span>
+                    <span class="p-val" id="readout-itd">0 µs</span>
+                </div>
+                <div class="param-item">
+                    <span class="p-title">HEAD SHADOW ILD</span>
+                    <span class="p-val" id="readout-ild">0.0 dB</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- ──────────────── Workflow Section (Brochure Style) ──────────────── -->
-    <hr class="gold-separator">
-    <section id="workflow" class="workflow-section">
-        <div class="workflow-container">
-            <h2 class="workflow-title" data-i18n="work_title">VON DER VISION ZUM MASTER</h2>
-
-            <div class="workflow-content">
-                <p class="workflow-intro" data-i18n="work_intro">
-                    Willkommen im modernsten Außenposten des Sound Studio Hannover. Meine duale KI-Engine ist darauf
-                    ausgelegt, die Barriere zwischen deiner kreativen Idee und dem fertigen Klangerlebnis einzureißen.
-                </p>
-                <p data-i18n="work_body">
-                    Während die Prompt-Engine (Links) deine abstrakten Visionen in präzise technische Anweisungen
-                    übersetzt, materialisiert die Sound-Engine (Rechts) daraus ein exklusives, KI-gestütztes
-                    Audio-Unikat. Es ist der kürzeste Weg weltweit, um Sounddesign nicht nur zu denken, sondern sofort
-                    hörbar zu machen.
-                </p>
-                <p class="workflow-highlight" data-i18n="work_footer">
-                    Warum VIR2OSE? Weil ich menschliche Expertise mit der grenzenlosen Rechenpower der nächsten
-                    KI-Generation (Gemini 3 Flash) vereine. Du lieferst den Funken – ich liefere den Beat.
-                </p>
+    <!-- ──────────────── Modal: V-CHOPPER Sample & Transient Slicer ──────────────── -->
+    <div id="chopper-modal" class="studio-modal">
+        <div class="modal-backdrop" onclick="closeChopperModal()"></div>
+        <div class="modal-window chopper-window">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <img src="NEUE_ASSETS_26/V_logo.png" alt="logo" class="modal-mini-logo">
+                    <h2 class="chopper-brand-title">V-CHOPPER</h2>
+                </div>
+                <button class="btn-close-modal" onclick="closeChopperModal()">✕</button>
             </div>
 
-            <div class="workflow-actions">
-                <a href="about.html" class="btn btn-outline btn-workflow" data-i18n="work_btn">MEHR ÜBER DAS STUDIO
-                    ERFAHREN</a>
+            <div class="chopper-toolbar">
+                <button class="btn-rack-action" onclick="chopperRandomize()">RANDOMIZER</button>
+                <button class="btn-rack-action" onclick="chopperRhythmize()">RHYTHMIZER</button>
+                <select id="chopper-grid" class="rack-select" onchange="chopperSetGrid(this.value)">
+                    <option value="4">1 / 4</option>
+                    <option value="8" selected>1 / 8</option>
+                    <option value="16">1 / 16</option>
+                    <option value="32">1 / 32</option>
+                </select>
+                <button class="btn-rack-action is-active" onclick="chopperSlice()">SLICE</button>
+                <button class="btn-rack-action" onclick="chopperSnap()">SNAP</button>
+                <button class="btn-rack-action" onclick="chopperTransient()">TRANSIENT</button>
+            </div>
+
+            <!-- Waveform Canvas Area with 8 Transient Slices -->
+            <div class="chopper-wave-container">
+                <canvas id="chopper-canvas" width="800" height="180"></canvas>
+                <div class="slice-play-overlay" id="slice-play-btn" onclick="playCurrentSlice()">
+                    <span class="play-icon">▶</span>
+                </div>
+            </div>
+
+            <!-- Pitch Slider & 3D Mapping -->
+            <div class="chopper-middle-controls">
+                <div class="pitch-control-wrap">
+                    <div class="pitch-range-labels">
+                        <span>-12</span>
+                        <span class="pitch-center">0</span>
+                        <span>+12</span>
+                    </div>
+                    <input type="range" id="chopper-pitch" min="-12" max="12" step="0.1" value="0" class="rack-range" oninput="updateChopperPitch(this.value)">
+                    <div class="pitch-readout" id="chopper-pitch-val">PITCH: 0.0 st (1.00x)</div>
+                </div>
+
+                <div class="chopper-routing-wrap">
+                    <button class="btn-gold-action" onclick="mapSliceTo3D()">3D MAPPING</button>
+                    <select id="chopper-stereo-bed" class="rack-select">
+                        <option value="stereo">STEREO BED L / R</option>
+                        <option value="mono_l">MONO LEFT</option>
+                        <option value="mono_r">MONO RIGHT</option>
+                        <option value="binaural">3D BINAURAL SPH3RE</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bottom Actions -->
+            <div class="chopper-bottom-bar">
+                <button class="btn-sub-tool" onclick="chopperPitchShaper()">PITCH SHAPER</button>
+                <button class="btn-sub-tool" onclick="chopperTimeShaper()">TIME SHAPER</button>
+                <button class="btn-sub-tool" onclick="chopperPresets()">PRESETS</button>
+                <button class="btn-gold-action" style="margin-left: auto;" onclick="sendSliceToSequencer()">SEND TO STEP SEQUENCER ➔</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Scroll Indicator -->
-
-    <!-- ──────────────── Newsletter Section (Golden Mirror Style) ──────────────── -->
-    <section id="newsletter" class="newsletter-section">
-        <div class="newsletter-container glass-panel">
-            <h2 class="newsletter-title" data-i18n="nl_title">STAY IN THE LOOP</h2>
-            <p class="newsletter-subtitle" data-i18n="nl_subtitle">Sichere dir exklusive Sound-Packs, Studio-Updates und
-                Insider-Tipps direkt in dein Postfach.</p>
-
-            <!-- MailerLite Form mapped to Golden Mirror Styles -->
-            <form class="newsletter-form" id="newsletter-form">
-                <div class="form-group row ml-field-group ml-field-email ml-validate-email ml-validate-required">
-                    <input type="email" name="fields[email]" id="nl-email" required placeholder="name@domain.com"
-                        class="input-gen w-100 form-control">
-                    <button type="submit" class="btn btn-primary primary" id="btn-newsletter"
-                        data-i18n="nl_btn">ABONNIEREN</button>
-                    <!-- MailerLite Loading Indicator -->
-                    <button disabled="disabled" style="display:none;" type="button" class="btn btn-primary loading"
-                        id="btn-newsletter-loading">
-                        <span class="play-indicator"
-                            style="display:inline-flex; transform:scale(0.8)"><span></span><span></span><span></span></span>
-                    </button>
-                </div>
-
-                <div class="form-group checkbox-group ml-field-group ml-validate-required">
-                    <input type="checkbox" id="nl-privacy" name="opt_in" value="1" required>
-                    <label for="nl-privacy" data-i18n="nl_privacy_text">
-                        Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage verarbeitet werden. (<a
-                            href="privacy.html" target="_blank" class="gold-link">Datenschutz</a>)
-                    </label>
-                </div>
-
-                <p id="nl-success-msg" class="success-message" style="display: none;" data-i18n="nl_success">Genial!
-                    Danke für deine Anmeldung ✨</p>
-                <p id="nl-error-msg" class="error-message" style="display: none;" data-i18n="nl_error">Es gab ein
-                    Problem. Bitte versuche es noch einmal.</p>
-            </form>
-        </div>
-    </section>
-
+    <!-- Footer -->
     <footer class="site-footer">
         <p>
-            <span data-i18n="footer_copyright">© Waldemar Krucinski Hannover 2026</span>
+            <span>© Waldemar Krucinski 2026 | HOFA College Diploma & IHK Mediengestalter Bild & Ton</span>
             <span class="footer-sep">|</span>
-            <a href="privacy.html" class="footer-link" data-i18n="footer_privacy">Datenschutz & Impressum</a>
+            <a href="privacy.html" class="footer-link">Datenschutz & Impressum</a>
         </p>
     </footer>
 
-
-    <!-- Hidden Admin Panel (Developer Settings) -->
-    <div id="admin-panel" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000; opacity: 0.1; transition: opacity 0.3s;" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0.1">
-        <input type="password" id="admin-key-input" placeholder="Admin Key" style="background: #111; color: #fff; border: 1px solid #333; padding: 5px; border-radius: 4px; font-size: 10px; width: 120px;">
-        <button onclick="saveAdminKey()" style="background: #222; color: #fff; border: 1px solid #444; padding: 5px; border-radius: 4px; font-size: 10px; cursor: pointer;">Save</button>
-    </div>
-
-    <script src="script.js" defer></script>
+    <!-- Core Scripts -->
+    <script src="script.js?v=2026" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js', { scope: '/' })
-                    .then(reg => console.log('SW registered!', reg))
-                    .catch(err => console.log('SW failed!', err));
+                navigator.serviceWorker.register('./sw.js', { scope: './' })
+                    .then(reg => console.log('Mobile Studio SW Registered!', reg))
+                    .catch(err => console.log('SW registration error:', err));
             });
         }
     </script>

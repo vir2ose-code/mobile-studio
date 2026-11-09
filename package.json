@@ -1,7 +1,7 @@
 {
-    "name": "golden-mirror-studio",
-    "version": "1.0.0",
+    "name": "mobile-studio-vir2ose",
+    "version": "2.0.0",
     "type": "module",
-    "description": "Sound Studio Hannover AI Engine",
+    "description": "Mobile Studio & 16-Track Sequencer by Waldemar Krucinski",
     "private": true
 }
