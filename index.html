@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOBILE STUDIO | Waldemar Krucinski - vir2ose sound</title>
     <link rel="icon" type="image/png" href="NEUE_ASSETS_26/V_logo.png">
     <link rel="manifest" href="manifest.json">
@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026">
+    <link rel="stylesheet" href="style.css?v=2026.2">
 </head>
 
 <body class="mobile-studio-body">
@@ -52,7 +52,7 @@
         </nav>
     </div>
 
-    <!-- Top Navigation Header -->
+    <!-- Top Navigation Header (Screen 1 Style) -->
     <header class="app-header" id="header">
         <div class="header-main-row">
             <div class="header-left">
@@ -71,14 +71,6 @@
             </div>
 
             <div class="header-right">
-                <div class="header-tools-nav">
-                    <button class="btn-tool-pill" onclick="openSph3reModal()" title="3D Spatial Audio Engine">
-                        <span class="tool-dot dot-sph3re"></span> V-SPH3RE 3D
-                    </button>
-                    <button class="btn-tool-pill" onclick="openChopperModal()" title="Transient & Sample Slicer">
-                        <span class="tool-dot dot-chopper"></span> V-CHOPPER
-                    </button>
-                </div>
                 <div class="language-switcher">
                     <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
                     <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
@@ -92,17 +84,20 @@
     <!-- Main Content Area -->
     <main class="studio-main-container">
 
-        <!-- Hero Branding Section -->
+        <!-- Hero Branding Section (Screen 1 Typography) -->
         <section class="hero-brand-section">
             <h1 class="hero-brand-title">MOBILE STUDIO</h1>
-            <p class="hero-brand-subscript"><em>powered by Waldemar Krucinski</em></p>
+            <p class="hero-brand-subscript">
+                <span class="subscript-lead">powered by</span> 
+                <span class="silver-brushed-name">Waldemar Krucinski</span>
+            </p>
             <h2 class="hero-brand-categories">
                 SAMPLE <span class="gold-accent">SOUNDDESIGN</span> BEATS
             </h2>
             <h3 class="hero-brand-tagline">SHAPING THE FUTURE TOGETHER</h3>
         </section>
 
-        <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack ──────────────── -->
+        <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack (Screen 1 Proportions) ──────────────── -->
         <section id="sequencer" class="sequencer-rack-section">
             <div class="beatcloud-chassis">
                 
@@ -119,114 +114,82 @@
                             <span class="btn-symbol">❚❚</span> PAUSE
                         </button>
                         <button id="btn-ff" class="rack-btn btn-ff" onclick="sequencerClearAll()" title="Clear Grid">
-                            <span class="btn-symbol">▷▷</span> CLEAR
+                            <span class="btn-symbol">▷▷</span> FF
                         </button>
                         <button id="btn-loop" class="rack-btn btn-loop is-active" onclick="toggleLoop()" title="Loop Pattern">
                             <span class="btn-symbol">🔁</span> LOOP
                         </button>
                     </div>
 
-                    <div class="center-controls-group">
-                        <!-- Sound Set Selector -->
-                        <div class="rack-control-item">
-                            <label for="kit-select" class="rack-label">SOUND SET</label>
-                            <select id="kit-select" class="rack-select" onchange="changeSoundKit(this.value)">
-                                <option value="LoFi_Retro" selected>LoFi_Retro</option>
-                                <option value="Organic">Organic</option>
-                                <option value="Urban_Trap">Urban_Trap</option>
-                            </select>
-                        </div>
+                    <div class="rack-badge-group">
+                        <span class="badge-main">BEATCLOUD</span>
+                        <span class="badge-author">by vir2osesound</span>
+                    </div>
+                </div>
 
-                        <!-- Pattern Presets -->
-                        <div class="rack-control-item">
-                            <label for="preset-select" class="rack-label">PRESET</label>
-                            <select id="preset-select" class="rack-select" onchange="loadPreset(this.value)">
-                                <option value="groove_1">LoFi Deep Groove</option>
-                                <option value="trap_bounce">Urban Trap Banger</option>
-                                <option value="organic_afro">Organic Percussion</option>
-                                <option value="house_4x4">House Peak</option>
-                                <option value="empty">Blank (Custom)</option>
-                            </select>
-                        </div>
+                <!-- Slim Secondary Parameters Bar -->
+                <div class="rack-sub-bar">
+                    <div class="sub-control-item">
+                        <span class="sub-label">KIT:</span>
+                        <select id="kit-select" class="sub-select" onchange="changeSoundKit(this.value)">
+                            <option value="LoFi_Retro" selected>LoFi_Retro</option>
+                            <option value="Organic">Organic</option>
+                            <option value="Urban_Trap">Urban_Trap</option>
+                        </select>
+                    </div>
 
-                        <!-- BPM -->
-                        <div class="rack-control-item">
-                            <label for="tempo-input" class="rack-label">BPM: <span id="bpm-val">120</span></label>
-                            <div class="bpm-stepper">
-                                <button class="bpm-btn" onclick="adjustBPM(-1)">-</button>
-                                <input type="number" id="tempo-input" min="50" max="220" value="120" onchange="setBPM(this.value)">
-                                <button class="bpm-btn" onclick="adjustBPM(1)">+</button>
-                                <button class="bpm-tap-btn" onclick="tapTempo()" title="Tap Tempo">TAP</button>
-                            </div>
-                        </div>
+                    <div class="sub-control-item">
+                        <span class="sub-label">PRESET:</span>
+                        <select id="preset-select" class="sub-select" onchange="loadPreset(this.value)">
+                            <option value="groove_1">LoFi Deep Groove</option>
+                            <option value="trap_bounce">Urban Trap Banger</option>
+                            <option value="organic_afro">Organic Percussion</option>
+                            <option value="house_4x4">House Peak</option>
+                            <option value="empty">Blank (Custom)</option>
+                        </select>
+                    </div>
 
-                        <!-- Swing -->
-                        <div class="rack-control-item">
-                            <label for="swing-slider" class="rack-label">SWING: <span id="swing-val">0%</span></label>
-                            <input type="range" id="swing-slider" min="0" max="60" value="0" class="rack-range" oninput="setSwing(this.value)">
-                        </div>
-
-                        <!-- Master Volume -->
-                        <div class="rack-control-item">
-                            <label for="master-vol" class="rack-label">MASTER</label>
-                            <input type="range" id="master-vol" min="0" max="100" value="85" class="rack-range" oninput="setMasterVolume(this.value)">
+                    <div class="sub-control-item">
+                        <span class="sub-label">BPM:</span>
+                        <div class="bpm-mini-stepper">
+                            <button class="bpm-mini-btn" onclick="adjustBPM(-1)">-</button>
+                            <span id="bpm-val" class="bpm-readout">120</span>
+                            <button class="bpm-mini-btn" onclick="adjustBPM(1)">+</button>
+                            <button class="bpm-mini-btn tap-btn" onclick="tapTempo()">TAP</button>
                         </div>
                     </div>
 
-                    <div class="rack-badge-group">
-                        <div class="rack-badge-title">
-                            <span class="badge-main">BEATCLOUD</span>
-                            <span class="badge-author">by vir2osesound</span>
-                        </div>
+                    <div class="sub-control-item">
+                        <span class="sub-label">SWING:</span>
+                        <input type="range" id="swing-slider" min="0" max="60" value="0" class="mini-range" oninput="setSwing(this.value)">
+                        <span id="swing-val" class="sub-val">0%</span>
+                    </div>
+
+                    <div class="sub-control-item">
+                        <span class="sub-label">VOL:</span>
+                        <input type="range" id="master-vol" min="0" max="100" value="85" class="mini-range" oninput="setMasterVolume(this.value)">
+                    </div>
+
+                    <div class="sub-tools-group">
+                        <button class="btn-sub-pill" onclick="openSph3reModal()" title="3D Spatial Engine">🪐 V-SPH3RE</button>
+                        <button class="btn-sub-pill" onclick="openChopperModal()" title="Transient Slicer">🎛️ V-CHOPPER</button>
+                        <button class="btn-sub-pill" onclick="randomizePattern()" title="Randomize Grid">🎲</button>
                     </div>
                 </div>
 
                 <!-- 16-Step Indicator Header Bar -->
                 <div class="step-ruler-bar">
-                    <div class="track-header-spacer">TRACKS / ROUTING</div>
+                    <div class="track-header-spacer">TRACKS / BUS</div>
                     <div class="step-numbers-grid" id="step-ruler">
-                        <!-- Step numbers 1 to 16 dynamically rendered or grouped into bars -->
+                        <!-- Step numbers 1 to 16 -->
                     </div>
                 </div>
 
                 <!-- 16-Track Matrix -->
                 <div class="sequencer-matrix" id="sequencer-matrix">
-                    <!-- 16 Tracks generated dynamically with distinct color tags, routing, controls & pads -->
+                    <!-- Tracks rendered dynamically -->
                 </div>
 
-                <!-- Bottom Status / Hint Bar -->
-                <div class="rack-footer-bar">
-                    <div class="footer-hint">
-                        <span class="pulse-indicator">●</span> 
-                        <span id="audio-engine-status">Audio Engine Ready (Web Audio 100% Offline)</span>
-                    </div>
-                    <div class="footer-actions">
-                        <button class="btn-footer-tool" onclick="randomizePattern()">🎲 RANDOMIZE</button>
-                        <button class="btn-footer-tool" onclick="openSph3reModal()">🪐 3D V-SPH3RE</button>
-                        <button class="btn-footer-tool" onclick="openChopperModal()">🎛️ V-CHOPPER</button>
-                        <button class="btn-footer-tool" onclick="exportWavBeat()" title="Export current loop as audio">💾 EXPORT WAV</button>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Brief Studio Features / Philosophy -->
-        <section class="studio-info-strip">
-            <div class="info-card">
-                <div class="info-card-icon">🎚️</div>
-                <h3>16-Spur Offline Engine</h3>
-                <p>Nativ im Browser berechnetes Web-Audio mit latenzfreiem Lookahead-Scheduling. Volle Performance im Flugzeug, Zug oder Studio.</p>
-            </div>
-            <div class="info-card">
-                <div class="info-card-icon">🪐</div>
-                <h3>V-SPH3RE 3D Audio</h3>
-                <p>Binaurales 3D-Klangfeld mit HRTF-Algorithmen, Woodworth-ITD, Kopfschatten-ILD und synchronisierter Auto-Motion.</p>
-            </div>
-            <div class="info-card">
-                <div class="info-card-icon">✂️</div>
-                <h3>V-CHOPPER Slicer</h3>
-                <p>Chop, Slice & Pitch-Shaping direkt auf der Audiospur. Drag & Drop eigener Samples mit unbegrenzter kreativer Freiheit.</p>
             </div>
         </section>
 
@@ -257,10 +220,10 @@
                 <div class="motion-controls">
                     <select id="sph3re-motion-type" class="rack-select" onchange="setMotionType(this.value)">
                         <option value="static">[ OFF / Static ]</option>
-                        <option value="circle_cw">Circle CW (Uhrzeigersinn)</option>
-                        <option value="circle_ccw">Circle CCW (Gegen-Uhrzeigersinn)</option>
-                        <option value="figure_8">Figure 8 (Unendlichkeitsschleife)</option>
-                        <option value="pendulum">Pendulum (L &lt;-&gt; R)</option>
+                        <option value="circle_cw">Circle CW</option>
+                        <option value="circle_ccw">Circle CCW</option>
+                        <option value="figure_8">Figure 8</option>
+                        <option value="pendulum">Pendulum</option>
                     </select>
 
                     <select id="sph3re-motion-speed" class="rack-select" onchange="setMotionSpeed(this.value)">
@@ -297,7 +260,7 @@
                     <img src="NEUE_ASSETS_26/golden_head.png" alt="Listener Head" class="radar-listener-head">
 
                     <!-- Interactive Sound Source Puck -->
-                    <div id="sph3re-puck" class="radar-sound-puck" style="transform: translate(0px, -70px);">
+                    <div id="sph3re-puck" class="radar-sound-puck" style="transform: translate(0px, -65px);">
                         <span class="puck-glow"></span>
                         <span class="puck-dot"></span>
                         <span class="puck-tag">BUS 1</span>
@@ -323,7 +286,7 @@
                     <!-- 3 Vertical Faders -->
                     <div class="faders-row">
                         <div class="fader-col">
-                            <span class="fader-label" style="color: #ffd700;">ELEVATION (Z)</span>
+                            <span class="fader-label" style="color: #a38f5a;">ELEVATION (Z)</span>
                             <input type="range" id="fader-elevation" min="-90" max="90" value="0" class="vertical-slider" oninput="updateElevation(this.value)">
                             <span class="fader-val" id="val-elevation">0.0°</span>
                         </div>
@@ -451,7 +414,7 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="script.js?v=2026" defer></script>
+    <script src="script.js?v=2026.2" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

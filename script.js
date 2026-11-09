@@ -561,34 +561,18 @@
             row.className = 'track-row';
             row.id = `track-row-${trackIdx}`;
 
-            // Track Header Column
+            // Track Header Column (Screen 1 Layout)
             const meta = document.createElement('div');
             meta.className = 'track-meta';
 
-            const colorPill = document.createElement('div');
-            colorPill.className = 'track-color-pill';
-            colorPill.style.backgroundColor = track.color;
-            colorPill.style.boxShadow = `0 0 8px ${track.color}`;
-
-            const info = document.createElement('div');
-            info.className = 'track-info';
-
             const nameBtn = document.createElement('button');
             nameBtn.className = 'track-name-btn';
-            nameBtn.innerText = track.name;
+            nameBtn.innerHTML = `<span style="color:${track.color};">${track.name}:</span> <span class="track-file-short">${track.file.slice(0, 7)}...</span>`;
             nameBtn.title = 'Klicke zum Vorhören';
             nameBtn.onclick = () => {
                 getAudioContext();
                 playTrackSound(trackIdx);
             };
-
-            const sub = document.createElement('span');
-            sub.className = 'track-sample-sub';
-            sub.id = `track-sub-${trackIdx}`;
-            sub.innerText = `${track.file}_${currentKit}`;
-
-            info.appendChild(nameBtn);
-            info.appendChild(sub);
 
             const controls = document.createElement('div');
             controls.className = 'track-controls';
@@ -600,22 +584,10 @@
             busBtn.innerText = track.bus;
             busBtn.onclick = () => cycleTrackBus(trackIdx);
 
-            // Mute
-            const muteBtn = document.createElement('button');
-            muteBtn.className = `btn-track-mini btn-mute ${trackMute[trackIdx] ? 'is-muted' : ''}`;
-            muteBtn.innerText = 'M';
-            muteBtn.onclick = () => toggleMute(trackIdx);
-
-            // Solo
-            const soloBtn = document.createElement('button');
-            soloBtn.className = `btn-track-mini btn-solo ${trackSolo[trackIdx] ? 'is-solo' : ''}`;
-            soloBtn.innerText = 'S';
-            soloBtn.onclick = () => toggleSolo(trackIdx);
-
             // Clear row
             const clearBtn = document.createElement('button');
             clearBtn.className = 'btn-track-mini';
-            clearBtn.innerText = '✕';
+            clearBtn.innerText = 'x';
             clearBtn.title = 'Spur leeren';
             clearBtn.onclick = () => {
                 patternMatrix[trackIdx] = Array(16).fill(0);
@@ -623,12 +595,9 @@
             };
 
             controls.appendChild(busBtn);
-            controls.appendChild(muteBtn);
-            controls.appendChild(soloBtn);
             controls.appendChild(clearBtn);
 
-            meta.appendChild(colorPill);
-            meta.appendChild(info);
+            meta.appendChild(nameBtn);
             meta.appendChild(controls);
 
             // 16 Step Pads
