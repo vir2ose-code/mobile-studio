@@ -195,6 +195,7 @@
 
     // ──────────────── Audio Buffers & SoundSets ────────────────
     let currentKit = 'LoFi_Retro';
+    const trackKit = Array(10).fill('LoFi_Retro');
     const sampleBuffers = {};
 
     function getSampleUrl(kit, filePrefix) {
@@ -220,7 +221,8 @@
     async function loadSample(trackIdx) {
         const track = TRACK_CONFIG[trackIdx];
         const ctx = getAudioContext();
-        const url = getSampleUrl(currentKit, track.file);
+        const kitToUse = trackKit[trackIdx] || currentKit;
+        const url = getSampleUrl(kitToUse, track.file);
 
         if (url) {
             try {
@@ -239,6 +241,13 @@
         // High-End DSP Fallback Synthesis if file is missing or for synthetic tracks
         sampleBuffers[trackIdx] = createSynthesizedBuffer(track.synth || track.id);
     }
+
+    window.changeTrackSample = async function (trackIdx, kitName) {
+        trackKit[trackIdx] = kitName;
+        await loadSample(trackIdx);
+        getAudioContext();
+        playTrackSound(trackIdx);
+    };
 
     function createSynthesizedBuffer(synthType) {
         const ctx = getAudioContext();
@@ -479,8 +488,11 @@
 
     window.changeSoundKit = async function (kitName) {
         currentKit = kitName;
+        for (let i = 0; i < 10; i++) {
+            trackKit[i] = kitName;
+        }
         await loadAllKitSamples();
-        updateTrackLabels();
+        renderMatrixPads();
     };
 
     window.loadPreset = function (presetKey) {
@@ -531,13 +543,13 @@
             row.className = 'track-row';
             row.id = `track-row-${trackIdx}`;
 
-            // Track Header Column (Screen 1 Layout)
+            // Track Header Column (Direct Sample Selector, No Bus)
             const meta = document.createElement('div');
             meta.className = 'track-meta';
 
             const nameBtn = document.createElement('button');
             nameBtn.className = 'track-name-btn';
-            nameBtn.innerHTML = `<span style="color:${track.color};">${track.name}:</span> <span class="track-file-short">${track.file.slice(0, 7)}...</span>`;
+            nameBtn.innerHTML = `<span style="color:${track.color};">${track.name}:</span>`;
             nameBtn.title = 'Klicke zum Vorhören';
             nameBtn.onclick = () => {
                 getAudioContext();
@@ -547,18 +559,32 @@
             const controls = document.createElement('div');
             controls.className = 'track-controls';
 
-            // Bus selector cycle
-            const busBtn = document.createElement('button');
-            busBtn.className = 'btn-track-bus';
-            busBtn.id = `track-bus-${trackIdx}`;
-            busBtn.innerText = track.bus;
-            busBtn.onclick = () => cycleTrackBus(trackIdx);
+            // Direct Individual Sample Selector
+            const sampleSelect = document.createElement('select');
+            sampleSelect.className = 'track-sample-select';
+            sampleSelect.title = 'Sample wählen';
+            sampleSelect.innerHTML = `
+                <option value="LoFi_Retro" ${trackKit[trackIdx] === 'LoFi_Retro' ? 'selected' : ''}>LoFi</option>
+                <option value="Organic" ${trackKit[trackIdx] === 'Organic' ? 'selected' : ''}>Organic</option>
+                <option value="Urban_Trap" ${trackKit[trackIdx] === 'Urban_Trap' ? 'selected' : ''}>Urban</option>
+            `;
+            sampleSelect.onchange = (e) => window.changeTrackSample(trackIdx, e.target.value);
 
             // Clear row
             const clearBtn = document.createElement('button');
             clearBtn.className = 'btn-track-mini';
             clearBtn.innerText = 'x';
             clearBtn.title = 'Spur leeren';
+            clearBtn.onclick = () => {
+                patternMatrix[trackIdx] = Array(16).fill(0);
+                renderMatrixPads();
+            };
+
+            controls.appendChild(sampleSelect);
+            controls.appendChild(clearBtn);
+
+            meta.appendChild(nameBtn);
+            meta.appendChild(controls);
             clearBtn.onclick = () => {
                 patternMatrix[trackIdx] = Array(16).fill(0);
                 renderMatrixPads();

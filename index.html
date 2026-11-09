@@ -175,25 +175,50 @@
                     </div>
 
                     <div class="sub-tools-group">
-                        <button class="btn-sub-pill" onclick="openSph3reModal()" title="3D Spatial Engine">🪐 V-SPH3RE</button>
-                        <button class="btn-sub-pill" onclick="openChopperModal()" title="Transient Slicer">🎛️ V-CHOPPER</button>
-                        <button class="btn-sub-pill" onclick="randomizePattern()" title="Randomize Grid">🎲</button>
+                        <button class="btn-sub-pill" onclick="randomizePattern()" title="Randomize Grid">🎲 RANDOMIZE</button>
                     </div>
                 </div>
 
                 <!-- 16-Step Indicator Header Bar -->
                 <div class="step-ruler-bar">
-                    <div class="track-header-spacer">TRACKS / BUS</div>
+                    <div class="track-header-spacer">TRACKS / SAMPLE</div>
                     <div class="step-numbers-grid" id="step-ruler">
                         <!-- Step numbers 1 to 16 -->
                     </div>
                 </div>
 
-                <!-- 16-Track Matrix -->
+                <!-- 10-Track Matrix -->
                 <div class="sequencer-matrix" id="sequencer-matrix">
                     <!-- Tracks rendered dynamically -->
                 </div>
 
+            </div>
+        </section>
+
+        <!-- ──────────────── Hardware Modules: V-CHOPPER & V-SPH3RE (Screen 3 Layout) ──────────────── -->
+        <section class="hardware-modules-section">
+            <div class="modules-grid-wrap">
+                <!-- V-CHOPPER Module Card -->
+                <div class="hardware-module-card" onclick="openChopperModal()" title="V-CHOPPER öffnen">
+                    <div class="module-card-preview">
+                        <img src="NEUE_ASSETS_26/v_chopper_logo.png" alt="V-CHOPPER Badge" class="module-logo-badge">
+                        <div class="module-screen-wrap">
+                            <img src="NEUE_ASSETS_26/V_Chopper.png" alt="V-CHOPPER Preview" class="module-preview-screen">
+                        </div>
+                    </div>
+                    <div class="module-card-title">V-CHOPPER</div>
+                </div>
+
+                <!-- V-SPH3RE Module Card -->
+                <div class="hardware-module-card" onclick="openSph3reModal()" title="V-SPH3RE 3D öffnen">
+                    <div class="module-card-preview">
+                        <div class="module-screen-wrap">
+                            <img src="NEUE_ASSETS_26/V_SPH3RE.png" alt="V-SPH3RE Preview" class="module-preview-screen">
+                        </div>
+                        <img src="NEUE_ASSETS_26/v_sph3re_logo.jpg" alt="V-SPH3RE Badge" class="module-logo-badge">
+                    </div>
+                    <div class="module-card-title">V-SPH3RE</div>
+                </div>
             </div>
         </section>
 
