@@ -4,23 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABOUT | VIR2OSE SOUND STUDIO</title>
-    <link rel="icon" type="image/png" href="logo.ping.png">
+    <title>ABOUT | MOBILE STUDIO - Waldemar Krucinski</title>
+    <link rel="icon" type="image/png" href="NEUE_ASSETS_26/V_logo.png">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#07070a">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=82">
+    <link rel="stylesheet" href="style.css?v=2026.2">
 </head>
 
-<body>
+<body class="mobile-studio-body">
     <div id="mouse-light"></div>
-    <audio id="preview-audio" style="display: none;"></audio>
-
-    <!-- Particle Canvas Background -->
-    <canvas id="particles-canvas"></canvas>
-
-    <!-- Animated 3D Gradient Overlay -->
-    <div class="gradient-3d"></div>
 
     <!-- Navigation Drawer -->
     <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
@@ -29,122 +22,106 @@
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
-            <a href="index.html" data-i18n="nav_studio">STUDIO</a>
+            <a href="index.html" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="about.html" data-i18n="nav_about">ABOUT / ÜBER MICH</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
-            <a href="about.html" data-i18n="nav_about">ABOUT</a>
             <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
-            <a href="contact.html" data-i18n="nav_contact">CONTACT</a>
+            <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
         </nav>
     </div>
 
+    <!-- Top Navigation Header -->
     <header class="app-header" id="header">
         <div class="header-main-row">
             <div class="header-left">
-                <div class="hamburger-menu" onclick="toggleDrawer()">
+                <button class="hamburger-menu" onclick="toggleDrawer()" aria-label="Menü öffnen">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
 
             <div class="header-center">
                 <a href="index.html" class="logo-link">
-                    <img src="LOGO HERO PAGE TRANSPARENT NEW.png" alt="Golden Mirror Studio" class="logo-img" id="logo-premium">
+                    <img src="NEUE_ASSETS_26/V_logo.png" alt="vir2ose logo" class="header-v-logo">
+                    <span class="header-studio-name" data-i18n="header_studio">STUDIO HANNOVER</span>
                 </a>
             </div>
 
             <div class="header-right">
                 <div class="language-switcher">
-                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')">
-                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')">
-                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')">
-                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')">
+                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
+                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
+                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')" title="Polski">
+                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')" title="Español">
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="portfolio-page" style="padding-top: 100px;">
+    <main class="studio-main-container">
         <section id="about" class="about-section">
             <div class="about-container">
-                <h2 class="about-title" data-i18n="about_title">ÜBER MICH</h2>
-                <div class="about-header">
-                    <p class="about-intro" data-i18n="about_intro">Herzlich willkommen! Mein Name ist Waldemar
-                        Krucinski.
-                        Mein professionelles Schaffen ruht auf drei wesentlichen Säulen, die kreatives Handwerk,
-                        staatlich
-                        geprüfte Expertise und technologischen Pioniergeist vereinen: Musikproduktion, Mediengestaltung
-                        und
-                        Netzwerk-Systeme.</p>
-                </div>
+                <h1 class="about-title" data-i18n="about_title">ÜBER MICH</h1>
+                
+                <p class="about-intro" data-i18n="about_intro">
+                    Herzlich willkommen! Mein Name ist Waldemar Krucinski. Mein professionelles Schaffen ruht auf drei wesentlichen Säulen, die kreatives Handwerk, staatlich geprüfte Expertise und technologischen Pioniergeist vereinen: Musikproduktion, Mediengestaltung und Netzwerk-Systeme.
+                </p>
 
                 <div class="about-grid">
                     <!-- Säule 1: Musik -->
                     <div class="about-pillar">
                         <div class="pillar-icon">🎵</div>
-                        <h3 data-i18n="about_col1_title">1. Musik: Staatlich geprüfte Produktion</h3>
-                        <p class="pillar-text" data-i18n="about_col1_text">Musik ist für mich ein ganzheitlicher Prozess
-                            auf
-                            höchstem technischem Niveau. Als staatlich geprüfter Musikproduzent (HOFA College Diploma)
-                            verfüge ich über tiefgreifendes Fachwissen in der gesamten Produktionskette. Mein Fokus
-                            liegt
-                            auf einem erstklassigen Sound und einer strukturierten Umsetzung – von der ersten Vision bis
-                            zum
-                            finalen Master.</p>
-                        <p class="pillar-subtitle"><strong data-i18n="about_col1_exp_title">Expertise:</strong> <span
-                                data-i18n="about_col1_exp_text">Projektplanung, Songwriting, Sounddesign, Recording,
-                                Editing, Drum-Programming, Mixing und Mastering.</span></p>
-                        <p class="pillar-subtitle"><strong data-i18n="about_col1_cert_title">Nachweis:</strong> <span
-                                data-i18n="about_col1_cert_text">Meine Qualifikationen sind durch das staatlich
-                                anerkannte
-                                Diploma und entsprechende Zertifizierungen belegbar.</span></p>
+                        <h2 data-i18n="about_col1_title">1. Musik: Staatlich geprüfte Produktion</h2>
+                        <p class="pillar-text" data-i18n="about_col1_text">
+                            Musik ist für mich ein ganzheitlicher Prozess auf höchstem technischem Niveau. Als staatlich geprüfter Musikproduzent (HOFA College Diploma) verfüge ich über tiefgreifendes Fachwissen in der gesamten Produktionskette. Mein Fokus liegt auf erstklassigem Sound und strukturierter Umsetzung – von der ersten Vision bis zum finalen Master.
+                        </p>
+                        <p class="pillar-subtitle">
+                            <strong data-i18n="about_col1_exp_title">Expertise:</strong> 
+                            <span data-i18n="about_col1_exp_text">Projektplanung, Songwriting, Sounddesign, Recording, Editing, Drum-Programming, Mixing und Mastering.</span>
+                        </p>
+                        <p class="pillar-subtitle">
+                            <strong data-i18n="about_col1_cert_title">Nachweis:</strong> 
+                            <span data-i18n="about_col1_cert_text">Staatlich anerkanntes HOFA Diploma und Zertifizierungen.</span>
+                        </p>
                     </div>
 
                     <!-- Säule 2: Mediengestaltung -->
                     <div class="about-pillar">
                         <div class="pillar-icon">🎬</div>
-                        <h3 data-i18n="about_col2_title">2. Mediengestaltung: Professionelles Bild & Ton</h3>
-                        <p class="pillar-text" data-i18n="about_col2_text">In der visuellen Welt verbinde ich kreatives
-                            Storytelling mit handwerklicher Präzision. Als IHK-geprüfter Mediengestalter Bild und Ton
-                            beherrsche ich die technischen und gestalterischen Standards der Medienbranche. Ich begleite
-                            Projekte durch alle Phasen der Postproduktion und garantiere einen professionellen Workflow.
+                        <h2 data-i18n="about_col2_title">2. Mediengestaltung: Professionelles Bild & Ton</h2>
+                        <p class="pillar-text" data-i18n="about_col2_text">
+                            In der visuellen Welt verbinde ich kreatives Storytelling mit handwerklicher Präzision. Als IHK-geprüfter Mediengestalter Bild und Ton beherrsche ich die technischen und gestalterischen Standards der Medienbranche für alle Phasen der Postproduktion.
                         </p>
-                        <p class="pillar-subtitle"><strong data-i18n="about_col2_skill_title">Skills:</strong> <span
-                                data-i18n="about_col2_skill_text">Kamera-Set-Planning, High-End-Schnitt (DaVinci Resolve
-                                Studio, Avid, FCP), Animation, Grafikbearbeitung, Synchronisation und komplette
-                                Filmproduktionen.</span></p>
+                        <p class="pillar-subtitle">
+                            <strong data-i18n="about_col2_skill_title">Skills:</strong> 
+                            <span data-i18n="about_col2_skill_text">Kamera-Set-Planning, High-End-Schnitt (DaVinci Resolve Studio, Avid, FCP), Animation, Synchronisation und komplette Filmproduktionen.</span>
+                        </p>
                     </div>
 
                     <!-- Säule 3: Netzwerk & Programmierung -->
                     <div class="about-pillar">
                         <div class="pillar-icon">💻</div>
-                        <h3 data-i18n="about_col3_title">3. Netzwerk & IT: Innovation & Zukunft</h3>
-                        <p class="pillar-text" data-i18n="about_col3_text">Die dritte Säule bildet meine Leidenschaft
-                            für
-                            Netzwerk-Kunst und moderne Programmierung. Hier bewege ich mich als ambitionierter "Early
-                            Adopter": Mein Interesse wächst mit jeder technologischen Neuerung. Ich experimentiere
-                            intensiv
-                            mit KI-Agenten-Tools, VS Cloud und GitHub. Mich faszinieren die Schnittstellen zwischen
-                            technischer Infrastruktur und zukunftsweisenden Konzepten wie der Antigravity-Technologie.
+                        <h2 data-i18n="about_col3_title">3. Netzwerk & IT: Innovation & Zukunft</h2>
+                        <p class="pillar-text" data-i18n="about_col3_text">
+                            Die dritte Säule bildet meine Leidenschaft für Netzwerk-Kunst, moderne Web Audio Programmierung und KI-gestützte Entwicklung. Als ambitionierter Early Adopter faszinieren mich die Schnittstellen zwischen digitaler Infrastruktur und Audio-Engineering.
                         </p>
                     </div>
                 </div>
 
-                <div class="about-footer">
-                    <p class="about-claim" data-i18n="about_claim"><strong>Mein Anspruch:</strong> Ob Akustik, Bild oder
-                        digitale Vernetzung – ich stehe für Projekte, die durch fundiertes Know-how, zweifach staatlich
-                        anerkannte Qualität und den Mut zu neuen Technologien überzeugen.</p>
+                <div class="about-claim" data-i18n="about_claim">
+                    <strong>Mein Anspruch:</strong> Ob Akustik, Bild oder digitale Vernetzung – ich stehe für Projekte, die durch fundiertes Know-how, zweifach staatlich anerkannte Qualität und den Mut zu neuen Technologien überzeugen.
                 </div>
 
                 <div class="about-certificates">
                     <div class="certs-placeholder">
                         <img src="HOFA LOGO.jpg" alt="HOFA College Diploma" class="cert-logo">
-                        <img src="IHK LOGO.jpg?v=2" alt="IHK Abschluss" class="cert-logo">
+                        <img src="IHK LOGO.jpg" alt="IHK Abschluss" class="cert-logo">
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 60px;">
-                    <a href="index.html" class="btn btn-secondary" data-i18n="nav_studio">BACK TO STUDIO</a>
+                <div style="text-align: center; margin-top: 36px;">
+                    <a href="index.html" class="btn-back-studio" data-i18n="nav_studio">➔ ZURÜCK ZUM STUDIO</a>
                 </div>
             </div>
         </section>
@@ -152,13 +129,13 @@
 
     <footer class="site-footer">
         <p>
-            <span data-i18n="footer_copyright">© Waldemar Krucinski Hannover 2026</span>
+            <span>© Waldemar Krucinski 2026 | HOFA College Diploma & IHK Mediengestalter Bild & Ton</span>
             <span class="footer-sep">|</span>
-            <a href="privacy.html" class="footer-link" data-i18n="footer_privacy">Datenschutz & Impressum</a>
+            <a href="privacy.html" class="footer-link">Datenschutz & Impressum</a>
         </p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2026.2"></script>
 </body>
 
 </html>

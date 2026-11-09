@@ -76,7 +76,7 @@
         localStorage.setItem('vir2ose_lang', lang);
     };
 
-    // ──────────────── 16-Track Matrix Configuration ────────────────
+    // ──────────────── 10-Track Matrix Configuration ────────────────
     const TRACK_CONFIG = [
         { id: 'kick', name: 'KICK 909', file: 'Kick', color: '#00e5ff', bus: 'BUS 1' },
         { id: 'snare', name: 'SNARE', file: 'Snare', color: '#ff7700', bus: 'BUS 1' },
@@ -87,16 +87,10 @@
         { id: 'conga2', name: 'CONGA 2', file: 'Congas2', color: '#d500f9', bus: 'BUS 2' },
         { id: 'cowbell', name: 'COWBELL', file: 'Cowbell', color: '#ffd600', bus: 'BUS 2' },
         { id: 'cymbal', name: 'CYMBAL', file: 'Cymbal', color: '#ffab00', bus: 'BUS 2' },
-        { id: 'tom_low', name: 'TOM LOW', file: 'Tom_Low', color: '#b388ff', bus: 'BUS 3', synth: 'tom_low' },
-        { id: 'tom_hi', name: 'TOM HI', file: 'Tom_Hi', color: '#7c4dff', bus: 'BUS 3', synth: 'tom_hi' },
-        { id: 'rim', name: 'PERC / RIM', file: 'Rimshot', color: '#ff6e40', bus: 'BUS 3', synth: 'rim' },
-        { id: 'sub808', name: 'SUB 808', file: 'Sub_808', color: '#ff1744', bus: 'BUS 1', synth: 'sub808' },
-        { id: 'chop1', name: 'CHOP 1', file: 'Vocal_Chop', color: '#76ff03', bus: 'BUS 3', synth: 'chop1' },
-        { id: 'chop2', name: 'CHOP 2', file: 'Synth_Stab', color: '#ea80fc', bus: 'BUS 3', synth: 'chop2' },
-        { id: 'fx', name: 'FX IMPACT', file: 'Impact_Sweep', color: '#00e5ff', bus: 'BUS 3', synth: 'fx' }
+        { id: 'sub808', name: 'SUB 808', file: 'Sub_808', color: '#ff1744', bus: 'BUS 1', synth: 'sub808' }
     ];
 
-    // Presets definitions (16 tracks x 16 steps: 1 = active, 0 = inactive)
+    // Presets definitions (10 tracks x 16 steps: 1 = active, 0 = inactive)
     const PRESETS = {
         'groove_1': [
             [1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,1,0], // Kick
@@ -108,13 +102,7 @@
             [0,0,0,0, 0,0,1,0, 0,0,0,0, 0,1,0,1], // Conga 2
             [0,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,0], // Cowbell
             [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0], // Cymbal
-            [0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0], // Tom low
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,1,0], // Tom hi
-            [0,0,1,0, 0,0,0,0, 0,0,1,0, 0,0,0,0], // Rim
-            [1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,0], // 808
-            [0,0,0,0, 1,0,0,0, 0,0,0,0, 0,0,0,0], // Chop 1
-            [0,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0], // Chop 2
-            [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]  // FX
+            [1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,0]  // Sub 808
         ],
         'trap_bounce': [
             [1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,0],
@@ -126,13 +114,7 @@
             [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
             [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
             [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,1,0, 0,0,0,1, 0,0,1,0, 0,0,0,0],
-            [1,0,0,0, 0,0,0,0, 0,0,1,0, 0,1,0,0],
-            [0,0,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0],
-            [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]
+            [1,0,0,0, 0,0,0,0, 0,0,1,0, 0,1,0,0]
         ],
         'organic_afro': [
             [1,0,0,0, 0,0,1,0, 0,0,1,0, 0,0,0,0],
@@ -144,13 +126,7 @@
             [0,1,0,0, 1,0,0,0, 1,0,0,1, 0,0,1,0],
             [0,0,1,0, 0,0,1,0, 0,0,1,0, 0,0,1,0],
             [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,1,0,0],
-            [0,0,1,0, 0,1,0,0, 0,0,1,0, 0,1,0,0],
-            [1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]
+            [1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0]
         ],
         'house_4x4': [
             [1,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0],
@@ -162,15 +138,9 @@
             [0,0,0,1, 0,1,0,0, 0,0,0,1, 0,1,0,0],
             [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
             [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [0,0,1,0, 0,0,1,0, 0,0,1,0, 0,0,1,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
-            [1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0],
-            [0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0]
+            [0,0,1,0, 0,0,1,0, 0,0,1,0, 0,0,1,0]
         ],
-        'empty': Array(16).fill(null).map(() => Array(16).fill(0))
+        'empty': Array(10).fill(null).map(() => Array(16).fill(0))
     };
 
     // ──────────────── Web Audio Context & Graph ────────────────
@@ -341,10 +311,10 @@
     let scheduleAheadTime = 0.1; // seconds
     let timerID = null;
 
-    // Track state: 16 rows x 16 steps
+    // Track state: 10 rows x 16 steps
     let patternMatrix = JSON.parse(JSON.stringify(PRESETS['groove_1']));
-    const trackMute = Array(16).fill(false);
-    const trackSolo = Array(16).fill(false);
+    const trackMute = Array(10).fill(false);
+    const trackSolo = Array(10).fill(false);
 
     function nextStep() {
         const secondsPerBeat = 60.0 / bpm;
@@ -371,7 +341,7 @@
         const hasSolo = trackSolo.some(s => s === true);
 
         // Play active steps
-        for (let trackIdx = 0; trackIdx < 16; trackIdx++) {
+        for (let trackIdx = 0; trackIdx < 10; trackIdx++) {
             if (patternMatrix[trackIdx][stepNumber]) {
                 if (trackMute[trackIdx]) continue;
                 if (hasSolo && !trackSolo[trackIdx]) continue;
@@ -452,7 +422,7 @@
     };
 
     window.sequencerClearAll = function () {
-        patternMatrix = Array(16).fill(null).map(() => Array(16).fill(0));
+        patternMatrix = Array(10).fill(null).map(() => Array(16).fill(0));
         renderMatrixPads();
     };
 
@@ -521,7 +491,7 @@
     };
 
     window.randomizePattern = function () {
-        for (let t = 0; t < 16; t++) {
+        for (let t = 0; t < 10; t++) {
             for (let s = 0; s < 16; s++) {
                 // Musical probability distribution
                 let prob = 0.15;
