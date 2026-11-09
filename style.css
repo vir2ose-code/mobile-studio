@@ -128,17 +128,21 @@ body.mobile-studio-body {
     text-decoration: none;
 }
 
-.header-brand-logo {
-    height: 14px; /* 50% kleiner für ruhiges edles Gesamtbild */
-    width: auto;
-    max-width: 95px;
+.header-brand-logo,
+.header-v-logo-img {
+    height: 14px !important;
+    max-height: 14px !important;
+    width: auto !important;
+    max-width: 85px !important;
     object-fit: contain;
+    display: block;
     filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.2));
     transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.header-brand-logo:hover {
-    transform: scale(1.04);
+.header-brand-logo:hover,
+.header-v-logo-img:hover {
+    transform: scale(1.05);
     filter: drop-shadow(0 0 10px rgba(163, 143, 90, 0.4));
 }
 
@@ -268,7 +272,6 @@ body.mobile-studio-body {
 .hero-brand-section {
     text-align: center;
     margin-bottom: 38px; /* 2x mehr Luft-Space zum Sequenzer */
-    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.95)); /* 15% dezenter Außenschatten */
 }
 
 .hero-brand-title-wrap {
@@ -278,16 +281,17 @@ body.mobile-studio-body {
     position: relative;
 }
 
+/* Ganz Hell Gold mit sehr dezentem Schatten (Screen 4) */
 .hero-brand-title {
     font-family: "Segoe UI Historic", "Segoe UI", sans-serif;
     font-size: clamp(1.8rem, 3.2vw, 2.7rem);
     font-weight: 700;
     letter-spacing: 6px;
-    background: var(--gold-gradient);
+    background: linear-gradient(180deg, #ffffff 0%, #fff6d6 25%, #f7df96 60%, #dfb845 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.9); /* 15% Außenschatten für Lesbarkeit */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45); /* Sehr dezent, kein dunkler Brei */
     margin: 0;
     line-height: 1.05;
 }
@@ -305,35 +309,36 @@ body.mobile-studio-body {
 .subscript-lead {
     font-family: "Segoe UI Historic", "Segoe UI", sans-serif;
     font-style: italic;
-    color: #cbd5e1;
+    color: #e2e8f0;
     font-size: 1.15rem; /* Richtig groß wie in Screen 1 */
     letter-spacing: 1px;
     font-weight: 500;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* Brushed Silver Name */
 .silver-brushed-name {
     font-family: 'Great Vibes', cursive;
-    font-size: 1.48rem; /* Etwas kleiner wie gewünscht */
-    background: var(--silver-gradient);
+    font-size: 1.48rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #e2e8f0 80%, #ffffff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 0 10px rgba(255, 255, 255, 0.45);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     padding-left: 2px;
 }
 
+/* Ganz Hell Gold Subtitle */
 .hero-brand-subtitle {
     font-family: "Segoe UI Historic", "Segoe UI", serif;
     font-size: clamp(1.15rem, 2.5vw, 1.45rem);
     font-weight: 600;
     letter-spacing: 4px;
-    background: var(--gold-gradient);
+    background: linear-gradient(180deg, #ffffff 0%, #fff8e1 30%, #fae69e 65%, #cca33b 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.9); /* 15% Außenschatten */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Sehr dezent */
     margin-top: 14px;
     margin-bottom: 6px;
 }
@@ -649,9 +654,9 @@ body.mobile-studio-body {
 .fader-range.swing-fader::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 14px;
-    height: 24px;
-    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob.png');
+    width: 24px; /* In horizontaler Richtung gedreht (Screen 1) */
+    height: 14px;
+    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob_for_swing.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -733,9 +738,9 @@ body.mobile-studio-body {
 .mixer-v-fader::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 14px;
-    height: 26px;
-    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob.png');
+    width: 26px; /* Im rotierten Zustand wird dies zur aufrechten vertikalen Faderkappe (Screen 2) */
+    height: 14px;
+    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob_for_mixer.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -837,8 +842,12 @@ body.mobile-studio-body {
 }
 
 .master-v-fader::-webkit-slider-thumb {
-    width: 16px;
-    height: 28px;
+    width: 28px;
+    height: 16px;
+    background-image: url('SMARTPHONE_TABLET_ASSETS/fader_knob_for_mixer.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
     filter: drop-shadow(0 0 5px rgba(163, 143, 90, 0.5));
 }
 
