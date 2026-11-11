@@ -56,7 +56,7 @@ body.mobile-studio-body {
         url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp') type('image/webp'),
         url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.png') type('image/png')
     );
-    background-position: center center;
+    background-position: center 46px; /* Vorlage nach unten versetzt: Logo & Artwork werden oben nie abgeschnitten */
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -255,13 +255,19 @@ body.mobile-studio-body {
     color: var(--gold-light);
 }
 
-/* ──────────────── Main Container & Hero Title (Screen 1 Look) ──────────────── */
+/* ──────────────── Main Container & Sequencer Placement (Clean Background Artwork Mode) ──────────────── */
 .studio-main-container {
     flex: 1;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 18px 16px 30px;
+    /* Großzügiger Freiraum nach oben, damit das im Hintergrundbild eingearbeitete Artwork
+       (Logo, MOBILE STUDIO PRO, powered by Waldemar Krucinski, Sample Sounds Beats)
+       vollständig sichtbar und unbedeckt bleibt */
+    padding-top: clamp(230px, 31vh, 380px);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 30px;
     position: relative;
     z-index: 2;
     display: flex;
@@ -270,8 +276,9 @@ body.mobile-studio-body {
 }
 
 .hero-brand-section {
+    display: none !important; /* Ausgeblendet, da im Background-Artwork bereits hochauflösend enthalten */
     text-align: center;
-    margin-bottom: 38px; /* 2x mehr Luft-Space zum Sequenzer */
+    margin-bottom: 38px;
 }
 
 .hero-brand-title-wrap {
