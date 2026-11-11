@@ -898,38 +898,67 @@ body.mobile-studio-landing {
     align-items: center;
 }
 
-/* ──────────────── Gold-Glänzend, Gebürstet & Poliert Transport Buttons (Screen 3 Style) ──────────────── */
+/* ──────────────── Gold-Glänzend, Gebürstet & Poliert Transport Buttons (#c7b584 Style) ──────────────── */
 .rack-btn {
-    background: linear-gradient(180deg, #ecd38c 0%, #cca33b 50%, #9e7920 100%);
-    border: 1px solid rgba(255, 245, 190, 0.45);
+    background: linear-gradient(180deg, #dfd2a8 0%, #c7b584 50%, #948253 100%);
+    border: 1px solid rgba(240, 230, 200, 0.55);
     color: #000000 !important;
     font-family: "Segoe UI Historic", "Segoe UI", sans-serif;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 1.2px;
-    padding: 5px 12px;
+    height: 32px;
+    box-sizing: border-box;
+    padding: 0 10px;
     border-radius: 4px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7), 0 0 10px rgba(163, 143, 90, 0.35);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7), 0 0 8px rgba(199, 181, 132, 0.3);
     transition: all 0.15s ease;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
 }
 
+/* Transport Buttons: Exakt gleiche Größe (Breite & Höhe) für einheitlichen Hardware-Look */
+.btn-play,
+.btn-stop,
+.btn-pause,
+.btn-ff,
+.btn-loop {
+    width: 84px;
+    min-width: 84px;
+    max-width: 84px;
+}
+
+.btn-eq {
+    min-width: 98px;
+    padding: 0 12px;
+}
+
+.btn-lyrics-toggle {
+    min-width: 88px;
+    padding: 0 12px;
+}
+
+.rack-btn .rack-btn-icon,
 .rack-btn .btn-symbol {
     font-size: 0.76rem;
     color: #000000 !important;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .rack-btn:hover {
-    background: linear-gradient(180deg, #fff2a3 0%, #dfb845 50%, #b38825 100%);
+    background: linear-gradient(180deg, #ede3c2 0%, #d5c597 50%, #a4915f 100%);
     transform: translateY(-1px) scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 0 16px rgba(223, 184, 69, 0.6);
-    border-color: #fff6d6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 0 14px rgba(199, 181, 132, 0.5);
+    border-color: #f7f1df;
     color: #000000 !important;
 }
 
@@ -940,25 +969,25 @@ body.mobile-studio-landing {
 
 /* PLAY button active / playing animation */
 .btn-play.is-playing {
-    background: linear-gradient(180deg, #ffffff 0%, #ffdf6d 40%, #e5a712 100%) !important;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 8px #ffffff !important;
+    background: linear-gradient(180deg, #ffffff 0%, #ded2a9 45%, #bca872 100%) !important;
+    box-shadow: 0 0 16px rgba(199, 181, 132, 0.85), 0 0 6px #ffffff !important;
     border-color: #ffffff !important;
     color: #000000 !important;
     animation: goldPulse 1.2s infinite alternate;
 }
 
 @keyframes goldPulse {
-    0% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.7); }
-    100% { box-shadow: 0 0 22px rgba(255, 225, 90, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
+    0% { box-shadow: 0 0 10px rgba(199, 181, 132, 0.6); }
+    100% { box-shadow: 0 0 20px rgba(223, 210, 168, 1), 0 0 8px rgba(255, 255, 255, 0.85); }
 }
 
 /* Toggle buttons (LOOP, EQUALIZER, LYRICS) active state */
 .btn-loop.is-active,
 .btn-eq.is-active,
 .btn-lyrics-toggle.is-active {
-    background: linear-gradient(180deg, #fff5be 0%, #e2b947 50%, #ad821a 100%) !important;
-    box-shadow: 0 0 14px rgba(223, 184, 69, 0.75), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
-    border-color: #fff9db !important;
+    background: linear-gradient(180deg, #f2ead0 0%, #cfc094 50%, #a08e5c 100%) !important;
+    box-shadow: 0 0 12px rgba(199, 181, 132, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+    border-color: #f7f1dd !important;
     color: #000000 !important;
 }
 
@@ -1977,6 +2006,43 @@ body.mobile-studio-landing {
     .matrix-pad {
         min-width: 28px;
         height: 28px;
+    }
+    .rack-header-bar {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 8px;
+    }
+    .rack-header-bar::-webkit-scrollbar {
+        display: none;
+    }
+    .transport-group {
+        gap: 4px;
+        flex-shrink: 0;
+    }
+    .rack-btn {
+        height: 29px;
+        font-size: 0.67rem;
+        letter-spacing: 0.8px;
+        padding: 0 6px;
+        gap: 4px;
+    }
+    .btn-play,
+    .btn-stop,
+    .btn-pause,
+    .btn-ff,
+    .btn-loop {
+        width: 70px;
+        min-width: 70px;
+        max-width: 70px;
+    }
+    .btn-eq {
+        min-width: 86px;
+        padding: 0 8px;
+    }
+    .btn-lyrics-toggle {
+        min-width: 76px;
+        padding: 0 8px;
     }
 }
 
