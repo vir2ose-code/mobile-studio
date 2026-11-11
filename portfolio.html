@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PORTFOLIO | VIR2OSE SOUND STUDIO</title>
-    <link rel="icon" type="image/png" href="logo.ping.png">
+    <title>SOUND PORTFOLIO & LOOPS | VIR2OSE SOUND</title>
+    <link rel="icon" type="image/png" href="NEUE_ASSETS_26/V_logo.png">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#07070a">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=82">
+    <link rel="stylesheet" href="style.css?v=2026.9">
 </head>
 
-<body>
+<body class="mobile-studio-body">
     <div id="mouse-light"></div>
     <audio id="preview-audio" style="display: none;"></audio>
 
@@ -33,12 +33,6 @@
         </div>
     </div>
 
-    <!-- Particle Canvas Background -->
-    <canvas id="particles-canvas"></canvas>
-
-    <!-- Animated 3D Gradient Overlay -->
-    <div class="gradient-3d"></div>
-
     <!-- Navigation Drawer -->
     <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
     <div id="nav-drawer" class="nav-drawer">
@@ -46,40 +40,40 @@
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
-            <a href="index.html" data-i18n="nav_studio">STUDIO</a>
+            <a href="index.html" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="portfolio.html" data-i18n="nav_portfolio">SOUND PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
-            <a href="about.html" data-i18n="nav_about">ABOUT</a>
-            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
-            <a href="contact.html" data-i18n="nav_contact">CONTACT</a>
+            <a href="about.html" data-i18n="nav_about">ÜBER MICH</a>
+            <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
         </nav>
     </div>
 
+    <!-- Top Navigation Header -->
     <header class="app-header" id="header">
         <div class="header-main-row">
             <div class="header-left">
-                <div class="hamburger-menu" onclick="toggleDrawer()">
+                <button class="hamburger-menu" onclick="toggleDrawer()" aria-label="Menü öffnen">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
 
             <div class="header-center">
                 <a href="index.html" class="logo-link">
-                    <img src="LOGO HERO PAGE TRANSPARENT NEW.png" alt="Golden Mirror Studio" class="logo-img" id="logo-premium">
+                    <span class="header-studio-name">VIR2OSE SOUND</span>
                 </a>
             </div>
 
             <div class="header-right">
                 <div class="language-switcher">
-                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')">
-                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')">
-                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')">
-                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')">
+                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
+                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
+                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')" title="Polski">
+                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')" title="Español">
                 </div>
             </div>
         </div>
-
     </header>
 
     <!-- Elegant Audio Wave Background -->
@@ -261,8 +255,8 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 60px;">
-                    <button onclick="toggleNotepad()" class="btn btn-primary" style="padding: 18px 30px; font-size: 1rem; cursor: pointer; border: none; font-family: 'Outfit', sans-serif; font-weight: 600; letter-spacing: 2px;" data-i18n="btn_project">START A PROJECT</button>
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="index.html" class="btn-back-studio" data-i18n="nav_studio">ZURÜCK ZUM STUDIO</a>
                 </div>
             </div>
         </section>
@@ -270,13 +264,13 @@
 
     <footer class="site-footer">
         <p>
-            <span data-i18n="footer_copyright">© Waldemar Krucinski Hannover 2026</span>
+            <span data-i18n="footer_copyright">© Waldemar Krucinski 2026 | HOFA College Diploma & IHK Mediengestalter Bild & Ton</span>
             <span class="footer-sep">|</span>
             <a href="privacy.html" class="footer-link" data-i18n="footer_privacy">Datenschutz & Impressum</a>
         </p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2026.9"></script>
 </body>
 
 </html>

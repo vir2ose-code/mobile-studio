@@ -1,14 +1,15 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026.8';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.9';
 const urlsToCache = [
     './',
     './index.html',
     './fonts/fonts.css',
-    './style.css?v=2026.8',
-    './script.js?v=2026.8',
+    './style.css?v=2026.9',
+    './script.js?v=2026.9',
     './about.html',
     './portfolio.html',
     './services.html',
     './contact.html',
+    './privacy.html',
     './offline.html',
     './icon-192.png',
     './icon-512.png',
@@ -16,6 +17,9 @@ const urlsToCache = [
     './EN.jpg',
     './PL.png',
     './ES.png',
+    './Facebook.png',
+    './Instagram.png',
+    './YouTube.png',
     './SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp',
     './SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.png',
     './SMARTPHONE_TABLET_ASSETS/Logo_Kopfzeile_tight.png',

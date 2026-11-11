@@ -4,23 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONTACT | VIR2OSE SOUND STUDIO</title>
-    <link rel="icon" type="image/png" href="logo.ping.png">
+    <title>KONTAKT | VIR2OSE SOUND STUDIO</title>
+    <link rel="icon" type="image/png" href="NEUE_ASSETS_26/V_logo.png">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#07070a">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=82">
+    <link rel="stylesheet" href="style.css?v=2026.9">
 </head>
 
-<body>
+<body class="mobile-studio-body">
     <div id="mouse-light"></div>
-    <audio id="preview-audio" style="display: none;"></audio>
-
-    <!-- Particle Canvas Background -->
-    <canvas id="particles-canvas"></canvas>
-
-    <!-- Animated 3D Gradient Overlay -->
-    <div class="gradient-3d"></div>
 
     <!-- Navigation Drawer -->
     <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
@@ -29,45 +22,46 @@
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
-            <a href="index.html" data-i18n="nav_studio">STUDIO</a>
+            <a href="index.html" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="portfolio.html" data-i18n="nav_portfolio">SOUND PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
-            <a href="about.html" data-i18n="nav_about">ABOUT</a>
-            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
-            <a href="contact.html" data-i18n="nav_contact">CONTACT</a>
+            <a href="about.html" data-i18n="nav_about">ÜBER MICH</a>
+            <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
         </nav>
     </div>
 
+    <!-- Top Navigation Header -->
     <header class="app-header" id="header">
         <div class="header-main-row">
             <div class="header-left">
-                <div class="hamburger-menu" onclick="toggleDrawer()">
+                <button class="hamburger-menu" onclick="toggleDrawer()" aria-label="Menü öffnen">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
 
             <div class="header-center">
                 <a href="index.html" class="logo-link">
-                    <img src="LOGO HERO PAGE TRANSPARENT NEW.png" alt="Golden Mirror Studio" class="logo-img" id="logo-premium">
+                    <span class="header-studio-name">VIR2OSE SOUND</span>
                 </a>
             </div>
 
             <div class="header-right">
                 <div class="language-switcher">
-                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')">
-                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')">
-                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')">
-                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')">
+                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
+                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
+                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')" title="Polski">
+                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')" title="Español">
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="portfolio-page" style="padding-top: 100px;">
+    <main class="portfolio-page">
         <section id="contact" class="contact-section">
             <div class="contact-container">
-                <h2 class="contact-title" data-i18n="contact_title">CONTACT</h2>
+                <h1 class="contact-title" data-i18n="contact_title">KONTAKT</h1>
                 <div class="contact-header">
                     <p class="contact-intro" data-i18n="contact_intro">Lass uns gemeinsam dein nächstes Audio-Projekt
                         verwirklichen. Schreibe mir eine Nachricht oder buche direkt eine Session im Studio.</p>
@@ -75,14 +69,13 @@
 
                 <div class="contact-grid">
                     <!-- Left: Contact Info -->
-                    <div class="contact-info-card glass-panel-generator">
+                    <div class="contact-info-card">
                         <h3 data-i18n="contact_info_title">DIRECT CONTACT</h3>
                         <p class="contact-text">
-                            <span data-i18n="contact_info_desc">Ich freue mich über jede Anfrage und melde mich zeitnah
-                                zurück.</span><br>
-                            <span data-i18n="contact_info_response_time"
-                                style="color: var(--gold); display: inline-block; margin-top: 8px;">Ich melde mich in
-                                der Regel innerhalb von 24 Stunden bei dir.</span>
+                            <span data-i18n="contact_info_desc">Ich freue mich über jede Anfrage und melde mich zeitnah zurück.</span><br>
+                            <span data-i18n="contact_info_response_time" style="color: var(--gold); display: inline-block; margin-top: 8px;">
+                                In der Regel innerhalb von 24 Stunden.
+                            </span>
                         </p>
 
                         <div class="info-item">
@@ -105,25 +98,27 @@
                             <span class="info-icon">📍</span>
                             <div class="info-content">
                                 <strong>Studio Hannover:</strong>
-                                <span>Termine im Studio nur nach Vereinbarung</span>
+                                <span>Termine im Studio nach Vereinbarung</span>
                             </div>
                         </div>
 
                         <div class="social-links">
-                            <a href="https://www.instagram.com/waldemarkrucinski/" target="_blank"
-                                class="social-icon"><img src="Instagram.png" alt="Instagram" class="social-img"></a>
-                            <a href="https://www.facebook.com/waldemar.krucinski" target="_blank"
-                                class="social-icon"><img src="Facebook.png" alt="Facebook" class="social-img"></a>
-                            <a href="https://www.youtube.com/@Waldemar-Krucinski" target="_blank"
-                                class="social-icon"><img src="YouTube.png" alt="YouTube" class="social-img"></a>
+                            <a href="https://www.instagram.com/waldemarkrucinski/" target="_blank" class="social-icon" title="Instagram">
+                                <img src="Instagram.png" alt="Instagram" class="social-img">
+                            </a>
+                            <a href="https://www.facebook.com/waldemar.krucinski" target="_blank" class="social-icon" title="Facebook">
+                                <img src="Facebook.png" alt="Facebook" class="social-img">
+                            </a>
+                            <a href="https://www.youtube.com/@Waldemar-Krucinski" target="_blank" class="social-icon" title="YouTube">
+                                <img src="YouTube.png" alt="YouTube" class="social-img">
+                            </a>
                         </div>
                     </div>
 
                     <!-- Right: Contact Form -->
-                    <div class="contact-form-card glass-panel-generator">
+                    <div class="contact-form-card">
                         <h3 data-i18n="contact_form_title">SEND A MESSAGE</h3>
-                        <form action="https://formsubmit.co/cc1f6ec469de6adc632c529da14728e0" method="POST"
-                            class="contact-form">
+                        <form action="https://formsubmit.co/cc1f6ec469de6adc632c529da14728e0" method="POST" class="contact-form">
                             <!-- FormSubmit Configurations -->
                             <input type="text" name="_honey" style="display:none">
                             <input type="hidden" name="_captcha" value="false">
@@ -142,54 +137,49 @@
                                 <label for="subject" data-i18n="contact_label_subject">BETREFF</label>
                                 <select id="subject" name="_subject">
                                     <option value="Musikproduktion / Beatmaking" data-i18n="contact_opt_prod">
-                                        Musikproduktion / Beatmaking</option>
-                                    <option value="Mixing & Mastering" data-i18n="contact_opt_mix">Mixing & Mastering
+                                        Musikproduktion / Beatmaking
                                     </option>
-                                    <option value="Video Sounddesign" data-i18n="contact_opt_video">Video Sounddesign
+                                    <option value="Mixing & Mastering" data-i18n="contact_opt_mix">
+                                        Mixing & Mastering
                                     </option>
-                                    <option value="Sonstige Anfrage" data-i18n="contact_opt_other">Sonstige Anfrage
+                                    <option value="Video Sounddesign" data-i18n="contact_opt_video">
+                                        Video Sounddesign
+                                    </option>
+                                    <option value="Sonstige Anfrage" data-i18n="contact_opt_other">
+                                        Sonstige Anfrage
                                     </option>
                                 </select>
                             </div>
 
                             <div class="input-group-gen">
                                 <label for="message" data-i18n="contact_label_msg">NACHRICHT</label>
-                                <textarea id="message" name="message" rows="5" required
-                                    placeholder="Beschreibe kurz dein Projekt..."></textarea>
+                                <textarea id="message" name="message" rows="5" required placeholder="Beschreibe kurz dein Projekt..."></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-gen" data-i18n="contact_btn_send"
-                                style="margin-top:20px;">
+                            <button type="submit" class="btn-submit-gold" data-i18n="contact_btn_send">
                                 NACHRICHT SENDEN
                             </button>
 
-                            <p
-                                style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: rgba(230,230,230,0.5);">
-                                By sending this message, you agree to our <a href="privacy.html"
-                                    style="color: var(--gold); text-decoration: none;">Privacy Policy</a>.
+                            <p style="text-align: center; margin-top: 15px; font-size: 0.75rem; color: #94a3b8;">
+                                Mit dem Absenden erklärst du dich mit unserer <a href="privacy.html" style="color: var(--gold); text-decoration: underline;">Datenschutzerklärung</a> einverstanden.
                             </p>
                         </form>
                     </div>
                 </div>
 
                 <!-- Google Play Data Safety: Account Deletion Notice -->
-                <div
-                    style="margin-top: 40px; padding: 25px 30px; border: 1px solid rgba(197, 165, 90, 0.3); border-radius: 12px; background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(8px);">
-                    <h3
-                        style="font-family: 'Syncopate', sans-serif; color: #C5A55A; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 12px;">
+                <div style="margin-top: 36px; padding: 22px 24px; border: 1.5px solid rgba(163, 143, 90, 0.28); border-radius: 8px; background: rgba(16, 18, 24, 0.88); backdrop-filter: blur(12px);">
+                    <h3 style="font-family: 'Segoe UI Historic', sans-serif; color: var(--gold-light); font-size: 0.92rem; letter-spacing: 2px; margin-bottom: 8px;">
                         🔐 DATENSCHUTZ & KONTO-LÖSCHUNG
                     </h3>
-                    <p style="color: rgba(230, 230, 230, 0.85); font-size: 0.9rem; line-height: 1.7;">
-                        Möchten Sie Ihr Konto oder Ihre Daten aus der Golden Mirror Studio App löschen lassen?
-                        Schreiben Sie uns einfach eine Nachricht über dieses Formular oder direkt an
-                        <a href="mailto:vir2ose@gmail.com"
-                            style="color: #C5A55A; text-decoration: none; border-bottom: 1px solid rgba(197, 165, 90, 0.4);">vir2ose@gmail.com</a>.
-                        Wir werden Ihre Anfrage umgehend bearbeiten.
+                    <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                        Möchtest du dein Konto oder deine Daten aus der Mobile Studio App löschen lassen? Schreibe uns einfach eine Nachricht über dieses Formular oder direkt an 
+                        <a href="mailto:vir2ose@gmail.com" style="color: var(--gold); text-decoration: underline;">vir2ose@gmail.com</a>. Wir bearbeiten deine Anfrage umgehend.
                     </p>
                 </div>
 
-                <div style="text-align: center; margin-top: 60px;">
-                    <a href="index.html" class="btn btn-secondary" data-i18n="nav_studio">BACK TO STUDIO</a>
+                <div style="text-align: center; margin-top: 50px;">
+                    <a href="index.html" class="btn-back-studio" data-i18n="nav_studio">ZURÜCK ZUM STUDIO</a>
                 </div>
             </div>
         </section>
@@ -197,13 +187,13 @@
 
     <footer class="site-footer">
         <p>
-            <span data-i18n="footer_copyright">© Waldemar Krucinski Hannover 2026</span>
+            <span data-i18n="footer_copyright">© Waldemar Krucinski 2026 | HOFA College Diploma & IHK Mediengestalter Bild & Ton</span>
             <span class="footer-sep">|</span>
             <a href="privacy.html" class="footer-link" data-i18n="footer_privacy">Datenschutz & Impressum</a>
         </p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2026.9"></script>
 </body>
 
 </html>

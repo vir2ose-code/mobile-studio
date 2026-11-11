@@ -1409,4 +1409,46 @@ startxref
         document.addEventListener('touchstart', unlockAudio);
     });
 
+    // ──────────────── Sound Portfolio Real Audio Player ────────────────
+    let currentPortfolioCard = null;
+    let portfolioAudioEl = null;
+
+    window.playPortfolioSample = function (path, card) {
+        if (!portfolioAudioEl) {
+            portfolioAudioEl = document.getElementById('preview-audio');
+            if (!portfolioAudioEl) {
+                portfolioAudioEl = new Audio();
+                portfolioAudioEl.id = 'preview-audio';
+                document.body.appendChild(portfolioAudioEl);
+            }
+        }
+
+        // If clicking the active playing card, pause and stop animation
+        if (currentPortfolioCard === card && !portfolioAudioEl.paused) {
+            portfolioAudioEl.pause();
+            card.classList.remove('playing');
+            return;
+        }
+
+        // Reset previous playing card
+        if (currentPortfolioCard && currentPortfolioCard !== card) {
+            currentPortfolioCard.classList.remove('playing');
+        }
+
+        portfolioAudioEl.pause();
+        portfolioAudioEl.src = path;
+        currentPortfolioCard = card;
+        card.classList.add('playing');
+
+        portfolioAudioEl.play().catch(err => {
+            console.warn('Playback error for', path, err);
+            card.classList.remove('playing');
+        });
+
+        portfolioAudioEl.onended = function () {
+            card.classList.remove('playing');
+            currentPortfolioCard = null;
+        };
+    };
+
 })();
