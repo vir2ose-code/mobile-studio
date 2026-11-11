@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.10">
+    <link rel="stylesheet" href="style.css?v=2026.11">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -216,8 +216,8 @@
                                 <div class="vu-led green"></div>
                             </div>
                         </div>
-                        <div class="master-fader-wrap" title="Master Volume Fader">
-                            <input type="range" id="mixer-master-slider" class="mixer-v-fader master-v-fader" orient="vertical" min="0" max="100" value="85" oninput="setMasterVolume(this.value)">
+                        <div class="master-fader-wrap" title="Master Volume Fader (Stereo-Summe)">
+                            <input type="range" id="mixer-master-slider" class="mixer-v-fader master-v-fader" orient="vertical" min="0" max="100" value="85" oninput="setMasterVolume(this.value)" onchange="setMasterVolume(this.value)">
                         </div>
                     </div>
                 </div>
@@ -477,7 +477,7 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="script.js?v=2026.10" defer></script>
+    <script src="script.js?v=2026.11" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

@@ -179,6 +179,7 @@
     let bus2Gain = null;
     let bus3Gain = null;
     let sph3rePanner = null;
+    let masterVolume = 0.85; // Global Master Volume
     const trackVolumes = Array(10).fill(0.85); // Channel faders (Screen 4)
 
     function getAudioContext() {
@@ -186,9 +187,9 @@
             const AudioContextClass = window.AudioContext || window.webkitAudioContext;
             audioCtx = new AudioContextClass();
 
-            // Master Gain
+            // Master Gain (Controlled in Real-Time by Stereo-Summe Fader)
             masterGain = audioCtx.createGain();
-            masterGain.gain.value = 0.85;
+            masterGain.gain.setValueAtTime(masterVolume, audioCtx.currentTime);
 
             // Stereo VU-Meter Analyser Node
             analyserNode = audioCtx.createAnalyser();
@@ -522,9 +523,16 @@
     };
 
     window.setMasterVolume = function (val) {
-        const vol = (parseInt(val, 10) || 85) / 100;
-        if (masterGain) {
-            masterGain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        const num = parseFloat(val);
+        masterVolume = isNaN(num) ? 0.85 : Math.max(0, Math.min(1.0, num / 100.0));
+        
+        if (audioCtx && masterGain) {
+            try {
+                masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+                masterGain.gain.linearRampToValueAtTime(masterVolume, audioCtx.currentTime + 0.02);
+            } catch (e) {
+                masterGain.gain.setValueAtTime(masterVolume, audioCtx.currentTime);
+            }
         }
     };
 
@@ -1375,6 +1383,18 @@ startxref
         renderMixerFaders();
         loadAllKitSamples();
         startVuMeterLoop();
+
+        // Stereo-Summe Master Fader Listener
+        const masterFader = document.getElementById('mixer-master-slider');
+        if (masterFader) {
+            masterFader.value = Math.round(masterVolume * 100);
+            masterFader.addEventListener('input', (e) => {
+                window.setMasterVolume(e.target.value);
+            });
+            masterFader.addEventListener('change', (e) => {
+                window.setMasterVolume(e.target.value);
+            });
+        }
 
         // Restore In-Page Lyrics from localStorage
         const inpageInput = document.getElementById('inpage-lyrics-input');

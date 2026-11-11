@@ -606,51 +606,7 @@ body.mobile-studio-landing {
 
 /* Lyrics toggle button in rack */
 .btn-lyrics-toggle {
-    background: rgba(163, 143, 90, 0.12) !important;
-    border-color: rgba(163, 143, 90, 0.4) !important;
-    color: var(--gold-light) !important;
     margin-right: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-lyrics-toggle:hover {
-    background: rgba(163, 143, 90, 0.25) !important;
-    border-color: var(--gold) !important;
-    color: #fff !important;
-    box-shadow: 0 0 10px rgba(163, 143, 90, 0.3);
-}
-
-.btn-lyrics-toggle.is-active {
-    background: linear-gradient(180deg, #44321c 0%, #291d10 100%) !important;
-    border-color: var(--gold) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 12px rgba(163, 143, 90, 0.5);
-}
-
-/* Equalizer / Mixer button in rack header (Screen 3) */
-.btn-eq {
-    background: rgba(163, 143, 90, 0.12) !important;
-    border: 1px solid rgba(163, 143, 90, 0.45) !important;
-    color: var(--gold-light) !important;
-    font-weight: 700 !important;
-    letter-spacing: 1px !important;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-eq:hover {
-    background: rgba(163, 143, 90, 0.25) !important;
-    border-color: var(--gold) !important;
-    color: #fff !important;
-    box-shadow: 0 0 10px rgba(163, 143, 90, 0.3);
-}
-
-.btn-eq.is-active {
-    background: linear-gradient(180deg, #44321c 0%, #291d10 100%) !important;
-    border-color: var(--gold) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 12px rgba(163, 143, 90, 0.5);
 }
 
 /* ──────────────── Chrome Fader Knob for SWING ──────────────── */
@@ -942,48 +898,68 @@ body.mobile-studio-landing {
     align-items: center;
 }
 
+/* ──────────────── Gold-Glänzend, Gebürstet & Poliert Transport Buttons (Screen 3 Style) ──────────────── */
 .rack-btn {
-    background: #14161c;
-    border: 1px solid var(--rack-border-soft);
-    color: #cbd5e1;
+    background: linear-gradient(180deg, #ecd38c 0%, #cca33b 50%, #9e7920 100%);
+    border: 1px solid rgba(255, 245, 190, 0.45);
+    color: #000000 !important;
     font-family: "Segoe UI Historic", "Segoe UI", sans-serif;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.8px;
-    padding: 4px 10px;
+    letter-spacing: 1.2px;
+    padding: 5px 12px;
     border-radius: 4px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7), 0 0 10px rgba(163, 143, 90, 0.35);
     transition: all 0.15s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.rack-btn .btn-symbol {
+    font-size: 0.76rem;
+    color: #000000 !important;
+    display: inline-block;
 }
 
 .rack-btn:hover {
-    border-color: var(--gold);
-    background: #1e222b;
+    background: linear-gradient(180deg, #fff2a3 0%, #dfb845 50%, #b38825 100%);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), 0 0 16px rgba(223, 184, 69, 0.6);
+    border-color: #fff6d6;
+    color: #000000 !important;
 }
 
-.btn-play {
-    color: #00e676;
+.rack-btn:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
+
+/* PLAY button active / playing animation */
 .btn-play.is-playing {
-    background: rgba(0, 230, 118, 0.2);
-    border-color: #00e676;
-    box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+    background: linear-gradient(180deg, #ffffff 0%, #ffdf6d 40%, #e5a712 100%) !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 8px #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+    animation: goldPulse 1.2s infinite alternate;
 }
 
-.btn-stop {
-    color: #ff7700;
-}
-.btn-pause {
-    color: #00e5ff;
+@keyframes goldPulse {
+    0% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.7); }
+    100% { box-shadow: 0 0 22px rgba(255, 225, 90, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
 }
 
-.btn-loop.is-active {
-    background: rgba(163, 143, 90, 0.25);
-    border-color: var(--gold);
-    color: var(--gold-light);
+/* Toggle buttons (LOOP, EQUALIZER, LYRICS) active state */
+.btn-loop.is-active,
+.btn-eq.is-active,
+.btn-lyrics-toggle.is-active {
+    background: linear-gradient(180deg, #fff5be 0%, #e2b947 50%, #ad821a 100%) !important;
+    box-shadow: 0 0 14px rgba(223, 184, 69, 0.75), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+    border-color: #fff9db !important;
+    color: #000000 !important;
 }
 
 .rack-badge-group {
