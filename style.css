@@ -49,14 +49,15 @@
     -webkit-font-smoothing: antialiased;
 }
 
+/* ──────────────── Global Body: Clean Unlettered Background for Subpages ──────────────── */
 body.mobile-studio-body {
     background-color: var(--bg-dark);
-    background-image: url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp');
+    background-image: url('SMARTPHONE_TABLET_ASSETS/Background_Subpages_Clean.webp');
     background-image: image-set(
-        url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp') type('image/webp'),
-        url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.png') type('image/png')
+        url('SMARTPHONE_TABLET_ASSETS/Background_Subpages_Clean.webp') type('image/webp'),
+        url('SMARTPHONE_TABLET_ASSETS/Background_Subpages_Clean.png') type('image/png')
     );
-    background-position: center 46px; /* Vorlage nach unten versetzt: Logo & Artwork werden oben nie abgeschnitten */
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -66,6 +67,19 @@ body.mobile-studio-body {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+}
+
+/* ──────────────── Landing Page / Studio: Branded Artwork Background ──────────────── */
+body.mobile-studio-landing {
+    background-image: url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp');
+    background-image: image-set(
+        url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp') type('image/webp'),
+        url('SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.png') type('image/png')
+    );
+    background-position: center 46px; /* Vorlage nach unten versetzt: Logo & Artwork werden oben nie abgeschnitten */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 #mouse-light {
