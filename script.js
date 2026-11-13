@@ -89,6 +89,26 @@
                 el.innerHTML = translations[lang][key];
             }
         });
+
+        // Toggle multi-language section blocks (e.g. on privacy.html)
+        document.querySelectorAll('.privacy-content').forEach(block => {
+            if (block.classList.contains(`lang-${lang}`)) {
+                block.style.display = 'block';
+            } else {
+                block.style.display = 'none';
+            }
+        });
+
+        // Toggle active state for language pills (Screen 4 style)
+        document.querySelectorAll('.lang-pill').forEach(pill => {
+            const pillLang = pill.getAttribute('data-lang');
+            if (pillLang === lang) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
+        });
+
         localStorage.setItem('vir2ose_lang', lang);
     };
 
@@ -1947,8 +1967,8 @@ startxref
             });
         }
 
-        const savedLang = localStorage.getItem('vir2ose_lang');
-        if (savedLang && translations[savedLang]) {
+        const savedLang = localStorage.getItem('vir2ose_lang') || 'de';
+        if (translations[savedLang]) {
             window.setLanguage(savedLang);
         }
 
