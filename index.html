@@ -11,11 +11,43 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11g">
+    <link rel="stylesheet" href="style.css?v=2026.11h">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
     <div id="mouse-light"></div>
+
+    <!-- ──────────────── SUBTILER QUERFORMAT-HINWEIS (SMARTPHONE / TABLET) ──────────────── -->
+    <div id="rotate-device-overlay" class="rotate-device-overlay" style="display: none;">
+        <div class="rotate-card glass-panel-generator">
+            <div class="rotate-visual-box">
+                <div class="rotate-phone-frame">
+                    <div class="phone-speaker"></div>
+                    <div class="phone-screen-display">
+                        <div class="mini-pads-row">
+                            <span class="m-pad pad-1"></span>
+                            <span class="m-pad pad-2"></span>
+                            <span class="m-pad pad-3"></span>
+                            <span class="m-pad pad-4"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rotate-orbit-arrow">↺</div>
+            </div>
+
+            <div class="rotate-text-wrap">
+                <span class="rotate-gold-badge">PRO AUDIO EXPERIENCE</span>
+                <h3 class="rotate-title">BEATCLOUD IM QUERFORMAT</h3>
+                <p class="rotate-desc">Für die vollen 16 Step-Pads, 10 Kanalzüge und das Master-Mischpult bitte das Smartphone ins <strong>Querformat drehen</strong>.</p>
+            </div>
+
+            <div class="rotate-actions">
+                <button class="btn-rotate-dismiss" onclick="dismissRotateOverlay()">
+                    Trotzdem im Hochformat nutzen →
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Lyrics Notepad Overlay -->
     <div id="lyrics-overlay" class="lyrics-overlay">
@@ -393,8 +425,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11g" defer></script>
-    <script src="script.js?v=2026.11g" defer></script>
+    <script src="rec_buffer.js?v=2026.11h" defer></script>
+    <script src="script.js?v=2026.11h" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

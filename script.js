@@ -1972,6 +1972,13 @@ startxref
             window.setLanguage(savedLang);
         }
 
+        // Initialize and listen for Landscape/Portrait Orientation
+        checkOrientationHint();
+        window.addEventListener('resize', checkOrientationHint);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(checkOrientationHint, 150);
+        });
+
         // Global unlock AudioContext on first click or touch
         const unlockAudio = () => {
             getAudioContext();
@@ -1981,6 +1988,53 @@ startxref
         document.addEventListener('click', unlockAudio);
         document.addEventListener('touchstart', unlockAudio);
     });
+
+    // ──────────────── Landscape Rotation Hint (Smartphones & Tablets) ────────────────
+    function checkOrientationHint() {
+        const overlay = document.getElementById('rotate-device-overlay');
+        if (!overlay) return;
+
+        // Is portrait mode? (Height > Width)
+        const isPortrait = window.innerHeight > window.innerWidth;
+        // On mobile/tablet or narrow browser window
+        const isMobileOrNarrow = window.innerWidth <= 960 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        const isDismissed = sessionStorage.getItem('vir2ose_dismiss_rotate') === 'true';
+
+        if (isPortrait && isMobileOrNarrow && !isDismissed) {
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.classList.add('is-visible');
+            }, 30);
+        } else {
+            overlay.classList.remove('is-visible');
+            setTimeout(() => {
+                if (!overlay.classList.contains('is-visible')) {
+                    overlay.style.display = 'none';
+                }
+            }, 350);
+        }
+    }
+
+    window.dismissRotateOverlay = function () {
+        const overlay = document.getElementById('rotate-device-overlay');
+        if (overlay) {
+            overlay.classList.remove('is-visible');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 350);
+        }
+        sessionStorage.setItem('vir2ose_dismiss_rotate', 'true');
+    };
+
+    window.previewRotateOverlay = function () {
+        const overlay = document.getElementById('rotate-device-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.classList.add('is-visible');
+            }, 30);
+        }
+    };
 
     // ──────────────── Sound Portfolio: Auto-Play in V-Player ────────────────
     window.playPortfolioSample = function (path, card) {
