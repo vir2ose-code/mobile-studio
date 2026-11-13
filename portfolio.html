@@ -9,7 +9,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#07070a">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11">
+    <link rel="stylesheet" href="style.css?v=2026.11e">
 </head>
 
 <body class="mobile-studio-body">
@@ -41,9 +41,11 @@
         </div>
         <nav class="drawer-nav">
             <a href="index.html" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
-            <a href="portfolio.html" data-i18n="nav_portfolio">SOUND PORTFOLIO</a>
+            <a href="player.html" data-i18n="nav_player">V-PLAYER</a>
+            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
+            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
-            <a href="about.html" data-i18n="nav_about">ÜBER MICH</a>
+            <a href="about.html" data-i18n="nav_about">ABOUT</a>
             <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
         </nav>
     </div>
@@ -255,7 +257,40 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 50px;">
+                <!-- Dedicated LYRICS Trigger Button directly under Portfolio Samples (Screen 3) -->
+                <div class="portfolio-lyrics-wrap" style="display: flex; justify-content: center; margin-top: 40px; margin-bottom: 12px;">
+                    <button id="btn-open-lyrics" class="rack-btn btn-external-lyrics" onclick="toggleLyricsMode()" title="Lyrics-Notizblock direkt im Sound Portfolio öffnen">
+                        <svg class="rack-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> LYRICS
+                    </button>
+                </div>
+
+                <!-- ──────────────── In-Page LYRICS Glass Notepad (Unfolds Under Portfolio) ──────────────── -->
+                <section class="lyrics-card-section" id="lyrics-section" style="margin: 0 auto 30px;">
+                    <div class="lyrics-glass-box">
+                        <div class="lyrics-header-row">
+                            <div class="lyrics-badge">
+                                <span class="lyrics-title">LYRICS & NOTIZEN</span>
+                                <span class="lyrics-pencil">✎</span>
+                            </div>
+                            <button class="btn-close-lyrics" onclick="toggleLyricsMode()" title="Lyrics schließen">✕</button>
+                        </div>
+                        <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Schreibe deine Songtexte & Ideen direkt beim Hören..." spellcheck="false"></textarea>
+                        <div class="lyrics-toolbar-row">
+                            <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
+                                <span>📋</span> <span data-i18n="lyrics_copy">Copy</span>
+                            </button>
+                            <button class="btn-lyrics-tool btn-pdf-tool" onclick="downloadLyricsPdf()" title="Als PDF speichern & herunterladen">
+                                <span>📄</span> <span data-i18n="lyrics_save_pdf">Save (PDF)</span>
+                            </button>
+                            <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
+                                <span>✕</span> <span data-i18n="lyrics_clear">Clear</span>
+                            </button>
+                            <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div style="text-align: center; margin-top: 20px; margin-bottom: 40px;">
                     <a href="index.html" class="btn-back-studio" data-i18n="nav_studio">ZURÜCK ZUM STUDIO</a>
                 </div>
             </div>
@@ -270,7 +305,7 @@
         </p>
     </footer>
 
-    <script src="script.js?v=2026.11"></script>
+    <script src="script.js?v=2026.11e"></script>
 </body>
 
 </html>

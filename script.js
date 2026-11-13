@@ -11,8 +11,7 @@
     const translations = {
         'de': {
             'nav_studio': 'STUDIO & BEATCLOUD',
-            'nav_sph3re': 'V-SPH3RE 3D ENGINE',
-            'nav_chopper': 'V-CHOPPER SLICER',
+            'nav_player': 'V-PLAYER',
             'nav_lyrics': 'LYRICS & NOTIZEN',
             'nav_services': 'SERVICES',
             'nav_about': 'ABOUT',
@@ -28,8 +27,7 @@
         },
         'en': {
             'nav_studio': 'STUDIO & BEATCLOUD',
-            'nav_sph3re': 'V-SPH3RE 3D ENGINE',
-            'nav_chopper': 'V-CHOPPER SLICER',
+            'nav_player': 'V-PLAYER',
             'nav_lyrics': 'LYRICS & NOTES',
             'nav_services': 'SERVICES',
             'nav_about': 'ABOUT',
@@ -45,8 +43,7 @@
         },
         'pl': {
             'nav_studio': 'STUDIO & BEATCLOUD',
-            'nav_sph3re': 'SILNIK V-SPH3RE 3D',
-            'nav_chopper': 'V-CHOPPER SLICER',
+            'nav_player': 'V-PLAYER',
             'nav_lyrics': 'TEKSTY I NOTATKI',
             'nav_services': 'USŁUGI',
             'nav_about': 'O NAS',
@@ -62,8 +59,7 @@
         },
         'es': {
             'nav_studio': 'ESTUDIO & BEATCLOUD',
-            'nav_sph3re': 'MOTOR 3D V-SPH3RE',
-            'nav_chopper': 'V-CHOPPER SLICER',
+            'nav_player': 'V-PLAYER',
             'nav_lyrics': 'LETRAS Y NOTAS',
             'nav_services': 'SERVICIOS',
             'nav_about': 'SOBRE MÍ',

@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11d">
+    <link rel="stylesheet" href="style.css?v=2026.11e">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -42,12 +42,11 @@
         </div>
         <nav class="drawer-nav">
             <a href="#sequencer" onclick="toggleDrawer()" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
-            <a href="javascript:void(0)" onclick="openSph3reModal(); toggleDrawer();" data-i18n="nav_sph3re">V-SPH3RE 3D ENGINE</a>
-            <a href="javascript:void(0)" onclick="openChopperModal(); toggleDrawer();" data-i18n="nav_chopper">V-CHOPPER SLICER</a>
+            <a href="player.html" data-i18n="nav_player">V-PLAYER</a>
             <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
+            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
             <a href="about.html" data-i18n="nav_about">ABOUT</a>
-            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
         </nav>
     </div>
@@ -309,215 +308,6 @@
 
     </main>
 
-    <!-- ──────────────── Modal: V-SPH3RE 3D Immersive Audio Engine ──────────────── -->
-    <div id="sph3re-modal" class="studio-modal">
-        <div class="modal-backdrop" onclick="closeSph3reModal()"></div>
-        <div class="modal-window sph3re-window">
-            <div class="modal-header">
-                <div class="modal-title-wrap">
-                    <img src="NEUE_ASSETS_26/V_logo.png" alt="logo" class="modal-mini-logo">
-                    <div>
-                        <h2>V-SPH3RE | 3D Immersive Audio Engine</h2>
-                        <p class="modal-subtitle">V-SPH3RE - Binaural & Multichannel Core</p>
-                    </div>
-                </div>
-                <button class="btn-close-modal" onclick="closeSph3reModal()">✕</button>
-            </div>
-
-            <div class="sph3re-top-toolbar">
-                <div class="format-buttons">
-                    <button class="btn-format" onclick="setSph3reMode('7.1.4')">7.1.4 IMMERSIVE</button>
-                    <button class="btn-format" onclick="setSph3reMode('5.1')">5.1 SURROUND</button>
-                    <button class="btn-format is-active" onclick="setSph3reMode('binaural')">BINAURAL 3D</button>
-                </div>
-
-                <div class="motion-controls">
-                    <select id="sph3re-motion-type" class="rack-select" onchange="setMotionType(this.value)">
-                        <option value="static">[ OFF / Static ]</option>
-                        <option value="circle_cw">Circle CW</option>
-                        <option value="circle_ccw">Circle CCW</option>
-                        <option value="figure_8">Figure 8</option>
-                        <option value="pendulum">Pendulum</option>
-                    </select>
-
-                    <select id="sph3re-motion-speed" class="rack-select" onchange="setMotionSpeed(this.value)">
-                        <option value="0.5">1/2 Bar</option>
-                        <option value="1" selected>1 Bar</option>
-                        <option value="2">2 Bars</option>
-                        <option value="4">4 Bars</option>
-                    </select>
-
-                    <button id="btn-auto-motion" class="btn-format" onclick="toggleAutoMotion()">
-                        AUTO MOTION
-                    </button>
-                </div>
-            </div>
-
-            <!-- Radar & Controls Core -->
-            <div class="sph3re-core-stage">
-                
-                <!-- Radar Polar Grid -->
-                <div class="radar-container" id="sph3re-radar">
-                    <div class="radar-circle radar-r3"></div>
-                    <div class="radar-circle radar-r2"></div>
-                    <div class="radar-circle radar-r1"></div>
-                    <div class="radar-axis axis-x"></div>
-                    <div class="radar-axis axis-y"></div>
-
-                    <!-- Labels -->
-                    <span class="radar-label label-front">0° FRONT (3.0m)</span>
-                    <span class="radar-label label-left">-90° L</span>
-                    <span class="radar-label label-right">+90° R</span>
-                    <span class="radar-label label-rear">180° REAR</span>
-
-                    <!-- Golden Head Center Silhouette -->
-                    <img src="NEUE_ASSETS_26/golden_head.png" alt="Listener Head" class="radar-listener-head">
-
-                    <!-- Interactive Sound Source Puck -->
-                    <div id="sph3re-puck" class="radar-sound-puck" style="transform: translate(0px, -65px);">
-                        <span class="puck-glow"></span>
-                        <span class="puck-dot"></span>
-                        <span class="puck-tag">BUS 1</span>
-                    </div>
-                </div>
-
-                <!-- Sliders & Compass Side Panel -->
-                <div class="sph3re-side-controls">
-                    
-                    <!-- Azimuth 360 Compass Dial -->
-                    <div class="compass-widget">
-                        <div class="compass-title">AZIMUTH (360° COMPASS)</div>
-                        <div class="compass-dial" id="compass-dial">
-                            <div class="compass-needle" id="compass-needle"></div>
-                            <span class="compass-n">0°</span>
-                            <span class="compass-e">R</span>
-                            <span class="compass-s">180°</span>
-                            <span class="compass-w">L</span>
-                        </div>
-                        <div class="compass-readout" id="compass-readout">0.0°</div>
-                    </div>
-
-                    <!-- 3 Vertical Faders -->
-                    <div class="faders-row">
-                        <div class="fader-col">
-                            <span class="fader-label" style="color: #a38f5a;">ELEVATION (Z)</span>
-                            <input type="range" id="fader-elevation" min="-90" max="90" value="0" class="vertical-slider" oninput="updateElevation(this.value)">
-                            <span class="fader-val" id="val-elevation">0.0°</span>
-                        </div>
-                        <div class="fader-col">
-                            <span class="fader-label" style="color: #00e676;">ROOM SIZE</span>
-                            <input type="range" id="fader-room" min="50" max="300" value="100" class="vertical-slider" oninput="updateRoomSize(this.value)">
-                            <span class="fader-val" id="val-room">1.00x</span>
-                        </div>
-                        <div class="fader-col">
-                            <span class="fader-label" style="color: #b388ff;">3D SPREAD</span>
-                            <input type="range" id="fader-spread" min="0" max="100" value="100" class="vertical-slider" oninput="updateSpread(this.value)">
-                            <span class="fader-val" id="val-spread">100%</span>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Bottom Parameter Readout Bar -->
-            <div class="sph3re-readout-bar">
-                <div class="param-item">
-                    <span class="p-title">AZIMUTH</span>
-                    <span class="p-val" id="readout-azimuth">0.0° FRONT</span>
-                </div>
-                <div class="param-item">
-                    <span class="p-title">ELEVATION (Z)</span>
-                    <span class="p-val" id="readout-elevation">+0.0°</span>
-                </div>
-                <div class="param-item">
-                    <span class="p-title">DISTANCE</span>
-                    <span class="p-val" id="readout-distance">1.00 m</span>
-                </div>
-                <div class="param-item">
-                    <span class="p-title">ROOM SIZE</span>
-                    <span class="p-val" id="readout-room">1.00x</span>
-                </div>
-                <div class="param-item">
-                    <span class="p-title">WOODWORTH ITD</span>
-                    <span class="p-val" id="readout-itd">0 µs</span>
-                </div>
-                <div class="param-item">
-                    <span class="p-title">HEAD SHADOW ILD</span>
-                    <span class="p-val" id="readout-ild">0.0 dB</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ──────────────── Modal: V-CHOPPER Sample & Transient Slicer ──────────────── -->
-    <div id="chopper-modal" class="studio-modal">
-        <div class="modal-backdrop" onclick="closeChopperModal()"></div>
-        <div class="modal-window chopper-window">
-            <div class="modal-header">
-                <div class="modal-title-wrap">
-                    <img src="NEUE_ASSETS_26/V_logo.png" alt="logo" class="modal-mini-logo">
-                    <h2 class="chopper-brand-title">V-CHOPPER</h2>
-                </div>
-                <button class="btn-close-modal" onclick="closeChopperModal()">✕</button>
-            </div>
-
-            <div class="chopper-toolbar">
-                <button class="btn-rack-action" onclick="chopperRandomize()">RANDOMIZER</button>
-                <button class="btn-rack-action" onclick="chopperRhythmize()">RHYTHMIZER</button>
-                <select id="chopper-grid" class="rack-select" onchange="chopperSetGrid(this.value)">
-                    <option value="4">1 / 4</option>
-                    <option value="8" selected>1 / 8</option>
-                    <option value="16">1 / 16</option>
-                    <option value="32">1 / 32</option>
-                </select>
-                <button class="btn-rack-action is-active" onclick="chopperSlice()">SLICE</button>
-                <button class="btn-rack-action" onclick="chopperSnap()">SNAP</button>
-                <button class="btn-rack-action" onclick="chopperTransient()">TRANSIENT</button>
-            </div>
-
-            <!-- Waveform Canvas Area with 8 Transient Slices -->
-            <div class="chopper-wave-container">
-                <canvas id="chopper-canvas" width="800" height="180"></canvas>
-                <div class="slice-play-overlay" id="slice-play-btn" onclick="playCurrentSlice()">
-                    <span class="play-icon">▶</span>
-                </div>
-            </div>
-
-            <!-- Pitch Slider & 3D Mapping -->
-            <div class="chopper-middle-controls">
-                <div class="pitch-control-wrap">
-                    <div class="pitch-range-labels">
-                        <span>-12</span>
-                        <span class="pitch-center">0</span>
-                        <span>+12</span>
-                    </div>
-                    <input type="range" id="chopper-pitch" min="-12" max="12" step="0.1" value="0" class="rack-range" oninput="updateChopperPitch(this.value)">
-                    <div class="pitch-readout" id="chopper-pitch-val">PITCH: 0.0 st (1.00x)</div>
-                </div>
-
-                <div class="chopper-routing-wrap">
-                    <button class="btn-gold-action" onclick="mapSliceTo3D()">3D MAPPING</button>
-                    <select id="chopper-stereo-bed" class="rack-select">
-                        <option value="stereo">STEREO BED L / R</option>
-                        <option value="mono_l">MONO LEFT</option>
-                        <option value="mono_r">MONO RIGHT</option>
-                        <option value="binaural">3D BINAURAL SPH3RE</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Bottom Actions -->
-            <div class="chopper-bottom-bar">
-                <button class="btn-sub-tool" onclick="chopperPitchShaper()">PITCH SHAPER</button>
-                <button class="btn-sub-tool" onclick="chopperTimeShaper()">TIME SHAPER</button>
-                <button class="btn-sub-tool" onclick="chopperPresets()">PRESETS</button>
-                <button class="btn-gold-action" style="margin-left: auto;" onclick="sendSliceToSequencer()">SEND TO STEP SEQUENCER ➔</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="site-footer">
         <p>
@@ -528,7 +318,7 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="script.js?v=2026.11d" defer></script>
+    <script src="script.js?v=2026.11e" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

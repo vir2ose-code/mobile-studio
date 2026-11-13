@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-PLAYER | VIR2OSE HIGH-END AUDIO ENGINE</title>
+    <link rel="icon" type="image/png" href="NEUE_ASSETS_26/V_logo.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#07070a">
+    <meta name="description"
+        content="VIR2OSE High-End Audio Engine - Professioneller Offline-Player für Beats, Loops, Sounddesign und Tracks von vir2ose sound.">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="style.css?v=2026.11e">
+</head>
+
+<body class="mobile-studio-body player-page-body">
+    <div id="mouse-light"></div>
+
+    <!-- Hidden Native Audio Element & File Inputs -->
+    <audio id="main-audio" preload="auto"></audio>
+    <input type="file" id="file-input" multiple accept="audio/*,.mp3,.wav,.flac,.ogg,.m4a,.aac" style="display: none;">
+    <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
+
+    <!-- Lyrics Notepad Overlay -->
+    <div id="lyrics-overlay" class="lyrics-overlay">
+        <div class="lyrics-notepad glass-panel-generator">
+            <button class="close-notepad" onclick="toggleNotepad()" aria-label="Close Notepad">×</button>
+            <div class="notepad-header">
+                <span class="animated-pencil">✎</span>
+                <span class="notepad-hint" data-i18n="note_hint">Schreibe deine neuen Lyrics...</span>
+            </div>
+            <textarea id="lyrics-text" class="lyrics-textarea" placeholder="..." spellcheck="false"></textarea>
+            <div class="notepad-footer">
+                <button class="btn btn-outline" onclick="downloadLyrics()">
+                    <span data-i18n="note_btn_download">Als .txt Speichern</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Drawer -->
+    <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div id="nav-drawer" class="nav-drawer">
+        <div class="drawer-header">
+            <span class="close-drawer" onclick="toggleDrawer()">✕</span>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="player.html" class="active" data-i18n="nav_player">V-PLAYER</a>
+            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
+            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
+            <a href="services.html" data-i18n="nav_services">SERVICES</a>
+            <a href="about.html" data-i18n="nav_about">ABOUT</a>
+            <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
+        </nav>
+    </div>
+
+    <!-- Top Navigation Header -->
+    <header class="app-header" id="header">
+        <div class="header-main-row">
+            <div class="header-left">
+                <button class="hamburger-menu" onclick="toggleDrawer()" aria-label="Menü öffnen">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <div class="header-center">
+                <a href="index.html" class="logo-link">
+                    <span class="header-studio-name">VIR2OSE SOUND</span>
+                </a>
+            </div>
+
+            <div class="header-right">
+                <div class="language-switcher">
+                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
+                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
+                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')" title="Polski">
+                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')" title="Español">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="player-page-main">
+        <!-- ──────────────── Main V-PLAYER Card (Exact Screen 2 Layout) ──────────────── -->
+        <div class="player-card">
+            
+            <!-- Top Status Header & Action Bar -->
+            <div class="player-header">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>VIR2OSE HIGH-END AUDIO ENGINE</span>
+                </div>
+
+                <div class="header-actions">
+                    <button id="btn-add-files" class="gold-action-btn" title="Audiodateien öffnen">
+                        <span>🎵</span> + Dateien
+                    </button>
+                    <button id="btn-add-folder" class="gold-action-btn" title="Musikordner importieren">
+                        <span>📁</span> + Ordner
+                    </button>
+                    <button id="btn-demo-tracks" class="gold-action-btn" title="vir2ose Studio Tracks laden">
+                        <span>★</span> Demo
+                    </button>
+                    <button id="btn-clear-pl" class="gold-action-btn" title="Playlist leeren">
+                        <span>🗑</span>
+                    </button>
+                    <span id="track-counter" class="track-counter-pill">0 / 0</span>
+                </div>
+            </div>
+
+            <!-- Now Playing Section (Artwork, Title, Visualizer) -->
+            <div class="now-playing">
+                <div class="cover-wrapper">
+                    <img id="cover-img" src="SMARTPHONE_TABLET_ASSETS/Beatcloud_Emblem.png" alt="Cover Art" class="cover-art">
+                </div>
+
+                <div class="track-meta">
+                    <div id="current-title" class="track-title">KEIN TRACK GELADEN</div>
+                    <div id="current-artist" class="track-subtitle">Ziehe Audiodateien ins Fenster oder klicke auf <strong>+ Dateien</strong></div>
+                    
+                    <!-- Live Canvas FFT Visualizer -->
+                    <div class="visualizer-container">
+                        <canvas id="fft-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress / Scrubber Section -->
+            <div class="progress-section">
+                <div id="progress-container" class="progress-container" title="Klicke zum Spulen">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="time-row">
+                    <span id="current-time">0:00</span>
+                    <span id="total-duration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Controls Row (Volume, Transport Buttons, Master Play Button) -->
+            <div class="controls-row">
+                <!-- Volume Section -->
+                <div class="volume-group">
+                    <button id="mute-btn" class="vol-btn" title="Stummschalten">🔊</button>
+                    <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="0.85" title="Lautstärke">
+                </div>
+
+                <!-- Main Playback Controls -->
+                <div class="main-controls">
+                    <button id="shuffle-btn" class="ctrl-btn" title="Zufallswiedergabe (Shuffle)">🔀</button>
+                    <button id="prev-btn" class="ctrl-btn" title="Vorheriger Track (P)">⏮</button>
+                    
+                    <button id="play-btn" class="play-main-btn" title="Wiedergabe / Pause (Leertaste)">
+                        <span id="play-icon">▶</span>
+                    </button>
+                    
+                    <button id="next-btn" class="ctrl-btn" title="Nächster Track (N)">⏭</button>
+                    <button id="repeat-btn" class="ctrl-btn" title="Wiederholen">🔁</button>
+                </div>
+
+                <!-- Meta Stats Pill -->
+                <div id="meta-stats" class="meta-stats">
+                    0 Audio Tracks
+                </div>
+            </div>
+
+            <!-- Playlist Container -->
+            <div id="playlist" class="playlist-container">
+                <div id="empty-state" class="empty-playlist-msg">
+                    <span class="empty-icon">🎵</span>
+                    <p>Deine Playlist ist noch leer</p>
+                    <span>Ziehe MP3, WAV, FLAC oder M4A Dateien hierher oder klicke auf „+ Dateien“</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ──────────────── Dedicated LYRICS Trigger Button under Player (Screen 3) ──────────────── -->
+        <div class="sequencer-lyrics-trigger-wrap" style="margin-top: 36px; margin-bottom: 12px;">
+            <button id="btn-open-lyrics" class="rack-btn btn-external-lyrics" onclick="toggleLyricsMode()" title="Lyrics-Notizblock direkt beim Hören aufklappen">
+                <svg class="rack-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> LYRICS
+            </button>
+        </div>
+
+        <!-- ──────────────── In-Page LYRICS Glass Notepad (Unfolds Under Player) ──────────────── -->
+        <section class="lyrics-card-section" id="lyrics-section" style="margin: 0 auto 30px;">
+            <div class="lyrics-glass-box">
+                <div class="lyrics-header-row">
+                    <div class="lyrics-badge">
+                        <span class="lyrics-title">LYRICS & NOTIZEN</span>
+                        <span class="lyrics-pencil">✎</span>
+                    </div>
+                    <button class="btn-close-lyrics" onclick="toggleLyricsMode()" title="Lyrics schließen">✕</button>
+                </div>
+                <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Schreibe deine Songtexte & Ideen direkt beim Hören..." spellcheck="false"></textarea>
+                <div class="lyrics-toolbar-row">
+                    <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
+                        <span>📋</span> <span data-i18n="lyrics_copy">Copy</span>
+                    </button>
+                    <button class="btn-lyrics-tool btn-pdf-tool" onclick="downloadLyricsPdf()" title="Als PDF speichern & herunterladen">
+                        <span>📄</span> <span data-i18n="lyrics_save_pdf">Save (PDF)</span>
+                    </button>
+                    <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
+                        <span>✕</span> <span data-i18n="lyrics_clear">Clear</span>
+                    </button>
+                    <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to Studio Link -->
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 40px;">
+            <a href="index.html" class="btn-back-studio" data-i18n="nav_studio">ZURÜCK ZUM STUDIO</a>
+        </div>
+    </main>
+
+    <!-- Drag & Drop Full Window Overlay -->
+    <div id="drop-overlay" class="drop-overlay">
+        <span style="font-size: 3rem; color: #c7b584;">☁</span>
+        <h3>AUDIODATEIEN HIER ABLEGEN</h3>
+        <p>Dateien oder ganze Ordner werden sofort in die Playlist geladen</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>
+            <span>© Waldemar Krucinski 2026 | HOFA College Diploma & IHK Mediengestalter Bild & Ton</span>
+            <span class="footer-sep">|</span>
+            <a href="privacy.html" class="footer-link">Datenschutz & Impressum</a>
+        </p>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="script.js?v=2026.11e"></script>
+    <script src="player.js?v=2026.11e"></script>
+</body>
+
+</html>
