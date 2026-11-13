@@ -4101,6 +4101,27 @@ body.groovebox-mode .sequencer-matrix {
     color: #94a3b8;
 }
 
+.privacy-card-footer a {
+    color: #c7b584 !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.privacy-card-footer a:hover {
+    color: #f3e5ab !important;
+    text-shadow: 0 0 10px rgba(199, 181, 132, 0.6);
+}
+
+a[href^="mailto:"] {
+    color: #c7b584;
+}
+
+a[href^="mailto:"]:hover {
+    color: #f3e5ab;
+}
+
 @media (max-width: 640px) {
     .privacy-container-card {
         padding: 24px 18px;
