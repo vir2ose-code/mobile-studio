@@ -1515,7 +1515,7 @@ startxref
     // Toggle Lyrics Unfold UNDER Sequencer (Screen 3)
     window.toggleLyricsMode = function () {
         const lyricsSection = document.getElementById('lyrics-section');
-        const lyricsBtn = document.getElementById('btn-toggle-lyrics');
+        const lyricsBtn = document.getElementById('btn-open-lyrics') || document.getElementById('btn-toggle-lyrics');
         if (!lyricsSection) return;
 
         const isOpen = lyricsSection.classList.toggle('is-open');

@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11c">
+    <link rel="stylesheet" href="style.css?v=2026.11d">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -126,13 +126,10 @@
                     </div>
 
                     <div class="rack-badge-group">
-                        <button id="btn-toggle-lyrics" class="rack-btn btn-lyrics-toggle" onclick="toggleLyricsMode()" title="Lyrics unter dem Sequenzer aufklappen">
-                            <svg class="rack-btn-icon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> LYRICS
-                        </button>
-                        <img src="SMARTPHONE_TABLET_ASSETS/Logo_Kopfzeile.png" alt="vir2osesound" class="rack-badge-logo">
+                        <img src="SMARTPHONE_TABLET_ASSETS/Beatcloud_Emblem.png" alt="BEATCLOUD by vir2osesound" class="rack-badge-logo">
                         <div class="badge-text-col">
                             <span class="badge-main">BEATCLOUD</span>
-                            <span class="badge-author">by vir2osesound</span>
+                            <span class="badge-author"><span class="badge-by">by</span> <span class="badge-brand">vir2osesound</span></span>
                         </div>
                     </div>
                 </div>
@@ -277,6 +274,13 @@
             </div>
         </section>
 
+        <!-- ──────────────── Dedicated LYRICS Trigger Button under Sequencer (Screen 3) ──────────────── -->
+        <div class="sequencer-lyrics-trigger-wrap">
+            <button id="btn-open-lyrics" class="rack-btn btn-external-lyrics" onclick="toggleLyricsMode()" title="Lyrics-Notizblock direkt unter dem Sequenzer aufklappen">
+                <svg class="rack-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> LYRICS
+            </button>
+        </div>
+
         <!-- ──────────────── In-Page LYRICS Glass Notepad (Unfolds Under Sequencer) ──────────────── -->
         <section class="lyrics-card-section" id="lyrics-section">
             <div class="lyrics-glass-box">
@@ -300,11 +304,6 @@
                     </button>
                     <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
                 </div>
-            </div>
-        </section>
-                    <!-- Tracks rendered dynamically -->
-                </div>
-
             </div>
         </section>
 
@@ -529,7 +528,7 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="script.js?v=2026.11c" defer></script>
+    <script src="script.js?v=2026.11d" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
