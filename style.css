@@ -3507,3 +3507,374 @@ body.groovebox-mode .sequencer-matrix {
         text-align: center;
     }
 }
+
+/* ──────────────── REC BUFFER PILL ──────────────── */
+.rec-buffer-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    background: rgba(199, 181, 132, 0.12);
+    border: 1px solid rgba(199, 181, 132, 0.35);
+    border-radius: 12px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #c7b584;
+    white-space: nowrap;
+    cursor: default;
+    transition: all 0.25s ease;
+}
+
+.rec-buffer-pill:hover {
+    background: rgba(199, 181, 132, 0.22);
+    border-color: #c7b584;
+    box-shadow: 0 0 10px rgba(199, 181, 132, 0.3);
+}
+
+/* ──────────────── "Aufnahme sichern..." (V-REC Modal) ──────────────── */
+.rec-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 6, 8, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 16px;
+    animation: fadeInModal 0.25s ease-out forwards;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.rec-modal-card {
+    background: linear-gradient(160deg, #18191f 0%, #0e0f13 100%);
+    border: 1.5px solid rgba(199, 181, 132, 0.55);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(199, 181, 132, 0.25);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 520px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.rec-modal-header {
+    background: linear-gradient(180deg, #22232b 0%, #15161c 100%);
+    border-bottom: 1px solid rgba(199, 181, 132, 0.3);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rec-modal-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rec-modal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ff3333;
+    box-shadow: 0 0 10px #ff3333;
+}
+
+.rec-modal-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #c7b584;
+    margin: 0;
+}
+
+.rec-modal-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.rec-modal-close:hover {
+    color: #ff4444;
+}
+
+.rec-modal-body {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.rec-info-preview {
+    background: rgba(10, 11, 15, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rec-audio-player {
+    width: 100%;
+    height: 38px;
+    outline: none;
+}
+
+.rec-meta-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.rec-badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 0.68rem;
+    color: #cbd5e1;
+    letter-spacing: 0.5px;
+}
+
+.rec-badge-gold {
+    background: rgba(199, 181, 132, 0.15);
+    border-color: rgba(199, 181, 132, 0.4);
+    color: #c7b584;
+    font-weight: 700;
+}
+
+.rec-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rec-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.rec-input-name {
+    width: 100%;
+    background: #090a0d;
+    border: 1px solid rgba(199, 181, 132, 0.35);
+    border-radius: 6px;
+    padding: 9px 12px;
+    font-size: 0.85rem;
+    color: #f1f5f9;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.rec-input-name:focus {
+    border-color: #c7b584;
+    box-shadow: 0 0 12px rgba(199, 181, 132, 0.3);
+}
+
+.rec-format-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rec-format-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rec-format-pill {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 14px;
+    background: rgba(14, 16, 22, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rec-format-pill input[type="radio"] {
+    display: none;
+}
+
+.rec-format-pill.active {
+    background: rgba(199, 181, 132, 0.12);
+    border-color: #c7b584;
+    box-shadow: 0 0 15px rgba(199, 181, 132, 0.2);
+}
+
+.format-title {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #e2e8f0;
+    letter-spacing: 0.5px;
+}
+
+.rec-format-pill.active .format-title {
+    color: #c7b584;
+}
+
+.format-desc {
+    font-size: 0.68rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.rec-buffer-gauge-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(8, 9, 13, 0.8);
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rec-buffer-gauge-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #c7b584;
+    letter-spacing: 0.8px;
+}
+
+.rec-buffer-bar-track {
+    width: 100%;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rec-buffer-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c7b584 0%, #f3e5ab 100%);
+    box-shadow: 0 0 10px rgba(199, 181, 132, 0.6);
+    border-radius: 4px;
+    transition: width 0.35s ease;
+}
+
+.rec-modal-footer {
+    padding: 14px 20px 18px;
+    background: #0b0c10;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.rec-btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rec-btn-save {
+    background: linear-gradient(180deg, #dbca98 0%, #998755 100%);
+    color: #101114;
+    border: 1px solid #c7b584;
+    box-shadow: 0 4px 14px rgba(199, 181, 132, 0.35);
+}
+
+.rec-btn-save:hover {
+    background: linear-gradient(180deg, #ffedb5 0%, #b09c63 100%);
+    box-shadow: 0 0 18px rgba(199, 181, 132, 0.55);
+    transform: translateY(-1px);
+}
+
+.rec-btn-download {
+    background: rgba(30, 32, 40, 0.9);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.rec-btn-download:hover {
+    border-color: #c7b584;
+    color: #c7b584;
+}
+
+.rec-btn-discard {
+    background: transparent;
+    color: #94a3b8;
+    border: 1px solid transparent;
+}
+
+.rec-btn-discard:hover {
+    color: #ff4444;
+}
+
+/* ──────────────── VIR2OSE GLOBAL TOAST ──────────────── */
+.vir2ose-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(14, 15, 20, 0.96);
+    border: 1.5px solid #c7b584;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 25px rgba(199, 181, 132, 0.3);
+    border-radius: 30px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 10001;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.vir2ose-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.vir2ose-toast .toast-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    letter-spacing: 0.5px;
+}
+
+.vir2ose-toast .toast-action-btn {
+    background: linear-gradient(180deg, #dbca98 0%, #998755 100%);
+    color: #0b0c10;
+    border: none;
+    border-radius: 14px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.vir2ose-toast .toast-action-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(199, 181, 132, 0.6);
+}

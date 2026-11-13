@@ -479,6 +479,9 @@
     };
 
     window.sequencerStop = function () {
+        if (isRecording) {
+            stopAudioRecording();
+        }
         isPlaying = false;
         isPaused = false;
         clearInterval(timerID);
@@ -521,11 +524,293 @@
         }
     };
 
+    // ──────────────── Real Audio Recording Engine (V-REC) ────────────────
     let isRecording = false;
-    window.sequencerToggleRec = function () {
-        isRecording = !isRecording;
+    let recBuffersL = [];
+    let recBuffersR = [];
+    let recTotalSamples = 0;
+    let recStartTime = 0;
+    let recProcessorNode = null;
+    let currentRecBlob = null;
+    let currentRecDuration = 0;
+    let currentRecUrl = null;
+    let currentRecFormat = 'wav';
+    let recLoopCounter = 1;
+
+    function encodeWAV(buffersL, buffersR, sampleRate) {
+        const totalSamples = buffersL.reduce((acc, b) => acc + b.length, 0);
+        const numChannels = 2;
+        const bytesPerSample = 2; // 16-bit Linear PCM
+        const blockAlign = numChannels * bytesPerSample;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = totalSamples * blockAlign;
+        const headerSize = 44;
+        const totalSize = headerSize + dataSize;
+
+        const arrayBuffer = new ArrayBuffer(totalSize);
+        const view = new DataView(arrayBuffer);
+
+        function writeString(offset, str) {
+            for (let i = 0; i < str.length; i++) {
+                view.setUint8(offset + i, str.charCodeAt(i));
+            }
+        }
+
+        // RIFF chunk descriptor
+        writeString(0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(8, 'WAVE');
+
+        // "fmt " sub-chunk
+        writeString(12, 'fmt ');
+        view.setUint32(16, 16, true);          // 16 for PCM
+        view.setUint16(20, 1, true);           // Linear PCM
+        view.setUint16(22, numChannels, true); // Stereo (2 channels)
+        view.setUint32(24, sampleRate, true);  // 44100 / native
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, 16, true);          // 16-bit
+
+        // "data" sub-chunk
+        writeString(36, 'data');
+        view.setUint32(40, dataSize, true);
+
+        // Interleave Left & Right channel samples and convert Float32 to Int16
+        let offset = 44;
+        for (let i = 0; i < buffersL.length; i++) {
+            const left = buffersL[i];
+            const right = buffersR[i];
+            const len = left.length;
+            for (let j = 0; j < len; j++) {
+                let sL = Math.max(-1, Math.min(1, left[j]));
+                view.setInt16(offset, sL < 0 ? sL * 0x8000 : sL * 0x7FFF, true);
+                offset += 2;
+
+                let sR = Math.max(-1, Math.min(1, right[j]));
+                view.setInt16(offset, sR < 0 ? sR * 0x8000 : sR * 0x7FFF, true);
+                offset += 2;
+            }
+        }
+
+        return new Blob([arrayBuffer], { type: 'audio/wav' });
+    }
+
+    function startAudioRecording() {
+        const ctx = getAudioContext();
+        if (ctx.state === 'suspended') {
+            ctx.resume();
+        }
+
+        isRecording = true;
+        recBuffersL = [];
+        recBuffersR = [];
+        recTotalSamples = 0;
+        recStartTime = Date.now();
+
+        if (!recProcessorNode) {
+            recProcessorNode = ctx.createScriptProcessor(4096, 2, 2);
+            recProcessorNode.onaudioprocess = function (e) {
+                if (!isRecording) return;
+                const inL = e.inputBuffer.getChannelData(0);
+                const inR = e.inputBuffer.getChannelData(1);
+                recBuffersL.push(new Float32Array(inL));
+                recBuffersR.push(new Float32Array(inR));
+                recTotalSamples += inL.length;
+            };
+        }
+
+        analyserNode.connect(recProcessorNode);
+        recProcessorNode.connect(ctx.destination);
+
         const recBtn = document.getElementById('btn-rec');
-        if (recBtn) recBtn.classList.toggle('is-recording', isRecording);
+        if (recBtn) recBtn.classList.add('is-recording');
+
+        // If sequencer isn't playing yet, start it automatically
+        if (!isPlaying) {
+            window.sequencerPlay();
+        }
+    }
+
+    function stopAudioRecording() {
+        if (!isRecording) return;
+        isRecording = false;
+
+        const recBtn = document.getElementById('btn-rec');
+        if (recBtn) recBtn.classList.remove('is-recording');
+
+        if (recProcessorNode && analyserNode) {
+            try {
+                analyserNode.disconnect(recProcessorNode);
+                recProcessorNode.disconnect();
+            } catch (e) {}
+        }
+
+        const ctx = getAudioContext();
+        const sampleRate = ctx.sampleRate || 44100;
+        const durationSec = recTotalSamples / sampleRate;
+
+        if (recTotalSamples === 0 || durationSec < 0.25) {
+            console.log('Aufnahme war zu kurz zum Speichern.');
+            return;
+        }
+
+        currentRecDuration = durationSec;
+        currentRecBlob = encodeWAV(recBuffersL, recBuffersR, sampleRate);
+
+        if (currentRecUrl) {
+            URL.revokeObjectURL(currentRecUrl);
+        }
+        currentRecUrl = URL.createObjectURL(currentRecBlob);
+
+        // Open "Aufnahme sichern..." Modal
+        window.openRecSaveModal();
+    }
+
+    window.sequencerToggleRec = function () {
+        if (isRecording) {
+            stopAudioRecording();
+        } else {
+            startAudioRecording();
+        }
+    };
+
+    // ──────────────── "Aufnahme sichern..." Modal Controls ────────────────
+    window.openRecSaveModal = async function () {
+        const modal = document.getElementById('rec-save-modal');
+        if (!modal) return;
+
+        const audioPrev = document.getElementById('rec-preview-audio');
+        if (audioPrev && currentRecUrl) {
+            audioPrev.src = currentRecUrl;
+        }
+
+        const durBadge = document.getElementById('rec-duration-badge');
+        if (durBadge) {
+            const mins = Math.floor(currentRecDuration / 60);
+            const secs = Math.floor(currentRecDuration % 60);
+            durBadge.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        const sizeBadge = document.getElementById('rec-size-badge');
+        if (sizeBadge && currentRecBlob) {
+            const mb = (currentRecBlob.size / (1024 * 1024)).toFixed(2);
+            sizeBadge.textContent = `${mb} MB`;
+        }
+
+        const bpmBadge = document.getElementById('rec-bpm-badge');
+        if (bpmBadge) {
+            bpmBadge.textContent = `${bpm} BPM`;
+        }
+
+        const nameInput = document.getElementById('rec-track-name');
+        if (nameInput) {
+            nameInput.value = `Beatcloud_Loop_${bpm}BPM_${recLoopCounter++}`;
+        }
+
+        if (window.updateRecBufferUI) {
+            await window.updateRecBufferUI();
+        }
+
+        modal.style.display = 'flex';
+    };
+
+    window.closeRecSaveModal = function () {
+        const modal = document.getElementById('rec-save-modal');
+        if (modal) modal.style.display = 'none';
+        const audioPrev = document.getElementById('rec-preview-audio');
+        if (audioPrev) {
+            audioPrev.pause();
+            audioPrev.removeAttribute('src');
+        }
+    };
+
+    window.onRecFormatChange = function (fmt) {
+        currentRecFormat = fmt;
+        document.querySelectorAll('.rec-format-pill').forEach(pill => pill.classList.remove('active'));
+        const activePill = document.getElementById(`format-pill-${fmt}`);
+        if (activePill) activePill.classList.add('active');
+    };
+
+    window.confirmSaveRecording = async function () {
+        if (!currentRecBlob) {
+            window.closeRecSaveModal();
+            return;
+        }
+        const nameInput = document.getElementById('rec-track-name');
+        const trackTitle = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : `Beatcloud_Loop_${Date.now()}`;
+
+        if (window.saveToRecBuffer) {
+            const saved = await window.saveToRecBuffer({
+                title: trackTitle,
+                artist: 'vir2ose sound (Recorded)',
+                type: 'audio',
+                format: currentRecFormat,
+                duration: currentRecDuration,
+                blob: currentRecBlob,
+                size: currentRecBlob.size
+            });
+
+            if (saved) {
+                window.showToast(`Loop gesichert: "${trackTitle}" ✓`, 'Im V-Player anhören ▶', () => {
+                    window.location.href = 'player.html?autoPlay=true';
+                });
+            }
+        }
+        window.closeRecSaveModal();
+    };
+
+    window.downloadRecordingDirectly = function () {
+        if (!currentRecBlob) return;
+        const nameInput = document.getElementById('rec-track-name');
+        const trackTitle = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : `Beatcloud_Loop_${Date.now()}`;
+        const ext = currentRecFormat === 'mp3' ? 'mp3' : 'wav';
+
+        const a = document.createElement('a');
+        a.href = currentRecUrl;
+        a.download = `${trackTitle}.${ext}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        window.showToast(`Download gestartet: ${trackTitle}.${ext} ✓`);
+    };
+
+    window.discardRecording = function () {
+        window.closeRecSaveModal();
+        window.showToast('Aufnahme verworfen.');
+    };
+
+    // ──────────────── Toast Notification System ────────────────
+    window.showToast = function (msg, actionText, actionCallback) {
+        let toast = document.getElementById('vir2ose-global-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'vir2ose-global-toast';
+            toast.className = 'vir2ose-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = '';
+        const textSpan = document.createElement('span');
+        textSpan.className = 'toast-text';
+        textSpan.textContent = msg;
+        toast.appendChild(textSpan);
+
+        if (actionText && actionCallback) {
+            const actBtn = document.createElement('button');
+            actBtn.className = 'toast-action-btn';
+            actBtn.textContent = actionText;
+            actBtn.onclick = () => {
+                actionCallback();
+                toast.classList.remove('show');
+            };
+            toast.appendChild(actBtn);
+        }
+
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 5000);
     };
 
     window.sequencerClearAll = function () {
@@ -1267,6 +1552,18 @@ startxref
         a.download = `vir2ose_lyrics_${Date.now()}.pdf`;
         a.click();
         showLyricsStatus('PDF gespeichert ✓');
+
+        // Automatically store in 250 MB vault
+        if (window.saveToRecBuffer) {
+            window.saveToRecBuffer({
+                title: `Lyrics_${dateStr.replace(/[\/\.:\s]/g, '_')}`,
+                artist: 'vir2ose Lyrics',
+                type: 'pdf',
+                format: 'pdf',
+                blob: blob,
+                size: blob.size
+            });
+        }
     };
 
     window.clearInpageLyrics = function () {
@@ -1612,46 +1909,29 @@ startxref
         document.addEventListener('touchstart', unlockAudio);
     });
 
-    // ──────────────── Sound Portfolio Real Audio Player ────────────────
-    let currentPortfolioCard = null;
-    let portfolioAudioEl = null;
-
+    // ──────────────── Sound Portfolio: Auto-Play in V-Player ────────────────
     window.playPortfolioSample = function (path, card) {
-        if (!portfolioAudioEl) {
-            portfolioAudioEl = document.getElementById('preview-audio');
-            if (!portfolioAudioEl) {
-                portfolioAudioEl = new Audio();
-                portfolioAudioEl.id = 'preview-audio';
-                document.body.appendChild(portfolioAudioEl);
-            }
+        let title = 'Soundtrack';
+        let genre = 'Master Sound';
+        if (card) {
+            const titleEl = card.querySelector('.sample-name');
+            const genreEl = card.querySelector('.sample-genre');
+            if (titleEl) title = titleEl.innerText.trim();
+            if (genreEl) genre = genreEl.innerText.trim();
         }
 
-        // If clicking the active playing card, pause and stop animation
-        if (currentPortfolioCard === card && !portfolioAudioEl.paused) {
-            portfolioAudioEl.pause();
-            card.classList.remove('playing');
-            return;
-        }
-
-        // Reset previous playing card
-        if (currentPortfolioCard && currentPortfolioCard !== card) {
-            currentPortfolioCard.classList.remove('playing');
-        }
-
-        portfolioAudioEl.pause();
-        portfolioAudioEl.src = path;
-        currentPortfolioCard = card;
-        card.classList.add('playing');
-
-        portfolioAudioEl.play().catch(err => {
-            console.warn('Playback error for', path, err);
-            card.classList.remove('playing');
-        });
-
-        portfolioAudioEl.onended = function () {
-            card.classList.remove('playing');
-            currentPortfolioCard = null;
+        const launchPayload = {
+            title: title,
+            artist: `vir2ose (${genre})`,
+            url: path
         };
+
+        try {
+            localStorage.setItem('vir2ose_vplayer_launch', JSON.stringify(launchPayload));
+        } catch (e) {}
+
+        // Seamless handoff: Redirect directly to V-Player with audio ready and playing!
+        window.location.href = `player.html?title=${encodeURIComponent(title)}&artist=${encodeURIComponent('vir2ose (' + genre + ')')}&src=${encodeURIComponent(path)}`;
     };
 
 })();

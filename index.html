@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11e">
+    <link rel="stylesheet" href="style.css?v=2026.11f">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -130,6 +130,7 @@
                             <span class="badge-main">BEATCLOUD</span>
                             <span class="badge-author"><span class="badge-by">by</span> <span class="badge-brand">vir2osesound</span></span>
                         </div>
+                        <div class="rec-buffer-pill" title="250 MB Aufnahme-Puffer & Vault">REC: 0.0 / 250 MB</div>
                     </div>
                 </div>
 
@@ -306,6 +307,77 @@
             </div>
         </section>
 
+        <!-- ──────────────── REC SAVE MODAL ("Sichern...") ──────────────── -->
+        <div id="rec-save-modal" class="rec-modal-backdrop" style="display: none;">
+            <div class="rec-modal-card glass-panel-generator">
+                <div class="rec-modal-header">
+                    <div class="rec-modal-title-wrap">
+                        <span class="rec-modal-dot"></span>
+                        <h3 class="rec-modal-title">AUFNAHME SICHERN (V-REC)</h3>
+                    </div>
+                    <button class="rec-modal-close" onclick="closeRecSaveModal()" title="Schließen">✕</button>
+                </div>
+
+                <div class="rec-modal-body">
+                    <div class="rec-info-preview">
+                        <div class="rec-preview-wave">
+                            <audio id="rec-preview-audio" controls class="rec-audio-player"></audio>
+                        </div>
+                        <div class="rec-meta-badges">
+                            <span class="rec-badge" id="rec-duration-badge">00:00</span>
+                            <span class="rec-badge" id="rec-size-badge">0.0 MB</span>
+                            <span class="rec-badge rec-badge-gold" id="rec-bpm-badge">120 BPM</span>
+                            <span class="rec-badge">44.1 kHz Stereo</span>
+                        </div>
+                    </div>
+
+                    <div class="rec-field-group">
+                        <label for="rec-track-name" class="rec-label">Titel / Name des Loops:</label>
+                        <input type="text" id="rec-track-name" class="rec-input-name" value="Beatcloud_Loop_120BPM_1" spellcheck="false" autocomplete="off">
+                    </div>
+
+                    <div class="rec-format-group">
+                        <span class="rec-label">Format-Auswahl (Studio & iOS Standard):</span>
+                        <div class="rec-format-options">
+                            <label class="rec-format-pill active" id="format-pill-wav">
+                                <input type="radio" name="rec-format" value="wav" checked onchange="onRecFormatChange('wav')">
+                                <span class="format-title">WAV (Studio Lossless 44.1 kHz)</span>
+                                <span class="format-desc">16-Bit Studio-Master • 100% nativ auf iPad, iPhone & allen DAWs</span>
+                            </label>
+                            <label class="rec-format-pill" id="format-pill-mp3">
+                                <input type="radio" name="rec-format" value="mp3" onchange="onRecFormatChange('mp3')">
+                                <span class="format-title">MP3 (Universal Kompakt)</span>
+                                <span class="format-desc">Kompakte Dateigröße • Ideal für Streaming & mobilen Puffer</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 250 MB REC-Puffer Vault Gauge -->
+                    <div class="rec-buffer-gauge-wrap">
+                        <div class="rec-buffer-gauge-header">
+                            <span>SPEICHER-PUFFER (250 MB VAULT)</span>
+                            <span id="rec-buffer-text">REC: 0.0 / 250 MB</span>
+                        </div>
+                        <div class="rec-buffer-bar-track">
+                            <div id="rec-buffer-bar-fill" class="rec-buffer-bar-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rec-modal-footer">
+                    <button class="rec-btn-action rec-btn-save" onclick="confirmSaveRecording()" title="Im 250 MB Puffer speichern und direkt an den V-Player übergeben">
+                        <span>💾</span> In Puffer & V-Player sichern
+                    </button>
+                    <button class="rec-btn-action rec-btn-download" onclick="downloadRecordingDirectly()" title="Audiodatei direkt auf dieses Gerät herunterladen">
+                        <span>⬇️</span> Auf Gerät laden
+                    </button>
+                    <button class="rec-btn-action rec-btn-discard" onclick="discardRecording()" title="Aufnahme verwerfen">
+                        <span>✕</span> Verwerfen
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Footer -->
@@ -318,7 +390,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="script.js?v=2026.11e" defer></script>
+    <script src="rec_buffer.js?v=2026.11f" defer></script>
+    <script src="script.js?v=2026.11f" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

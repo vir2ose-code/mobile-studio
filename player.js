@@ -648,6 +648,45 @@
             renderPlaylist();
         }
 
+        // Check for launch from Portfolio or Sequencer REC
+        let incomingTrack = null;
+        const launchDataStr = localStorage.getItem('vir2ose_vplayer_launch');
+        if (launchDataStr) {
+            try {
+                incomingTrack = JSON.parse(launchDataStr);
+                localStorage.removeItem('vir2ose_vplayer_launch');
+            } catch (e) {}
+        }
+        if (!incomingTrack) {
+            const params = new URLSearchParams(window.location.search);
+            const src = params.get('src');
+            if (src) {
+                incomingTrack = {
+                    title: params.get('title') || 'Soundtrack',
+                    artist: params.get('artist') || 'vir2ose sound',
+                    url: src
+                };
+            }
+        }
+
+        if (incomingTrack && incomingTrack.url) {
+            let existingIdx = tracks.findIndex(t => t.url === incomingTrack.url || t.title === incomingTrack.title);
+            if (existingIdx === -1) {
+                tracks.unshift({
+                    title: incomingTrack.title,
+                    artist: incomingTrack.artist || 'vir2ose sound',
+                    url: incomingTrack.url,
+                    duration: incomingTrack.duration || 0
+                });
+                existingIdx = 0;
+            }
+            renderPlaylist();
+            loadTrack(existingIdx);
+            setTimeout(() => {
+                playAudio();
+            }, 300);
+        }
+
         // Global unlock AudioContext on click / touch
         const unlockAudio = () => {
             initAudioContext();
