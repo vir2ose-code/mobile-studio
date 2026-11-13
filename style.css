@@ -660,22 +660,100 @@ body.mobile-studio-landing {
     transform: scale(1.08);
 }
 
-/* ──────────────── Hardware Equalizer / Mixer Panel (Screen 4) ──────────────── */
-.sequencer-mixer-panel {
-    background: linear-gradient(180deg, rgba(16, 18, 25, 0.97) 0%, rgba(10, 12, 17, 0.99) 100%);
-    border-top: 1.5px solid rgba(163, 143, 90, 0.45);
-    padding: 10px 14px 12px;
+/* ──────────────── Modular Hardware Panels (Equalizer & Mixer Screen 2 & 4) ──────────────── */
+.sequencer-rack-panel {
+    background: linear-gradient(180deg, rgba(16, 18, 25, 0.98) 0%, rgba(10, 12, 17, 0.99) 100%);
+    border-top: 1.5px solid rgba(199, 181, 132, 0.45);
+    padding: 8px 14px 10px;
     display: none;
-    grid-template-columns: 1fr 90px;
-    gap: 12px;
-    box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.85);
     position: relative;
-    z-index: 5;
+    z-index: 10;
 }
 
-.sequencer-mixer-panel.is-open {
+.sequencer-rack-panel.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: fadeInSlideDown 0.28s ease forwards;
+}
+
+.rack-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(199, 181, 132, 0.2);
+    margin-bottom: 4px;
+}
+
+.rack-panel-title {
+    font-family: "Segoe UI Historic", "Segoe UI", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: #c7b584;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.rack-close-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(199, 181, 132, 0.35);
+    color: #c7b584;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    padding: 0;
+}
+
+.rack-close-btn:hover {
+    background: #c7b584;
+    color: #000000;
+    border-color: #f7f1dd;
+    box-shadow: 0 0 10px rgba(199, 181, 132, 0.6);
+    transform: scale(1.08);
+}
+
+.rack-panel-body {
     display: grid;
-    animation: fadeInSlideDown 0.3s ease forwards;
+    grid-template-columns: 1fr 90px;
+    gap: 12px;
+}
+
+.eq-bands-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    align-items: center;
+}
+
+.eq-freq-tag {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.5px !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+    margin-top: 6px !important;
+    opacity: 1 !important;
+}
+
+.eq-zero-mark {
+    position: absolute;
+    width: 10px;
+    height: 1px;
+    background: rgba(199, 181, 132, 0.55);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 .mixer-channels-grid {
@@ -873,6 +951,7 @@ body.mobile-studio-landing {
 }
 
 .beatcloud-chassis {
+    position: relative;
     background: linear-gradient(180deg, #181b22 0%, #12141a 50%, #0c0e12 100%);
     border: 1.5px solid var(--rack-border);
     border-radius: 6px;
@@ -924,24 +1003,54 @@ body.mobile-studio-landing {
 }
 
 /* Transport Buttons: Exakt gleiche Größe (Breite & Höhe) für einheitlichen Hardware-Look */
+.btn-play-pause,
 .btn-play,
 .btn-stop,
 .btn-pause,
+.btn-rew,
 .btn-ff,
+.btn-rec,
 .btn-loop {
     width: 84px;
     min-width: 84px;
     max-width: 84px;
 }
 
-.btn-eq {
-    min-width: 98px;
+.btn-eq,
+.btn-mixer {
+    min-width: 96px;
     padding: 0 12px;
 }
 
 .btn-lyrics-toggle {
     min-width: 88px;
     padding: 0 12px;
+}
+
+.btn-rec .rec-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff3333;
+    display: inline-block;
+    box-shadow: 0 0 5px rgba(255, 51, 51, 0.8);
+}
+
+.btn-rec.is-recording {
+    border-color: #ff4444 !important;
+    background: linear-gradient(180deg, #ffdddd 0%, #ff8888 50%, #cc2222 100%) !important;
+    color: #ffffff !important;
+}
+
+.btn-rec.is-recording .rec-dot {
+    background: #ffffff;
+    box-shadow: 0 0 8px #ffffff;
+    animation: recPulse 0.8s infinite alternate;
+}
+
+@keyframes recPulse {
+    0% { transform: scale(0.85); opacity: 0.6; }
+    100% { transform: scale(1.3); opacity: 1; }
 }
 
 .rack-btn .rack-btn-icon,
@@ -968,6 +1077,7 @@ body.mobile-studio-landing {
 }
 
 /* PLAY button active / playing animation */
+.btn-play-pause.is-playing,
 .btn-play.is-playing {
     background: linear-gradient(180deg, #ffffff 0%, #ded2a9 45%, #bca872 100%) !important;
     box-shadow: 0 0 16px rgba(199, 181, 132, 0.85), 0 0 6px #ffffff !important;
@@ -981,14 +1091,30 @@ body.mobile-studio-landing {
     100% { box-shadow: 0 0 20px rgba(223, 210, 168, 1), 0 0 8px rgba(255, 255, 255, 0.85); }
 }
 
-/* Toggle buttons (LOOP, EQUALIZER, LYRICS) active state */
+/* Toggle buttons (LOOP, EQUALIZER, MIXER, LYRICS) active state */
 .btn-loop.is-active,
 .btn-eq.is-active,
+.btn-mixer.is-active,
 .btn-lyrics-toggle.is-active {
     background: linear-gradient(180deg, #f2ead0 0%, #cfc094 50%, #a08e5c 100%) !important;
     box-shadow: 0 0 12px rgba(199, 181, 132, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
     border-color: #f7f1dd !important;
     color: #000000 !important;
+}
+
+.rack-badge-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.8));
+    border: 1px solid rgba(199, 181, 132, 0.4);
+}
+
+.badge-text-col {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
 }
 
 .rack-badge-group {
@@ -2027,22 +2153,55 @@ body.mobile-studio-landing {
         padding: 0 6px;
         gap: 4px;
     }
+    .btn-play-pause,
     .btn-play,
     .btn-stop,
     .btn-pause,
+    .btn-rew,
     .btn-ff,
+    .btn-rec,
     .btn-loop {
         width: 70px;
         min-width: 70px;
         max-width: 70px;
     }
-    .btn-eq {
+    .btn-eq,
+    .btn-mixer {
         min-width: 86px;
         padding: 0 8px;
     }
     .btn-lyrics-toggle {
         min-width: 76px;
         padding: 0 8px;
+    }
+    /* Mobile/Smartphone & Tablet Foreground Slide-Over */
+    .sequencer-rack-panel.is-open {
+        position: absolute;
+        inset: 0;
+        z-index: 100;
+        border-top: none;
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(14, 17, 24, 0.98) 0%, rgba(8, 10, 15, 0.99) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 10px 12px 12px;
+        animation: slideForeground 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.95);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    @keyframes slideForeground {
+        0% { transform: translateY(30px) scale(0.97); opacity: 0; }
+        100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .rack-panel-header {
+        padding: 2px 4px 6px;
+    }
+    .rack-close-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 18px;
     }
 }
 

@@ -182,6 +182,14 @@
     let masterVolume = 0.85; // Global Master Volume
     const trackVolumes = Array(10).fill(0.85); // Channel faders (Screen 4)
 
+    // ──────────────── 10-Band Graphic Equalizer Engine (Screen 2) ────────────────
+    const eqFrequencies = [32, 64, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+    const eqLabels = ['32', '64', '125', '250', '500', '1K', '2K', '4K', '8K', '16K'];
+    const eqGains = Array(10).fill(0); // 0 dB Flat Default
+    let eqFilters = [];
+    let eqMasterGainNode = null;
+    let eqMasterVolume = 0.85;
+
     function getAudioContext() {
         if (!audioCtx) {
             const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -221,7 +229,26 @@
             bus3Gain = audioCtx.createGain(); // Melodic & FX Bus
             bus3Gain.connect(sph3rePanner || masterGain);
 
-            masterGain.connect(analyserNode);
+            // 10-Band Graphic Equalizer Filter Chain in Series
+            eqFilters = [];
+            let lastNode = masterGain;
+            for (let i = 0; i < eqFrequencies.length; i++) {
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'peaking';
+                filter.frequency.setValueAtTime(eqFrequencies[i], audioCtx.currentTime);
+                filter.Q.setValueAtTime(1.4, audioCtx.currentTime);
+                filter.gain.setValueAtTime(eqGains[i], audioCtx.currentTime);
+                lastNode.connect(filter);
+                lastNode = filter;
+                eqFilters.push(filter);
+            }
+
+            // EQ Master Output Gain
+            eqMasterGainNode = audioCtx.createGain();
+            eqMasterGainNode.gain.setValueAtTime(eqMasterVolume, audioCtx.currentTime);
+            lastNode.connect(eqMasterGainNode);
+
+            eqMasterGainNode.connect(analyserNode);
             analyserNode.connect(audioCtx.destination);
         }
         if (audioCtx.state === 'suspended') {
@@ -448,8 +475,11 @@
 
         timerID = setInterval(scheduler, lookahead);
 
-        const playBtn = document.getElementById('btn-play');
-        if (playBtn) playBtn.classList.add('is-playing');
+        const playBtn = document.getElementById('btn-play-pause') || document.getElementById('btn-play');
+        if (playBtn) {
+            playBtn.classList.add('is-playing');
+            playBtn.classList.remove('is-paused');
+        }
     };
 
     window.sequencerStop = function () {
@@ -459,8 +489,10 @@
         currentStep = 0;
         clearPlayheadVisual();
 
-        const playBtn = document.getElementById('btn-play');
-        if (playBtn) playBtn.classList.remove('is-playing');
+        const playBtn = document.getElementById('btn-play-pause') || document.getElementById('btn-play');
+        if (playBtn) {
+            playBtn.classList.remove('is-playing', 'is-paused');
+        }
     };
 
     window.sequencerPause = function () {
@@ -469,8 +501,35 @@
         isPaused = true;
         clearInterval(timerID);
 
-        const playBtn = document.getElementById('btn-play');
-        if (playBtn) playBtn.classList.remove('is-playing');
+        const playBtn = document.getElementById('btn-play-pause') || document.getElementById('btn-play');
+        if (playBtn) {
+            playBtn.classList.remove('is-playing');
+            playBtn.classList.add('is-paused');
+        }
+    };
+
+    window.sequencerTogglePlayPause = function () {
+        if (isPlaying) {
+            window.sequencerPause();
+        } else {
+            window.sequencerPlay();
+        }
+    };
+
+    window.sequencerRewind = function () {
+        currentStep = 0;
+        clearPlayheadVisual();
+        if (isPlaying) {
+            const ctx = getAudioContext();
+            nextNoteTime = ctx.currentTime + 0.02;
+        }
+    };
+
+    let isRecording = false;
+    window.sequencerToggleRec = function () {
+        isRecording = !isRecording;
+        const recBtn = document.getElementById('btn-rec');
+        if (recBtn) recBtn.classList.toggle('is-recording', isRecording);
     };
 
     window.sequencerClearAll = function () {
@@ -1235,14 +1294,120 @@ startxref
         }, 2200);
     }
 
-    // ──────────────── Hardware Equalizer / Mischpult (Screen 3 & 4) ────────────────
-    window.toggleEqualizer = function () {
-        const mixer = document.getElementById('sequencer-mixer-panel');
+    // ──────────────── 10-Band Graphic Equalizer & 10-Track Mixer (Screen 2, 3 & 4) ────────────────
+    window.toggleEqualizer = function (forceState) {
+        const eqPanel = document.getElementById('sequencer-eq-panel');
         const eqBtn = document.getElementById('btn-toggle-eq');
-        if (!mixer) return;
-        const isOpen = mixer.classList.toggle('is-open');
-        if (eqBtn) eqBtn.classList.toggle('is-active', isOpen);
+        if (!eqPanel) return;
+
+        const willOpen = typeof forceState === 'boolean' ? forceState : !eqPanel.classList.contains('is-open');
+
+        if (willOpen) {
+            // Auf mobilen Screens das andere Panel schließen, damit kein Überlappen entsteht
+            if (window.innerWidth <= 1024) {
+                window.toggleMixer(false);
+            }
+            eqPanel.classList.add('is-open');
+            if (eqBtn) eqBtn.classList.add('is-active');
+            eqPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            eqPanel.classList.remove('is-open');
+            if (eqBtn) eqBtn.classList.remove('is-active');
+        }
     };
+
+    window.toggleMixer = function (forceState) {
+        const mixerPanel = document.getElementById('sequencer-mixer-panel');
+        const mixerBtn = document.getElementById('btn-toggle-mixer');
+        if (!mixerPanel) return;
+
+        const willOpen = typeof forceState === 'boolean' ? forceState : !mixerPanel.classList.contains('is-open');
+
+        if (willOpen) {
+            // Auf mobilen Screens das andere Panel schließen, damit kein Überlappen entsteht
+            if (window.innerWidth <= 1024) {
+                window.toggleEqualizer(false);
+            }
+            mixerPanel.classList.add('is-open');
+            if (mixerBtn) mixerBtn.classList.add('is-active');
+            mixerPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            mixerPanel.classList.remove('is-open');
+            if (mixerBtn) mixerBtn.classList.remove('is-active');
+        }
+    };
+
+    window.setEqBandGain = function (bandIdx, dbVal) {
+        const val = parseFloat(dbVal);
+        eqGains[bandIdx] = isNaN(val) ? 0 : val;
+        if (eqFilters[bandIdx] && audioCtx) {
+            eqFilters[bandIdx].gain.setTargetAtTime(eqGains[bandIdx], audioCtx.currentTime, 0.015);
+        }
+    };
+
+    window.resetEqBand = function (bandIdx) {
+        window.setEqBandGain(bandIdx, 0);
+        const slider = document.getElementById(`eq-fader-${bandIdx}`);
+        if (slider) slider.value = 0;
+    };
+
+    window.setEqMasterGain = function (val) {
+        const norm = Math.max(0, Math.min(1.0, val / 100.0));
+        eqMasterVolume = norm;
+        if (eqMasterGainNode && audioCtx) {
+            eqMasterGainNode.gain.setTargetAtTime(norm, audioCtx.currentTime, 0.015);
+        }
+    };
+
+    function renderEqFaders() {
+        const grid = document.getElementById('eq-bands-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        eqLabels.forEach((label, idx) => {
+            const strip = document.createElement('div');
+            strip.className = 'eq-channel-strip';
+
+            const slotBg = document.createElement('div');
+            slotBg.className = 'fader-slot-bg eq-slot-bg';
+
+            const zeroLine = document.createElement('div');
+            zeroLine.className = 'eq-zero-mark';
+            zeroLine.title = '0 dB Center';
+            slotBg.appendChild(zeroLine);
+
+            const slotLine = document.createElement('div');
+            slotLine.className = 'fader-slot-line';
+            slotBg.appendChild(slotLine);
+
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.id = `eq-fader-${idx}`;
+            slider.className = 'mixer-v-fader eq-v-fader';
+            slider.setAttribute('orient', 'vertical');
+            slider.min = '-12';
+            slider.max = '12';
+            slider.step = '0.5';
+            slider.value = eqGains[idx].toString();
+            slider.title = `${label} Hz / Band ${idx + 1} (${eqGains[idx]} dB)`;
+            slider.oninput = (e) => {
+                window.setEqBandGain(idx, e.target.value);
+                slider.title = `${label} (${e.target.value} dB)`;
+            };
+            slider.ondblclick = () => {
+                window.resetEqBand(idx);
+            };
+            slotBg.appendChild(slider);
+
+            const labelEl = document.createElement('span');
+            labelEl.className = 'eq-freq-tag';
+            labelEl.textContent = label;
+
+            strip.appendChild(slotBg);
+            strip.appendChild(labelEl);
+            grid.appendChild(strip);
+        });
+    }
 
     window.setTrackVolume = function (trackIdx, val) {
         trackVolumes[trackIdx] = Math.max(0, Math.min(1.0, val / 100.0));
@@ -1291,7 +1456,9 @@ startxref
     function startVuMeterLoop() {
         const ledsL = document.querySelectorAll('#vu-meter-l .vu-led');
         const ledsR = document.querySelectorAll('#vu-meter-r .vu-led');
-        if (!ledsL.length || !ledsR.length) return;
+        const eqLedsL = document.querySelectorAll('#eq-vu-meter-l .vu-led');
+        const eqLedsR = document.querySelectorAll('#eq-vu-meter-r .vu-led');
+        if (!ledsL.length && !eqLedsL.length) return;
 
         const dataArray = new Uint8Array(32);
 
@@ -1300,6 +1467,8 @@ startxref
             if (!analyserNode || !isPlaying) {
                 ledsL.forEach(l => l.classList.remove('active'));
                 ledsR.forEach(r => r.classList.remove('active'));
+                eqLedsL.forEach(l => l.classList.remove('active'));
+                eqLedsR.forEach(r => r.classList.remove('active'));
                 return;
             }
 
@@ -1314,16 +1483,21 @@ startxref
             for (let i = 0; i < 8; i++) {
                 const ledIdx = 7 - i; // 7 is bottom green, 0 is top red
                 if (i < level) {
-                    ledsL[ledIdx].classList.add('active');
+                    if (ledsL[ledIdx]) ledsL[ledIdx].classList.add('active');
+                    if (eqLedsL[ledIdx]) eqLedsL[ledIdx].classList.add('active');
                     const rLevel = Math.max(0, level + (Math.random() > 0.4 ? 0 : -1));
                     if (i < rLevel) {
-                        ledsR[ledIdx].classList.add('active');
+                        if (ledsR[ledIdx]) ledsR[ledIdx].classList.add('active');
+                        if (eqLedsR[ledIdx]) eqLedsR[ledIdx].classList.add('active');
                     } else {
-                        ledsR[ledIdx].classList.remove('active');
+                        if (ledsR[ledIdx]) ledsR[ledIdx].classList.remove('active');
+                        if (eqLedsR[ledIdx]) eqLedsR[ledIdx].classList.remove('active');
                     }
                 } else {
-                    ledsL[ledIdx].classList.remove('active');
-                    ledsR[ledIdx].classList.remove('active');
+                    if (ledsL[ledIdx]) ledsL[ledIdx].classList.remove('active');
+                    if (ledsR[ledIdx]) ledsR[ledIdx].classList.remove('active');
+                    if (eqLedsL[ledIdx]) eqLedsL[ledIdx].classList.remove('active');
+                    if (eqLedsR[ledIdx]) eqLedsR[ledIdx].classList.remove('active');
                 }
             }
         }
@@ -1380,9 +1554,22 @@ startxref
     window.addEventListener('DOMContentLoaded', () => {
         renderStepRuler();
         renderMatrixPads();
+        renderEqFaders();
         renderMixerFaders();
         loadAllKitSamples();
         startVuMeterLoop();
+
+        // Equalizer Master Output Fader
+        const eqMasterFader = document.getElementById('eq-master-slider');
+        if (eqMasterFader) {
+            eqMasterFader.value = Math.round(eqMasterVolume * 100);
+            eqMasterFader.addEventListener('input', (e) => {
+                window.setEqMasterGain(e.target.value);
+            });
+            eqMasterFader.addEventListener('change', (e) => {
+                window.setEqMasterGain(e.target.value);
+            });
+        }
 
         // Stereo-Summe Master Fader Listener
         const masterFader = document.getElementById('mixer-master-slider');
