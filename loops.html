@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>LOOP LIBRARY | BEATCLOUD Mobile Studio by vir2osesound</title>
+    <meta name="description" content="Exklusive lizenzfreie Studio-Loops & Beat-Vorlagen von Waldemar Krucinski (vir2ose sound).">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <link rel="stylesheet" href="style.css?v=2026.11g">
+</head>
+
+<body class="mobile-studio-body">
+    <div id="mouse-light"></div>
+    <audio id="loop-preview-audio" style="display: none;"></audio>
+
+    <!-- Navigation Drawer -->
+    <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div id="nav-drawer" class="nav-drawer">
+        <div class="drawer-header">
+            <span class="close-drawer" onclick="toggleDrawer()">✕</span>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="player.html" data-i18n="nav_player">V-PLAYER</a>
+            <a href="loops.html" class="active" data-i18n="nav_loops">LOOP LIBRARY</a>
+            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
+            <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
+            <a href="services.html" data-i18n="nav_services">SERVICES</a>
+            <a href="about.html" data-i18n="nav_about">ABOUT</a>
+            <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
+        </nav>
+    </div>
+
+    <!-- Top Navigation Header -->
+    <header class="app-header" id="header">
+        <div class="header-main-row">
+            <div class="header-left">
+                <button class="hamburger-menu" onclick="toggleDrawer()" aria-label="Menü öffnen">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <div class="header-center">
+                <a href="index.html" class="logo-link">
+                    <span class="header-studio-name">VIR2OSE SOUND</span>
+                </a>
+            </div>
+
+            <div class="header-right">
+                <div class="rec-buffer-pill" title="250 MB Aufnahme-Puffer & Vault">REC: 0.0 / 250 MB</div>
+                <div class="language-switcher">
+                    <img src="DE.png" alt="DE" class="lang-flag" onclick="setLanguage('de')" title="Deutsch">
+                    <img src="EN.jpg" alt="EN" class="lang-flag" onclick="setLanguage('en')" title="English">
+                    <img src="PL.png" alt="PL" class="lang-flag" onclick="setLanguage('pl')" title="Polski">
+                    <img src="ES.png" alt="ES" class="lang-flag" onclick="setLanguage('es')" title="Español">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Visualizer Background -->
+    <div class="visualizer">
+        <canvas id="wave-canvas"></canvas>
+    </div>
+
+    <main class="portfolio-page">
+        <section id="loops-section" class="samples-section">
+            <div class="container">
+                <h2 class="section-title">LOOP LIBRARY</h2>
+                <p class="section-subtitle">Exklusive lizenzfreie Studio-Loops & Beat-Vorlagen von VIR2OSE (44.1 kHz Studio WAV).</p>
+
+                <!-- Loops Dynamic Grid -->
+                <div class="samples-grid" id="loops-grid">
+                    <!-- Rendered by JavaScript -->
+                </div>
+
+                <!-- Dedicated LYRICS Trigger Button under Loops (Screen 3) -->
+                <div class="portfolio-lyrics-wrap" style="display: flex; justify-content: center; margin-top: 40px; margin-bottom: 12px;">
+                    <button id="btn-open-lyrics" class="rack-btn btn-external-lyrics" onclick="toggleLyricsMode()" title="Lyrics-Notizblock direkt unter den Loops öffnen">
+                        <svg class="rack-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> LYRICS
+                    </button>
+                </div>
+
+                <!-- In-Page LYRICS Glass Notepad (Screen 3) -->
+                <section class="lyrics-card-section" id="lyrics-section">
+                    <div class="lyrics-glass-box">
+                        <div class="lyrics-header-row">
+                            <div class="lyrics-badge">
+                                <span class="lyrics-title">LYRICS & NOTIZEN</span>
+                                <span class="lyrics-pencil">✎</span>
+                            </div>
+                            <button class="btn-close-lyrics" onclick="toggleLyricsMode()" title="Lyrics schließen">✕</button>
+                        </div>
+                        <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Schreibe deine Songtexte & Song-Ideen direkt zum Loop..." spellcheck="false"></textarea>
+                        <div class="lyrics-toolbar-row">
+                            <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
+                                <span>📋</span> <span data-i18n="lyrics_copy">Copy</span>
+                            </button>
+                            <button class="btn-lyrics-tool btn-pdf-tool" onclick="downloadLyricsPdf()" title="Als PDF speichern & herunterladen">
+                                <span>📄</span> <span data-i18n="lyrics_save_pdf">Save (PDF)</span>
+                            </button>
+                            <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
+                                <span>✕</span> <span data-i18n="lyrics_clear">Clear</span>
+                            </button>
+                            <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div style="text-align: center; margin-top: 24px; margin-bottom: 40px;">
+                    <a href="index.html" class="btn-back-studio" data-i18n="nav_studio">ZURÜCK ZUM STUDIO</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>
+            <span>© Waldemar Krucinski 2026 | HOFA College Diploma & IHK Mediengestalter Bild & Ton</span>
+            <span class="footer-sep">|</span>
+            <a href="privacy.html" class="footer-link">Datenschutz & Impressum</a>
+        </p>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="rec_buffer.js?v=2026.11g"></script>
+    <script src="script.js?v=2026.11g"></script>
+    <script>
+        // ──────────────── VIR2OSE LOOP LIBRARY CATALOG ────────────────
+        // Easy-to-expand list of studio loops
+        const LOOPS_CATALOG = [
+            {
+                id: 'cinematic_1',
+                title: 'VIR2OSE Cinematic 1',
+                genre: 'Cinematic Dark',
+                icon: '🎬',
+                format: 'Studio WAV',
+                quality: '44.1 kHz • Lossless',
+                url: 'sounds/loops/Cinematic Dark/VIR2OSE_Cinematic_1.wav'
+            },
+            {
+                id: 'drill_1',
+                title: 'VIR2OSE Drill 1',
+                genre: 'Hard-Hitting Drill',
+                icon: '🥷',
+                format: 'Studio WAV',
+                quality: '44.1 kHz • Lossless',
+                url: 'sounds/loops/Hard-Hitting Drill/VIR2OSE_Drill_1.wav'
+            },
+            {
+                id: 'techno_1',
+                title: 'Techno 1',
+                genre: 'Industrial Techno',
+                icon: '🔊',
+                format: 'Studio WAV',
+                quality: '44.1 kHz • Lossless',
+                url: 'sounds/loops/Industrial Techno/Techno_1.wav'
+            },
+            {
+                id: 'lofi_1',
+                title: 'VIR2OSE Lofi 1',
+                genre: 'Luxury Lofi',
+                icon: '☕',
+                format: 'Studio WAV',
+                quality: '44.1 kHz • Lossless',
+                url: 'sounds/loops/Luxury Lofi/VIR2OSE_Lofi_1.wav'
+            },
+            {
+                id: 'house_1',
+                title: 'VIR2OSE House 1',
+                genre: 'Melodic House',
+                icon: '🌊',
+                format: 'Studio WAV',
+                quality: '44.1 kHz • Lossless',
+                url: 'sounds/loops/Melodic House/VIR2OSE_House_1.wav'
+            }
+        ];
+
+        let activeLoopAudio = null;
+        let activePlayingCard = null;
+
+        function renderLoopCards() {
+            const grid = document.getElementById('loops-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            LOOPS_CATALOG.forEach(loop => {
+                const card = document.createElement('div');
+                card.className = 'sample-card glass-panel loop-card';
+                card.id = `loop-card-${loop.id}`;
+
+                card.innerHTML = `
+                    <div class="sample-icon">${loop.icon}</div>
+                    <div class="sample-info" style="flex: 1;">
+                        <span class="sample-genre">${loop.genre}</span>
+                        <h4 class="sample-name">${loop.title}</h4>
+                        <span class="loop-subtext" style="font-size: 0.68rem; color: #a38f5a; display: block; margin-top: 2px;">${loop.quality}</span>
+                    </div>
+                    <div class="loop-card-actions" style="display: flex; align-items: center; gap: 8px;">
+                        <button class="loop-action-btn loop-btn-play" title="Vorhören (Loop)" onclick="toggleLoopPlay('${loop.url}', this.closest('.loop-card'), event)">
+                            <span class="btn-play-icon">▶</span>
+                        </button>
+                        <button class="loop-action-btn loop-btn-vplayer" title="Im V-Player öffnen" onclick="openLoopInVPlayer('${loop.url}', '${loop.title}', '${loop.genre}', event)">
+                            <span>V-PLAYER ▶</span>
+                        </button>
+                        <a href="${loop.url}" download="${loop.title}.wav" class="loop-action-btn loop-btn-download" title="Download WAV" onclick="event.stopPropagation()">
+                            <span>⬇️</span>
+                        </a>
+                    </div>
+                    <div class="play-indicator"><span></span><span></span><span></span></div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleLoopPlay(url, card, event) {
+            if (event) event.stopPropagation();
+            if (!activeLoopAudio) {
+                activeLoopAudio = document.getElementById('loop-preview-audio');
+                if (!activeLoopAudio) {
+                    activeLoopAudio = new Audio();
+                    activeLoopAudio.id = 'loop-preview-audio';
+                    document.body.appendChild(activeLoopAudio);
+                }
+            }
+
+            if (activePlayingCard === card && !activeLoopAudio.paused) {
+                activeLoopAudio.pause();
+                card.classList.remove('playing');
+                const btn = card.querySelector('.btn-play-icon');
+                if (btn) btn.textContent = '▶';
+                activePlayingCard = null;
+                return;
+            }
+
+            if (activePlayingCard && activePlayingCard !== card) {
+                activePlayingCard.classList.remove('playing');
+                const prevBtn = activePlayingCard.querySelector('.btn-play-icon');
+                if (prevBtn) prevBtn.textContent = '▶';
+            }
+
+            activeLoopAudio.src = url;
+            activeLoopAudio.loop = true;
+            activePlayingCard = card;
+            card.classList.add('playing');
+            const playIcon = card.querySelector('.btn-play-icon');
+            if (playIcon) playIcon.textContent = '❚❚';
+
+            activeLoopAudio.play().catch(e => {
+                console.warn('Playback error:', e);
+                card.classList.remove('playing');
+                if (playIcon) playIcon.textContent = '▶';
+            });
+        }
+
+        function openLoopInVPlayer(url, title, genre, event) {
+            if (event) event.stopPropagation();
+            if (activeLoopAudio) activeLoopAudio.pause();
+
+            const trackData = {
+                title: title,
+                artist: `vir2ose (${genre} Loop)`,
+                url: url
+            };
+
+            try {
+                localStorage.setItem('vir2ose_vplayer_launch', JSON.stringify(trackData));
+            } catch (e) {}
+
+            window.location.href = `player.html?title=${encodeURIComponent(title)}&artist=${encodeURIComponent('vir2ose (' + genre + ' Loop)')}&src=${encodeURIComponent(url)}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLoopCards();
+        });
+    </script>
+</body>
+
+</html>

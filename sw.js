@@ -1,13 +1,14 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026.11f';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.11g';
 const urlsToCache = [
     './',
     './index.html',
     './player.html',
+    './loops.html',
     './fonts/fonts.css',
-    './style.css?v=2026.11f',
-    './script.js?v=2026.11f',
-    './player.js?v=2026.11f',
-    './rec_buffer.js?v=2026.11f',
+    './style.css?v=2026.11g',
+    './script.js?v=2026.11g',
+    './player.js?v=2026.11g',
+    './rec_buffer.js?v=2026.11g',
     './about.html',
     './portfolio.html',
     './services.html',
@@ -29,6 +30,14 @@ const urlsToCache = [
     './sounds/vplayer_demos/edm_phantom.mp3',
     './sounds/vplayer_demos/marv_x_2_ts.mp3',
     './sounds/vplayer_demos/new_indian_world.mp3',
+
+    // Studio Loops
+    './sounds/loops/Cinematic Dark/VIR2OSE_Cinematic_1.wav',
+    './sounds/loops/Hard-Hitting Drill/VIR2OSE_Drill_1.wav',
+    './sounds/loops/Industrial Techno/Techno_1.wav',
+    './sounds/loops/Luxury Lofi/VIR2OSE_Lofi_1.wav',
+    './sounds/loops/Melodic House/VIR2OSE_House_1.wav',
+
     './SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.webp',
     './SMARTPHONE_TABLET_ASSETS/Background_iPAD_Tablet.png',
     './SMARTPHONE_TABLET_ASSETS/Background_Subpages_Clean.webp',
@@ -67,7 +76,7 @@ const urlsToCache = [
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Organic/Congas1_Organic_vir2ose.wav',
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Organic/Congas2_Organic_vir2ose.wav',
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Organic/Cowbell_Organic_vir2ose.wav',
-    './NEUE_ASSETS_26/SoundSets_Beatcloud/Organic/Cymbal_Organic_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Organic/Shaker_Organic_vir2ose.wav',
 
     // Urban_Trap SoundSet
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Urban_Trap/Kick_UrbanTrap_vir2ose.wav',
@@ -78,7 +87,27 @@ const urlsToCache = [
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Urban_Trap/Congas1_UrbanTrap_vir2ose.wav',
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Urban_Trap/Congas2_UrbanTrap_vir2ose.wav',
     './NEUE_ASSETS_26/SoundSets_Beatcloud/Urban_Trap/Cowbell_UrbanTrap_vir2ose.wav',
-    './NEUE_ASSETS_26/SoundSets_Beatcloud/Urban_Trap/Cymbal_UrbanTrap_vir2ose.wav'
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Urban_Trap/Cymbal_UrbanTrap_vir2ose.wav',
+
+    // POP SoundSet
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Kick_1_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Kick_2_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Snare_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Clap_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Clap_Long_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/HiHat_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Cabasa_POP__vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/POP/Crash_POP__vir2ose.wav',
+
+    // Classic_Rock SoundSet
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Kick_1_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Kick_2_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Snare_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/HiHat_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Ride_Bel_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Crash_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Tom_1_Rock_vir2ose.wav',
+    './NEUE_ASSETS_26/SoundSets_Beatcloud/Classic_Rock/Tom_2_Rock_vir2ose.wav'
 ];
 
 self.addEventListener('install', event => {

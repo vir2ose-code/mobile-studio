@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11f">
+    <link rel="stylesheet" href="style.css?v=2026.11g">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -43,6 +43,7 @@
         <nav class="drawer-nav">
             <a href="#sequencer" onclick="toggleDrawer()" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
             <a href="player.html" data-i18n="nav_player">V-PLAYER</a>
+            <a href="loops.html" data-i18n="nav_loops">LOOP LIBRARY</a>
             <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
             <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
@@ -142,6 +143,8 @@
                             <option value="LoFi_Retro" selected>LoFi_Retro</option>
                             <option value="Organic">Organic</option>
                             <option value="Urban_Trap">Urban_Trap</option>
+                            <option value="POP">POP</option>
+                            <option value="Classic_Rock">Classic_Rock</option>
                         </select>
                     </div>
 
@@ -390,8 +393,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11f" defer></script>
-    <script src="script.js?v=2026.11f" defer></script>
+    <script src="rec_buffer.js?v=2026.11g" defer></script>
+    <script src="script.js?v=2026.11g" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

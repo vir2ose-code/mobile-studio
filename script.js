@@ -12,6 +12,7 @@
         'de': {
             'nav_studio': 'STUDIO & BEATCLOUD',
             'nav_player': 'V-PLAYER',
+            'nav_loops': 'LOOP LIBRARY',
             'nav_lyrics': 'LYRICS & NOTIZEN',
             'nav_services': 'SERVICES',
             'nav_about': 'ABOUT',
@@ -28,6 +29,7 @@
         'en': {
             'nav_studio': 'STUDIO & BEATCLOUD',
             'nav_player': 'V-PLAYER',
+            'nav_loops': 'LOOP LIBRARY',
             'nav_lyrics': 'LYRICS & NOTES',
             'nav_services': 'SERVICES',
             'nav_about': 'ABOUT',
@@ -44,6 +46,7 @@
         'pl': {
             'nav_studio': 'STUDIO & BEATCLOUD',
             'nav_player': 'V-PLAYER',
+            'nav_loops': 'BIBLIOTEKA PĘTLI',
             'nav_lyrics': 'TEKSTY I NOTATKI',
             'nav_services': 'USŁUGI',
             'nav_about': 'O NAS',
@@ -60,6 +63,7 @@
         'es': {
             'nav_studio': 'ESTUDIO & BEATCLOUD',
             'nav_player': 'V-PLAYER',
+            'nav_loops': 'BIBLIOTECA DE LOOPS',
             'nav_lyrics': 'LETRAS Y NOTAS',
             'nav_services': 'SERVICIOS',
             'nav_about': 'SOBRE MÍ',
@@ -258,22 +262,69 @@
     const trackKit = Array(10).fill('LoFi_Retro');
     const sampleBuffers = {};
 
-    function getSampleUrl(kit, filePrefix) {
-        // Map file prefix to actual filenames in SoundSets_Beatcloud
-        const map = {
-            'Kick': `Kick_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'Snare': `Snare_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'Clap': `${kit === 'Organic' ? 'Claps_Organic' : (kit === 'Urban_Trap' ? 'Clap_UrbanTrap' : 'Clap_LoFi')}_vir2ose.wav`,
-            'HiHat_Closed': `HiHat_Closed_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'HiHat_Open': `HiHat_Open_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'Congas1': `Congas1_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'Congas2': `Congas2_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'Cowbell': `Cowbell_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`,
-            'Cymbal': `Cymbal_${kit === 'Organic' ? 'Organic' : (kit === 'Urban_Trap' ? 'UrbanTrap' : 'LoFi')}_vir2ose.wav`
-        };
+    const SOUND_KIT_FILES = {
+        'LoFi_Retro': {
+            'Kick': 'Kick_LoFi_vir2ose.wav',
+            'Snare': 'Snare_LoFi_vir2ose.wav',
+            'Clap': 'Clap_LoFi_vir2ose.wav',
+            'HiHat_Closed': 'HiHat_Closed_LoFi_vir2ose.wav',
+            'HiHat_Open': 'HiHat_Open_LoFi_vir2ose.wav',
+            'Congas1': 'Congas1_LoFi_vir2ose.wav',
+            'Congas2': 'Congas2_LoFi_vir2ose.wav',
+            'Cowbell': 'Cowbell_LoFi_vir2ose.wav',
+            'Cymbal': 'Cymbal_LoFi_vir2ose.wav'
+        },
+        'Organic': {
+            'Kick': 'Kick_Organic_vir2ose.wav',
+            'Snare': 'Snare_Organic_vir2ose.wav',
+            'Clap': 'Claps_Organic_vir2ose.wav',
+            'HiHat_Closed': 'HiHat_Closed_Organic_vir2ose.wav',
+            'HiHat_Open': 'HiHat_Open_Organic_vir2ose.wav',
+            'Congas1': 'Congas1_Organic_vir2ose.wav',
+            'Congas2': 'Congas2_Organic_vir2ose.wav',
+            'Cowbell': 'Cowbell_Organic_vir2ose.wav',
+            'Cymbal': 'Shaker_Organic_vir2ose.wav'
+        },
+        'Urban_Trap': {
+            'Kick': 'Kick_UrbanTrap_vir2ose.wav',
+            'Snare': 'Snare_UrbanTrap_vir2ose.wav',
+            'Clap': 'Clap_UrbanTrap_vir2ose.wav',
+            'HiHat_Closed': 'HiHat_Closed_UrbanTrap_vir2ose.wav',
+            'HiHat_Open': 'HiHat_Open_UrbanTrap_vir2ose.wav',
+            'Congas1': 'Congas1_UrbanTrap_vir2ose.wav',
+            'Congas2': 'Congas2_UrbanTrap_vir2ose.wav',
+            'Cowbell': 'Cowbell_UrbanTrap_vir2ose.wav',
+            'Cymbal': 'Cymbal_UrbanTrap_vir2ose.wav'
+        },
+        'POP': {
+            'Kick': 'Kick_1_POP__vir2ose.wav',
+            'Snare': 'Snare_POP__vir2ose.wav',
+            'Clap': 'Clap_POP__vir2ose.wav',
+            'HiHat_Closed': 'HiHat_POP__vir2ose.wav',
+            'HiHat_Open': 'Clap_Long_POP__vir2ose.wav',
+            'Congas1': 'Kick_2_POP__vir2ose.wav',
+            'Congas2': 'Cabasa_POP__vir2ose.wav',
+            'Cowbell': 'Cabasa_POP__vir2ose.wav',
+            'Cymbal': 'Crash_POP__vir2ose.wav'
+        },
+        'Classic_Rock': {
+            'Kick': 'Kick_1_Rock_vir2ose.wav',
+            'Snare': 'Snare_Rock_vir2ose.wav',
+            'Clap': 'Ride_Bel_Rock_vir2ose.wav',
+            'HiHat_Closed': 'HiHat_Rock_vir2ose.wav',
+            'HiHat_Open': 'Crash_Rock_vir2ose.wav',
+            'Congas1': 'Tom_1_Rock_vir2ose.wav',
+            'Congas2': 'Tom_2_Rock_vir2ose.wav',
+            'Cowbell': 'Kick_2_Rock_vir2ose.wav',
+            'Cymbal': 'Ride_Bel_Rock_vir2ose.wav'
+        }
+    };
 
-        if (map[filePrefix]) {
-            return `./NEUE_ASSETS_26/SoundSets_Beatcloud/${kit}/${map[filePrefix]}`;
+    function getSampleUrl(kit, filePrefix) {
+        const kitMap = SOUND_KIT_FILES[kit] || SOUND_KIT_FILES['LoFi_Retro'];
+        const fileName = kitMap[filePrefix];
+        if (fileName) {
+            return `./NEUE_ASSETS_26/SoundSets_Beatcloud/${kit}/${fileName}`;
         }
         return null;
     }
@@ -957,6 +1008,8 @@
                 <option value="LoFi_Retro" ${trackKit[trackIdx] === 'LoFi_Retro' ? 'selected' : ''}>LoFi</option>
                 <option value="Organic" ${trackKit[trackIdx] === 'Organic' ? 'selected' : ''}>Organic</option>
                 <option value="Urban_Trap" ${trackKit[trackIdx] === 'Urban_Trap' ? 'selected' : ''}>Urban</option>
+                <option value="POP" ${trackKit[trackIdx] === 'POP' ? 'selected' : ''}>POP</option>
+                <option value="Classic_Rock" ${trackKit[trackIdx] === 'Classic_Rock' ? 'selected' : ''}>Rock</option>
             `;
             sampleSelect.onchange = (e) => window.changeTrackSample(trackIdx, e.target.value);
 

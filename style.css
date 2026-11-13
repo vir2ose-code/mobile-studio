@@ -3878,3 +3878,72 @@ body.groovebox-mode .sequencer-matrix {
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(199, 181, 132, 0.6);
 }
+
+/* ──────────────── LOOP LIBRARY CARDS ──────────────── */
+.loop-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: default;
+}
+
+.loop-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(20, 22, 28, 0.85);
+    color: #cbd5e1;
+    padding: 6px 12px;
+}
+
+.loop-btn-play {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(199, 181, 132, 0.15);
+    border-color: rgba(199, 181, 132, 0.4);
+    color: #c7b584;
+}
+
+.loop-btn-play:hover {
+    background: #c7b584;
+    color: #0b0c10;
+    box-shadow: 0 0 12px rgba(199, 181, 132, 0.5);
+}
+
+.loop-btn-vplayer {
+    background: linear-gradient(180deg, #dbca98 0%, #998755 100%);
+    color: #0b0c10;
+    border: 1px solid #c7b584;
+    letter-spacing: 0.6px;
+    font-size: 0.72rem;
+}
+
+.loop-btn-vplayer:hover {
+    background: linear-gradient(180deg, #ffedb5 0%, #b09c63 100%);
+    box-shadow: 0 0 12px rgba(199, 181, 132, 0.5);
+    transform: translateY(-1px);
+}
+
+.loop-btn-download {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 6px;
+}
+
+.loop-btn-download:hover {
+    border-color: #c7b584;
+    color: #c7b584;
+    background: rgba(30, 34, 44, 0.9);
+}
