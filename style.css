@@ -4327,3 +4327,397 @@ a[href^="mailto:"]:hover {
     color: #c7b584;
     text-decoration: underline;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   CINEMA HERO SHOWROOM STAGE (3-LAYER 2K COMPOSITE + VIDEO BLEND)
+   ══════════════════════════════════════════════════════════════════ */
+.v-hero-stage-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 14px 28px 14px;
+    position: relative;
+    z-index: 10;
+}
+
+.v-hero-stage-container {
+    width: 100%;
+    max-width: 1360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+}
+
+.v-hero-stage-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2048 / 1080;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #030407;
+    border: 1px solid rgba(199, 181, 132, 0.28);
+    box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(199, 181, 132, 0.12),
+        inset 0 0 30px rgba(0, 0, 0, 0.6);
+    transform: translateZ(0); /* Hardware accelerated compositing */
+}
+
+.v-stage-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.v-layer-1 {
+    object-fit: cover;
+    z-index: 1;
+}
+
+.v-layer-2 {
+    object-fit: cover;
+    z-index: 2;
+    mix-blend-mode: screen;
+    opacity: 0.92;
+    pointer-events: none;
+}
+
+.v-layer-3 {
+    object-fit: cover;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* ── Interactive Hotspots for App Store Badges ── */
+.v-store-hotspots-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.v-store-hotspot {
+    position: absolute;
+    pointer-events: auto;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 6px;
+}
+
+.hotspot-google-play {
+    left: 10.94%;
+    top: 70.83%;
+    width: 14.31%;
+    height: 10.46%;
+}
+
+.hotspot-app-store {
+    left: 10.99%;
+    top: 81.39%;
+    width: 14.26%;
+    height: 10.65%;
+}
+
+.v-store-hotspot:hover,
+.v-store-hotspot:focus-visible {
+    border-color: rgba(243, 229, 171, 0.7);
+    background: rgba(243, 229, 171, 0.08);
+    box-shadow: 
+        0 0 20px rgba(243, 229, 171, 0.45),
+        inset 0 0 14px rgba(243, 229, 171, 0.2);
+    transform: scale(1.025);
+}
+
+.hotspot-beacon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #c7b584;
+    box-shadow: 0 0 8px #f3e5ab;
+    opacity: 0.6;
+    animation: beaconPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes beaconPulse {
+    0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.4;
+        box-shadow: 0 0 4px #c7b584;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.95;
+        box-shadow: 0 0 14px #f3e5ab, 0 0 22px rgba(243, 229, 171, 0.6);
+    }
+}
+
+/* ── Cinema Hero Call-To-Action Row ── */
+.v-hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.v-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.v-hero-btn-primary {
+    background: linear-gradient(135deg, #dfb845 0%, #c7b584 50%, #998347 100%);
+    color: #0b0c10;
+    border: 1px solid #f3e5ab;
+    box-shadow: 0 4px 18px rgba(199, 181, 132, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.v-hero-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(243, 229, 171, 0.5), inset 0 1px 4px rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, #f5d676 0%, #d8c28d 50%, #ad9452 100%);
+}
+
+.v-hero-btn-secondary {
+    background: rgba(15, 17, 23, 0.7);
+    color: #f1f5f9;
+    border: 1px solid rgba(199, 181, 132, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.v-hero-btn-secondary:hover {
+    transform: translateY(-2px);
+    border-color: #c7b584;
+    color: #ffffff;
+    background: rgba(26, 29, 38, 0.9);
+    box-shadow: 0 6px 20px rgba(199, 181, 132, 0.25);
+}
+
+.btn-hero-icon {
+    font-size: 1.15rem;
+}
+
+/* ── Store Notice Modal ── */
+.store-notice-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(3, 4, 7, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.store-notice-overlay.active {
+    opacity: 1;
+}
+
+.store-notice-card {
+    position: relative;
+    background: linear-gradient(165deg, rgba(24, 27, 36, 0.96) 0%, rgba(11, 13, 18, 0.98) 100%);
+    border: 1px solid rgba(199, 181, 132, 0.4);
+    box-shadow: 
+        0 25px 65px rgba(0, 0, 0, 0.9),
+        0 0 35px rgba(199, 181, 132, 0.18),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 28px 30px;
+    max-width: 480px;
+    width: 100%;
+    color: #f1f5f9;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    transform: scale(0.94);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.store-notice-overlay.active .store-notice-card {
+    transform: scale(1);
+}
+
+.store-notice-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.store-notice-close:hover {
+    color: #c7b584;
+}
+
+.store-notice-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(199, 181, 132, 0.12);
+    border: 1px solid rgba(199, 181, 132, 0.35);
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #c7b584;
+    text-transform: uppercase;
+}
+
+.store-notice-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 0;
+    color: #ffffff;
+    text-shadow: 0 0 16px rgba(199, 181, 132, 0.25);
+}
+
+.store-notice-desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin: 0;
+}
+
+.store-notice-desc strong.gold-target {
+    color: #c7b584;
+}
+
+.store-notice-pwa-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(199, 181, 132, 0.08);
+    border: 1px solid rgba(199, 181, 132, 0.25);
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+    margin-top: 4px;
+}
+
+.pwa-box-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+    color: #c7b584;
+}
+
+.pwa-box-content strong {
+    display: block;
+    color: #f3e5ab;
+    margin-bottom: 2px;
+}
+
+.store-notice-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.store-modal-btn {
+    flex: 1;
+    padding: 11px 16px;
+    border-radius: 24px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.store-btn-primary {
+    background: linear-gradient(135deg, #dfb845 0%, #c7b584 100%);
+    color: #0b0c10;
+    box-shadow: 0 4px 14px rgba(199, 181, 132, 0.35);
+}
+
+.store-btn-primary:hover {
+    background: linear-gradient(135deg, #f5d676 0%, #d8c28d 100%);
+    transform: translateY(-1px);
+}
+
+.store-btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.store-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+@media (max-width: 600px) {
+    .v-hero-stage-section {
+        padding: 6px 8px 20px 8px;
+    }
+    .v-hero-stage-frame {
+        border-radius: 10px;
+    }
+    .v-hero-btn {
+        width: 100%;
+        padding: 12px 18px;
+        font-size: 0.8rem;
+    }
+    .store-notice-card {
+        padding: 22px 18px;
+    }
+    .store-notice-actions {
+        flex-direction: column;
+    }
+}

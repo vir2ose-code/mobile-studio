@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11h">
+    <link rel="stylesheet" href="style.css?v=2026.11i">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -113,19 +113,70 @@
     <!-- Main Content Area -->
     <main class="studio-main-container">
 
-        <!-- Hero Branding Section: Vorübergehend probeweise ausgeblendet, da im Background bereits enthalten -->
-        <!--
-        <section class="hero-brand-section" id="brand-hero">
-            <div class="hero-brand-title-wrap">
-                <h1 class="hero-brand-title">MOBILE STUDIO PRO</h1>
-                <div class="hero-brand-subscript">
-                    <span class="subscript-lead">powered by</span> 
-                    <span class="silver-brushed-name">Waldemar Krucinski</span>
+        <!-- ──────────────── Cinema Hero Showroom Stage (3-Layer 2K Composite) ──────────────── -->
+        <section class="v-hero-stage-section" id="hero-stage">
+            <div class="v-hero-stage-container">
+                <!-- 3-Layer Visual Stage Frame (2048x1080 Native Aspect Ratio) -->
+                <div class="v-hero-stage-frame">
+                    <!-- Layer 1: Static Cosmic Master Background (2K) -->
+                    <img src="NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png" 
+                         alt="V-Beatmaker Mobile Cosmic Studio Environment" 
+                         class="v-stage-layer v-layer-1" 
+                         loading="eager"
+                         decoding="async">
+
+                    <!-- Layer 2: Cosmic Video Animation Loop (Seamless Screen Blend) -->
+                    <video class="v-stage-layer v-layer-2" 
+                           autoplay 
+                           loop 
+                           muted 
+                           playsinline 
+                           preload="auto"
+                           aria-hidden="true">
+                        <source src="NEUE_ASSETS_26/Layer_2_Mobile_Beatmaker.mp4" type="video/mp4">
+                    </video>
+
+                    <!-- Layer 3: Foreground Devices & 3D Typography & Store Badges (2K) -->
+                    <img src="NEUE_ASSETS_26/Layer_3_B_Mobile_Beatmaker.png" 
+                         alt="V-Beatmaker Mobile - This Is Your Moment" 
+                         class="v-stage-layer v-layer-3" 
+                         loading="eager"
+                         decoding="async">
+
+                    <!-- Interactive Touch Hotspots Layer for Store Badges -->
+                    <div class="v-store-hotspots-layer" aria-label="App Store Downloads">
+                        <a href="#store-google-play" 
+                           class="v-store-hotspot hotspot-google-play" 
+                           onclick="openStoreNotice('Google Play Store', event)" 
+                           role="button"
+                           title="Google Play Store (In Kürze verfügbar)"
+                           aria-label="Google Play Store">
+                            <span class="hotspot-beacon"></span>
+                        </a>
+                        <a href="#store-app-store" 
+                           class="v-store-hotspot hotspot-app-store" 
+                           onclick="openStoreNotice('Apple App Store', event)" 
+                           role="button"
+                           title="Apple App Store (In Kürze verfügbar)"
+                           aria-label="Apple App Store">
+                            <span class="hotspot-beacon"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cinema Hero Call-To-Action Row -->
+                <div class="v-hero-cta-row">
+                    <a href="#sequencer" class="v-hero-btn v-hero-btn-primary">
+                        <span class="btn-hero-icon">🚀</span>
+                        <span data-i18n="hero_cta_studio">LIVE STUDIO IM WEB STARTEN</span>
+                    </a>
+                    <a href="loops.html" class="v-hero-btn v-hero-btn-secondary">
+                        <span class="btn-hero-icon">🎵</span>
+                        <span data-i18n="hero_cta_loops">LOOP LIBRARY ENTDECKEN</span>
+                    </a>
                 </div>
             </div>
-            <h2 class="hero-brand-subtitle">Sample Sounds Beats</h2>
         </section>
-        -->
 
         <!-- ──────────────── Hero Component: BEATCLOUD Sequencer Rack ──────────────── -->
         <section id="sequencer" class="sequencer-rack-section">
@@ -415,6 +466,33 @@
 
     </main>
 
+    <!-- ──────────────── Store Notice Modal (Google Play & App Store Release Announcement) ──────────────── -->
+    <div id="store-notice-modal" class="store-notice-overlay" style="display:none;" onclick="if(event.target===this) closeStoreNotice()" role="dialog" aria-modal="true" aria-labelledby="store-notice-title">
+        <div class="store-notice-card">
+            <button class="store-notice-close" onclick="closeStoreNotice()" aria-label="Schließen">✕</button>
+            <div class="store-notice-badge" data-i18n="store_badge_coming_soon">OFFIZIELLER RELEASE IN KÜRZE</div>
+            <h3 id="store-notice-title" class="store-notice-title">GOOGLE PLAY STORE</h3>
+            <p id="store-notice-desc" class="store-notice-desc">
+                Die native App-Version für <strong id="store-notice-target" class="gold-target">Google Play</strong> wird derzeit final poliert und für den weltweiten Store-Release vorbereitet.
+            </p>
+            <div class="store-notice-pwa-box">
+                <span class="pwa-box-icon">⚡</span>
+                <div class="pwa-box-content">
+                    <strong data-i18n="store_pwa_title">Bereits jetzt voll einsatzbereit:</strong>
+                    <span data-i18n="store_pwa_desc">Nutze die V-Beatmaker Web Studio PWA direkt im mobilen Browser oder installiere sie als Homescreen-App!</span>
+                </div>
+            </div>
+            <div class="store-notice-actions">
+                <button class="store-modal-btn store-btn-primary" onclick="closeStoreNotice(); document.getElementById('sequencer').scrollIntoView({behavior:'smooth'});">
+                    <span>🚀</span> <span data-i18n="store_btn_seq">Zum Web Sequencer</span>
+                </button>
+                <button class="store-modal-btn store-btn-secondary" onclick="closeStoreNotice()">
+                    <span data-i18n="store_btn_close">Verstanden</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="site-footer">
         <p>
@@ -425,8 +503,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11h" defer></script>
-    <script src="script.js?v=2026.11h" defer></script>
+    <script src="rec_buffer.js?v=2026.11i" defer></script>
+    <script src="script.js?v=2026.11i" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

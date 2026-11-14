@@ -24,7 +24,14 @@
             'lyrics_copy': 'Kopieren',
             'lyrics_save': 'Speichern',
             'lyrics_save_pdf': 'Save (PDF)',
-            'lyrics_clear': 'Leeren'
+            'lyrics_clear': 'Leeren',
+            'hero_cta_studio': 'LIVE STUDIO IM WEB STARTEN',
+            'hero_cta_loops': 'LOOP LIBRARY ENTDECKEN',
+            'store_badge_coming_soon': 'OFFIZIELLER RELEASE IN KÜRZE',
+            'store_pwa_title': 'Bereits jetzt voll einsatzbereit:',
+            'store_pwa_desc': 'Nutze die V-Beatmaker Web Studio PWA direkt im mobilen Browser oder installiere sie als Homescreen-App!',
+            'store_btn_seq': 'Zum Web Sequencer',
+            'store_btn_close': 'Verstanden'
         },
         'en': {
             'nav_studio': 'STUDIO & BEATCLOUD',
@@ -41,7 +48,14 @@
             'lyrics_copy': 'Copy',
             'lyrics_save': 'Save',
             'lyrics_save_pdf': 'Save (PDF)',
-            'lyrics_clear': 'Clear'
+            'lyrics_clear': 'Clear',
+            'hero_cta_studio': 'LAUNCH WEB STUDIO',
+            'hero_cta_loops': 'EXPLORE LOOP LIBRARY',
+            'store_badge_coming_soon': 'OFFICIAL RELEASE COMING SOON',
+            'store_pwa_title': 'Already fully operational:',
+            'store_pwa_desc': 'Use the V-Beatmaker Web Studio PWA directly in your mobile browser or install it as a homescreen app!',
+            'store_btn_seq': 'Go to Web Sequencer',
+            'store_btn_close': 'Got it'
         },
         'pl': {
             'nav_studio': 'STUDIO & BEATCLOUD',
@@ -58,7 +72,14 @@
             'lyrics_copy': 'Kopiuj',
             'lyrics_save': 'Zapisz',
             'lyrics_save_pdf': 'Zapisz (PDF)',
-            'lyrics_clear': 'Wyczyść'
+            'lyrics_clear': 'Wyczyść',
+            'hero_cta_studio': 'URUCHOM STUDIO W SIECI',
+            'hero_cta_loops': 'ODKRYJ BIBLIOTEKĘ PĘTLI',
+            'store_badge_coming_soon': 'OFICJALNE WYDANIE WKRÓTCE',
+            'store_pwa_title': 'Już teraz w pełni gotowy do działania:',
+            'store_pwa_desc': 'Korzystaj z aplikacji V-Beatmaker Web Studio bezpośrednio w przeglądarce mobilnej lub zainstaluj ją na ekranie głównym!',
+            'store_btn_seq': 'Przejdź do sekwencera',
+            'store_btn_close': 'Rozumiem'
         },
         'es': {
             'nav_studio': 'ESTUDIO & BEATCLOUD',
@@ -75,7 +96,14 @@
             'lyrics_copy': 'Copiar',
             'lyrics_save': 'Guardar',
             'lyrics_save_pdf': 'Guardar (PDF)',
-            'lyrics_clear': 'Borrar'
+            'lyrics_clear': 'Borrar',
+            'hero_cta_studio': 'INICIAR ESTUDIO EN LA WEB',
+            'hero_cta_loops': 'DESCUBRIR LOOP LIBRARY',
+            'store_badge_coming_soon': 'LANZAMIENTO OFICIAL PRÓXIMAMENTE',
+            'store_pwa_title': 'Ya totalmente operativo:',
+            'store_pwa_desc': '¡Usa la PWA de V-Beatmaker Web Studio directamente en tu navegador móvil o instálala como aplicación de pantalla de inicio!',
+            'store_btn_seq': 'Ir al secuenciador web',
+            'store_btn_close': 'Entendido'
         }
     };
 
@@ -110,6 +138,32 @@
         });
 
         localStorage.setItem('vir2ose_lang', lang);
+    };
+
+    // ──────────────── Store Notice Modal Handlers ────────────────
+    window.openStoreNotice = function (storeName, event) {
+        if (event) event.preventDefault();
+        const modal = document.getElementById('store-notice-modal');
+        const title = document.getElementById('store-notice-title');
+        const target = document.getElementById('store-notice-target');
+        if (modal) {
+            if (title) title.textContent = (storeName || 'APP STORE').toUpperCase();
+            if (target) target.textContent = storeName || 'App Store';
+            modal.style.display = 'flex';
+            // Force reflow for smooth opacity transition
+            void modal.offsetWidth;
+            modal.classList.add('active');
+        }
+    };
+
+    window.closeStoreNotice = function () {
+        const modal = document.getElementById('store-notice-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 250);
+        }
     };
 
     // ──────────────── 10-Track Matrix Configuration ────────────────
