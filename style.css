@@ -4329,40 +4329,63 @@ a[href^="mailto:"]:hover {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   CINEMA HERO SHOWROOM STAGE (3-LAYER 2K COMPOSITE + VIDEO BLEND)
+   CINEMA HERO SHOWROOM STAGE (DESKTOP FULL-SCREEN SHOWCASE)
    ══════════════════════════════════════════════════════════════════ */
 .v-hero-stage-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 14px 28px 14px;
     position: relative;
+    width: 100vw;
+    height: calc(100vh - 46px);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #030407;
+    overflow: hidden;
     z-index: 10;
 }
 
 .v-hero-stage-container {
-    width: 100%;
-    max-width: 1360px;
+    width: 100vw;
+    height: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 22px;
+    justify-content: center;
 }
 
 .v-hero-stage-frame {
     position: relative;
-    width: 100%;
+    width: 100vw;
+    height: calc(100vh - 46px);
     aspect-ratio: 2048 / 1080;
-    border-radius: 16px;
+    max-width: calc((100vh - 46px) * (2048 / 1080));
+    max-height: 100%;
+    margin: auto;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
     overflow: hidden;
-    background: #030407;
-    border: 1px solid rgba(199, 181, 132, 0.28);
-    box-shadow: 
-        0 24px 60px rgba(0, 0, 0, 0.85),
-        0 0 40px rgba(199, 181, 132, 0.12),
-        inset 0 0 30px rgba(0, 0, 0, 0.6);
     transform: translateZ(0); /* Hardware accelerated compositing */
+}
+
+/* Background wallpaper extension behind the stage on ultra-wide screens */
+.v-hero-stage-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.65) blur(3px);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .v-stage-layer {
@@ -4438,8 +4461,8 @@ a[href^="mailto:"]:hover {
     border-color: rgba(243, 229, 171, 0.7);
     background: rgba(243, 229, 171, 0.08);
     box-shadow: 
-        0 0 20px rgba(243, 229, 171, 0.45),
-        inset 0 0 14px rgba(243, 229, 171, 0.2);
+        0 0 22px rgba(243, 229, 171, 0.5),
+        inset 0 0 14px rgba(243, 229, 171, 0.25);
     transform: scale(1.025);
 }
 
@@ -4469,65 +4492,93 @@ a[href^="mailto:"]:hover {
     }
 }
 
-/* ── Cinema Hero Call-To-Action Row ── */
-.v-hero-cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
+/* ── Mode Routing: Desktop Landing vs Mobile Studio App ── */
+
+/* DESKTOP LANDING (Screen 2: Pure Showroom, No Sequencer) */
+body.is-desktop-landing {
+    overflow: hidden !important;
+    height: 100vh !important;
+    background: #030407 !important;
 }
 
-.v-hero-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 13px 28px;
-    border-radius: 30px;
-    font-size: 0.88rem;
-    font-weight: 800;
-    letter-spacing: 1.4px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    box-sizing: border-box;
-    cursor: pointer;
+body.is-desktop-landing .studio-main-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    width: 100vw !important;
+    height: calc(100vh - 46px) !important;
+    overflow: hidden !important;
 }
 
-.v-hero-btn-primary {
-    background: linear-gradient(135deg, #dfb845 0%, #c7b584 50%, #998347 100%);
-    color: #0b0c10;
-    border: 1px solid #f3e5ab;
-    box-shadow: 0 4px 18px rgba(199, 181, 132, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+body.is-desktop-landing #hero-stage {
+    display: flex !important;
 }
 
-.v-hero-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(243, 229, 171, 0.5), inset 0 1px 4px rgba(255, 255, 255, 0.8);
-    background: linear-gradient(135deg, #f5d676 0%, #d8c28d 50%, #ad9452 100%);
+body.is-desktop-landing #sequencer {
+    display: none !important;
 }
 
-.v-hero-btn-secondary {
-    background: rgba(15, 17, 23, 0.7);
-    color: #f1f5f9;
-    border: 1px solid rgba(199, 181, 132, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+body.is-desktop-landing .site-footer {
+    display: none !important;
 }
 
-.v-hero-btn-secondary:hover {
-    transform: translateY(-2px);
-    border-color: #c7b584;
-    color: #ffffff;
-    background: rgba(26, 29, 38, 0.9);
-    box-shadow: 0 6px 20px rgba(199, 181, 132, 0.25);
+/* Hide studio/app/library links in drawer on desktop landing */
+body.is-desktop-landing .nav-app-link {
+    display: none !important;
 }
 
-.btn-hero-icon {
-    font-size: 1.15rem;
+/* MOBILE & TABLET (iOS & Android: Original Sequencer App) */
+body.is-mobile-device #hero-stage {
+    display: none !important;
+}
+
+body.is-mobile-device #sequencer {
+    display: block !important;
+}
+
+body.is-mobile-device .nav-app-link {
+    display: block !important;
+}
+
+/* STUDIO WORKSTATION (studio.html or ?app=1 on PC) */
+body.is-studio-workstation #hero-stage {
+    display: none !important;
+}
+
+body.is-studio-workstation #sequencer {
+    display: block !important;
+}
+
+body.is-studio-workstation .nav-app-link {
+    display: block !important;
+}
+
+/* CSS Media Query Fallbacks */
+@media (max-width: 1024px) {
+    body:not(.is-desktop-landing-forced) #hero-stage {
+        display: none !important;
+    }
+    body:not(.is-desktop-landing-forced) #sequencer {
+        display: block !important;
+    }
+    body:not(.is-desktop-landing-forced) .nav-app-link {
+        display: block !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    body:not(.is-mobile-device):not(.is-studio-workstation) #sequencer {
+        display: none !important;
+    }
+    body:not(.is-mobile-device):not(.is-studio-workstation) #hero-stage {
+        display: flex !important;
+    }
+    body:not(.is-mobile-device):not(.is-studio-workstation) .site-footer {
+        display: none !important;
+    }
+    body:not(.is-mobile-device):not(.is-studio-workstation) .nav-app-link {
+        display: none !important;
+    }
 }
 
 /* ── Store Notice Modal ── */
@@ -4537,7 +4588,7 @@ a[href^="mailto:"]:hover {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(3, 4, 7, 0.78);
+    background: rgba(3, 4, 7, 0.82);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     z-index: 10000;
@@ -4555,7 +4606,7 @@ a[href^="mailto:"]:hover {
 
 .store-notice-card {
     position: relative;
-    background: linear-gradient(165deg, rgba(24, 27, 36, 0.96) 0%, rgba(11, 13, 18, 0.98) 100%);
+    background: linear-gradient(165deg, rgba(24, 27, 36, 0.97) 0%, rgba(11, 13, 18, 0.99) 100%);
     border: 1px solid rgba(199, 181, 132, 0.4);
     box-shadow: 
         0 25px 65px rgba(0, 0, 0, 0.9),
@@ -4563,7 +4614,7 @@ a[href^="mailto:"]:hover {
         inset 0 1px 1px rgba(255, 255, 255, 0.1);
     border-radius: 18px;
     padding: 28px 30px;
-    max-width: 480px;
+    max-width: 520px;
     width: 100%;
     color: #f1f5f9;
     text-align: center;
@@ -4630,43 +4681,47 @@ a[href^="mailto:"]:hover {
     color: #c7b584;
 }
 
-.store-notice-pwa-box {
+.store-notice-features-box {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: rgba(199, 181, 132, 0.08);
-    border: 1px solid rgba(199, 181, 132, 0.25);
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(199, 181, 132, 0.06);
+    border: 1px solid rgba(199, 181, 132, 0.22);
     border-radius: 12px;
     padding: 12px 14px;
     text-align: left;
     font-size: 0.82rem;
-    line-height: 1.5;
-    color: #e2e8f0;
+    line-height: 1.45;
+    color: #cbd5e1;
     margin-top: 4px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.pwa-box-icon {
-    font-size: 1.3rem;
-    line-height: 1;
-    color: #c7b584;
+.store-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
 }
 
-.pwa-box-content strong {
-    display: block;
+.store-feature-item .feat-icon {
+    font-size: 1.05rem;
+    line-height: 1.2;
+}
+
+.store-feature-item strong {
     color: #f3e5ab;
-    margin-bottom: 2px;
 }
 
 .store-notice-actions {
     display: flex;
-    gap: 12px;
+    justify-content: center;
     width: 100%;
     margin-top: 8px;
 }
 
 .store-modal-btn {
-    flex: 1;
-    padding: 11px 16px;
+    padding: 10px 24px;
     border-radius: 24px;
     font-size: 0.82rem;
     font-weight: 700;
@@ -4680,44 +4735,14 @@ a[href^="mailto:"]:hover {
     gap: 6px;
 }
 
-.store-btn-primary {
-    background: linear-gradient(135deg, #dfb845 0%, #c7b584 100%);
-    color: #0b0c10;
-    box-shadow: 0 4px 14px rgba(199, 181, 132, 0.35);
-}
-
-.store-btn-primary:hover {
-    background: linear-gradient(135deg, #f5d676 0%, #d8c28d 100%);
-    transform: translateY(-1px);
-}
-
 .store-btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    color: #94a3b8;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    border: 1px solid rgba(199, 181, 132, 0.35);
 }
 
 .store-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(199, 181, 132, 0.2);
     color: #ffffff;
-}
-
-@media (max-width: 600px) {
-    .v-hero-stage-section {
-        padding: 6px 8px 20px 8px;
-    }
-    .v-hero-stage-frame {
-        border-radius: 10px;
-    }
-    .v-hero-btn {
-        width: 100%;
-        padding: 12px 18px;
-        font-size: 0.8rem;
-    }
-    .store-notice-card {
-        padding: 22px 18px;
-    }
-    .store-notice-actions {
-        flex-direction: column;
-    }
+    border-color: #c7b584;
 }

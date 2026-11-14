@@ -1970,8 +1970,45 @@ startxref
         document.documentElement.style.setProperty('--y', `${y}%`);
     });
 
+    // ──────────────── Device & Mode Routing (Desktop Landing vs Mobile Studio) ────────────────
+    function applyDeviceRouting() {
+        const body = document.body;
+        if (!body) return;
+        // Don't override if on studio.html
+        if (body.classList.contains('is-studio-workstation')) return;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const forceApp = urlParams.get('app') === '1' || urlParams.get('studio') === '1';
+        const forceLanding = urlParams.get('landing') === '1';
+
+        const ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+        const isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+        const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        const isMobileSize = window.innerWidth <= 1024;
+
+        const isMobile = forceApp || (!forceLanding && (isMobileUA || (isTouch && isMobileSize)));
+
+        const heroStage = document.getElementById('hero-stage');
+        const sequencer = document.getElementById('sequencer');
+
+        if (isMobile) {
+            body.classList.add('is-mobile-device');
+            body.classList.remove('is-desktop-landing');
+            if (heroStage) heroStage.style.display = 'none';
+            if (sequencer) sequencer.style.display = 'block';
+        } else {
+            body.classList.add('is-desktop-landing');
+            body.classList.remove('is-mobile-device');
+            if (heroStage) heroStage.style.display = 'flex';
+            if (sequencer) sequencer.style.display = 'none';
+        }
+    }
+
     // ──────────────── Initialization on DOM Ready ────────────────
     window.addEventListener('DOMContentLoaded', () => {
+        applyDeviceRouting();
+        window.addEventListener('resize', applyDeviceRouting);
+
         renderStepRuler();
         renderMatrixPads();
         renderEqFaders();
@@ -2047,6 +2084,10 @@ startxref
     function checkOrientationHint() {
         const overlay = document.getElementById('rotate-device-overlay');
         if (!overlay) return;
+        if (document.body && document.body.classList.contains('is-desktop-landing')) {
+            overlay.style.display = 'none';
+            return;
+        }
 
         // Is portrait mode? (Height > Width)
         const isPortrait = window.innerHeight > window.innerWidth;

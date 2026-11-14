@@ -11,10 +11,29 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11i">
+    <link rel="stylesheet" href="style.css?v=2026.11j">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var forceApp = params.get('app') === '1' || params.get('studio') === '1';
+            var forceLanding = params.get('landing') === '1';
+            var ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+            var isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+            var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+            var isMobileSize = window.innerWidth <= 1024;
+            var isMobile = forceApp || (!forceLanding && (isMobileUA || (isTouch && isMobileSize)));
+            if (isMobile) {
+                document.body.classList.add('is-mobile-device');
+                document.body.classList.remove('is-desktop-landing');
+            } else {
+                document.body.classList.add('is-desktop-landing');
+                document.body.classList.remove('is-mobile-device');
+            }
+        })();
+    </script>
     <div id="mouse-light"></div>
 
     <!-- ──────────────── SUBTILER QUERFORMAT-HINWEIS (SMARTPHONE / TABLET) ──────────────── -->
@@ -73,14 +92,15 @@
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
-            <a href="#sequencer" onclick="toggleDrawer()" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
-            <a href="player.html" data-i18n="nav_player">V-PLAYER</a>
-            <a href="loops.html" data-i18n="nav_loops">LOOP LIBRARY</a>
-            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
+            <a href="#sequencer" onclick="toggleDrawer()" data-i18n="nav_studio" class="nav-app-link">STUDIO & BEATCLOUD</a>
+            <a href="player.html" data-i18n="nav_player" class="nav-app-link">V-PLAYER</a>
+            <a href="loops.html" data-i18n="nav_loops" class="nav-app-link">LOOP LIBRARY</a>
+            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics" class="nav-app-link">LYRICS & NOTIZEN</a>
             <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
             <a href="about.html" data-i18n="nav_about">ABOUT</a>
             <a href="contact.html" data-i18n="nav_contact">KONTAKT</a>
+            <a href="privacy.html" data-i18n="nav_privacy">DATENSCHUTZ & IMPRESSUM</a>
         </nav>
     </div>
 
@@ -162,18 +182,6 @@
                             <span class="hotspot-beacon"></span>
                         </a>
                     </div>
-                </div>
-
-                <!-- Cinema Hero Call-To-Action Row -->
-                <div class="v-hero-cta-row">
-                    <a href="#sequencer" class="v-hero-btn v-hero-btn-primary">
-                        <span class="btn-hero-icon">🚀</span>
-                        <span data-i18n="hero_cta_studio">LIVE STUDIO IM WEB STARTEN</span>
-                    </a>
-                    <a href="loops.html" class="v-hero-btn v-hero-btn-secondary">
-                        <span class="btn-hero-icon">🎵</span>
-                        <span data-i18n="hero_cta_loops">LOOP LIBRARY ENTDECKEN</span>
-                    </a>
                 </div>
             </div>
         </section>
@@ -473,21 +481,29 @@
             <div class="store-notice-badge" data-i18n="store_badge_coming_soon">OFFIZIELLER RELEASE IN KÜRZE</div>
             <h3 id="store-notice-title" class="store-notice-title">GOOGLE PLAY STORE</h3>
             <p id="store-notice-desc" class="store-notice-desc">
-                Die native App-Version für <strong id="store-notice-target" class="gold-target">Google Play</strong> wird derzeit final poliert und für den weltweiten Store-Release vorbereitet.
+                Die native Studio-App <strong class="gold-target">V-BEATMAKER MOBILE</strong> für <strong id="store-notice-target" class="gold-target">Google Play</strong> wird derzeit für den weltweiten Store-Release vorbereitet.
             </p>
-            <div class="store-notice-pwa-box">
-                <span class="pwa-box-icon">⚡</span>
-                <div class="pwa-box-content">
-                    <strong data-i18n="store_pwa_title">Bereits jetzt voll einsatzbereit:</strong>
-                    <span data-i18n="store_pwa_desc">Nutze die V-Beatmaker Web Studio PWA direkt im mobilen Browser oder installiere sie als Homescreen-App!</span>
+            <div class="store-notice-features-box">
+                <div class="store-feature-item">
+                    <span class="feat-icon">🎛️</span>
+                    <span><strong>16-Spur Matrix:</strong> Drums, Synths & Bassline-Sequencer mit Echtzeit-Step-Programmierung</span>
+                </div>
+                <div class="store-feature-item">
+                    <span class="feat-icon">🎚️</span>
+                    <span><strong>Studio Hardware Rack:</strong> 10-Kanal Master Mixer & 10-Band Parametric Equalizer</span>
+                </div>
+                <div class="store-feature-item">
+                    <span class="feat-icon">🔊</span>
+                    <span><strong>High-End Audio Engine:</strong> 16-Bit / 44.1 kHz Studio-Master WAV & MP3 Export</span>
+                </div>
+                <div class="store-feature-item">
+                    <span class="feat-icon">🪐</span>
+                    <span><strong>Sounddesign & Produktion:</strong> Waldemar Krucinski (HOFA Diploma & IHK Mediengestalter)</span>
                 </div>
             </div>
             <div class="store-notice-actions">
-                <button class="store-modal-btn store-btn-primary" onclick="closeStoreNotice(); document.getElementById('sequencer').scrollIntoView({behavior:'smooth'});">
-                    <span>🚀</span> <span data-i18n="store_btn_seq">Zum Web Sequencer</span>
-                </button>
                 <button class="store-modal-btn store-btn-secondary" onclick="closeStoreNotice()">
-                    <span data-i18n="store_btn_close">Verstanden</span>
+                    <span data-i18n="store_btn_close">Schließen</span>
                 </button>
             </div>
         </div>
@@ -503,8 +519,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11i" defer></script>
-    <script src="script.js?v=2026.11i" defer></script>
+    <script src="rec_buffer.js?v=2026.11j" defer></script>
+    <script src="script.js?v=2026.11j" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
