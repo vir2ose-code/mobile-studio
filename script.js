@@ -25,6 +25,7 @@
             'lyrics_save': 'Speichern',
             'lyrics_save_pdf': 'Save (PDF)',
             'lyrics_clear': 'Leeren',
+            'nav_privacy': 'DATENSCHUTZ',
             'hero_cta_studio': 'LIVE STUDIO IM WEB STARTEN',
             'hero_cta_loops': 'LOOP LIBRARY ENTDECKEN',
             'store_badge_coming_soon': 'OFFIZIELLER RELEASE IN KÜRZE',
@@ -49,6 +50,7 @@
             'lyrics_save': 'Save',
             'lyrics_save_pdf': 'Save (PDF)',
             'lyrics_clear': 'Clear',
+            'nav_privacy': 'PRIVACY & LEGAL',
             'hero_cta_studio': 'LAUNCH WEB STUDIO',
             'hero_cta_loops': 'EXPLORE LOOP LIBRARY',
             'store_badge_coming_soon': 'OFFICIAL RELEASE COMING SOON',
@@ -73,6 +75,7 @@
             'lyrics_save': 'Zapisz',
             'lyrics_save_pdf': 'Zapisz (PDF)',
             'lyrics_clear': 'Wyczyść',
+            'nav_privacy': 'POLITYKA PRYWATNOŚCI',
             'hero_cta_studio': 'URUCHOM STUDIO W SIECI',
             'hero_cta_loops': 'ODKRYJ BIBLIOTEKĘ PĘTLI',
             'store_badge_coming_soon': 'OFICJALNE WYDANIE WKRÓTCE',
@@ -97,6 +100,7 @@
             'lyrics_save': 'Guardar',
             'lyrics_save_pdf': 'Guardar (PDF)',
             'lyrics_clear': 'Borrar',
+            'nav_privacy': 'AVISO LEGAL',
             'hero_cta_studio': 'INICIAR ESTUDIO EN LA WEB',
             'hero_cta_loops': 'DESCUBRIR LOOP LIBRARY',
             'store_badge_coming_soon': 'LANZAMIENTO OFICIAL PRÓXIMAMENTE',
@@ -2001,13 +2005,59 @@ startxref
             body.classList.remove('is-mobile-device');
             if (heroStage) heroStage.style.display = 'flex';
             if (sequencer) sequencer.style.display = 'none';
+            setTimeout(updateHotspotsRect, 50);
         }
+    }
+
+    // ──────────────── Dynamic Hotspots Calibration (Pixel-Exact to Layer 3_B) ────────────────
+    function updateHotspotsRect() {
+        const layer3 = document.querySelector('.v-layer-3');
+        const hotspotsLayer = document.querySelector('.v-store-hotspots-layer');
+        if (!layer3 || !hotspotsLayer) return;
+
+        const containerW = layer3.clientWidth;
+        const containerH = layer3.clientHeight;
+        if (!containerW || !containerH) return;
+
+        const naturalRatio = 2048 / 1080;
+        const currentRatio = containerW / containerH;
+
+        let renderedW, renderedH, offsetLeft, offsetTop;
+
+        if (currentRatio > naturalRatio) {
+            // Container is wider than 2048/1080: image scales to fill width, cropped top/bottom
+            renderedW = containerW;
+            renderedH = containerW / naturalRatio;
+            offsetLeft = 0;
+            offsetTop = (containerH - renderedH) / 2;
+        } else {
+            // Container is taller than 2048/1080: image scales to fill height, cropped left/right
+            renderedH = containerH;
+            renderedW = containerH * naturalRatio;
+            offsetTop = 0;
+            offsetLeft = (containerW - renderedW) / 2;
+        }
+
+        hotspotsLayer.style.position = 'absolute';
+        hotspotsLayer.style.left = offsetLeft + 'px';
+        hotspotsLayer.style.top = offsetTop + 'px';
+        hotspotsLayer.style.width = renderedW + 'px';
+        hotspotsLayer.style.height = renderedH + 'px';
     }
 
     // ──────────────── Initialization on DOM Ready ────────────────
     window.addEventListener('DOMContentLoaded', () => {
         applyDeviceRouting();
-        window.addEventListener('resize', applyDeviceRouting);
+        window.addEventListener('resize', () => {
+            applyDeviceRouting();
+            updateHotspotsRect();
+        });
+
+        const layer3Img = document.querySelector('.v-layer-3');
+        if (layer3Img) {
+            layer3Img.addEventListener('load', updateHotspotsRect);
+        }
+        updateHotspotsRect();
 
         renderStepRuler();
         renderMatrixPads();

@@ -4329,12 +4329,12 @@ a[href^="mailto:"]:hover {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   CINEMA HERO SHOWROOM STAGE (DESKTOP FULL-SCREEN SHOWCASE)
+   CINEMA HERO SHOWROOM STAGE (DESKTOP FULL-SCREEN VOLLBILD SHOWCASE)
    ══════════════════════════════════════════════════════════════════ */
 .v-hero-stage-section {
     position: relative;
     width: 100vw;
-    height: calc(100vh - 46px);
+    height: calc(100vh - 52px);
     padding: 0;
     margin: 0;
     display: flex;
@@ -4346,7 +4346,7 @@ a[href^="mailto:"]:hover {
 }
 
 .v-hero-stage-container {
-    width: 100vw;
+    width: 100%;
     height: 100%;
     max-width: none;
     padding: 0;
@@ -4358,12 +4358,10 @@ a[href^="mailto:"]:hover {
 
 .v-hero-stage-frame {
     position: relative;
-    width: 100vw;
-    height: calc(100vh - 46px);
-    aspect-ratio: 2048 / 1080;
-    max-width: calc((100vh - 46px) * (2048 / 1080));
-    max-height: 100%;
-    margin: auto;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -4383,7 +4381,7 @@ a[href^="mailto:"]:hover {
     background-image: url('NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.65) blur(3px);
+    filter: brightness(0.7) blur(4px);
     z-index: 0;
     pointer-events: none;
 }
@@ -4394,24 +4392,23 @@ a[href^="mailto:"]:hover {
     left: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center center;
     display: block;
 }
 
 .v-layer-1 {
-    object-fit: cover;
     z-index: 1;
 }
 
 .v-layer-2 {
-    object-fit: cover;
     z-index: 2;
     mix-blend-mode: screen;
-    opacity: 0.92;
+    opacity: 0.95;
     pointer-events: none;
 }
 
 .v-layer-3 {
-    object-fit: cover;
     z-index: 3;
     pointer-events: none;
 }
@@ -4492,12 +4489,155 @@ a[href^="mailto:"]:hover {
     }
 }
 
+/* ── Top Header Bar (turntablism.waldemar-krucinski.com style) ── */
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 52px;
+    background: rgba(6, 7, 9, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(199, 181, 132, 0.22);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+}
+
+.header-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.header-logo-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(199, 181, 132, 0.4));
+}
+
+.header-brand-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.header-brand-text .gold-text {
+    color: #c7b584;
+    margin-left: 2px;
+}
+
+.desktop-navbar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 32px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: #b5b5b5;
+    text-decoration: none;
+    font-size: 0.80rem;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    position: relative;
+    padding: 4px 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #c7b584;
+    box-shadow: 0 0 8px rgba(199, 181, 132, 0.6);
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover {
+    color: #c7b584;
+    text-shadow: 0 0 10px rgba(199, 181, 132, 0.4);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 1025px) {
+    .hamburger-menu {
+        display: none !important;
+    }
+    .desktop-navbar {
+        display: flex !important;
+    }
+    .header-brand-logo {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hamburger-menu {
+        display: flex !important;
+    }
+    .desktop-navbar {
+        display: none !important;
+    }
+    .header-brand-logo {
+        display: none !important;
+    }
+}
+
 /* ── Mode Routing: Desktop Landing vs Mobile Studio App ── */
 
-/* DESKTOP LANDING (Screen 2: Pure Showroom, No Sequencer) */
+/* DESKTOP LANDING (Screen 2: Pure Showroom VollBild, No Sequencer, No Lyrics) */
 body.is-desktop-landing {
     overflow: hidden !important;
+    width: 100vw !important;
     height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
     background: #030407 !important;
 }
 
@@ -4506,8 +4646,9 @@ body.is-desktop-landing .studio-main-container {
     margin: 0 !important;
     max-width: none !important;
     width: 100vw !important;
-    height: calc(100vh - 46px) !important;
+    height: calc(100vh - 52px) !important;
     overflow: hidden !important;
+    display: block !important;
 }
 
 body.is-desktop-landing #hero-stage {
@@ -4519,6 +4660,12 @@ body.is-desktop-landing #sequencer {
 }
 
 body.is-desktop-landing .site-footer {
+    display: none !important;
+}
+
+body.is-desktop-landing .sequencer-lyrics-trigger-wrap,
+body.is-desktop-landing .lyrics-card-section,
+body.is-desktop-landing .lyrics-overlay {
     display: none !important;
 }
 

@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11j">
+    <link rel="stylesheet" href="style.css?v=2026.11k">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -68,34 +68,13 @@
         </div>
     </div>
 
-    <!-- Lyrics Notepad Overlay -->
-    <div id="lyrics-overlay" class="lyrics-overlay">
-        <div class="lyrics-notepad glass-panel-generator">
-            <button class="close-notepad" onclick="toggleNotepad()" aria-label="Close Notepad">×</button>
-            <div class="notepad-header">
-                <span class="animated-pencil">✎</span>
-                <span class="notepad-hint" data-i18n="note_hint">Schreibe deine neuen Lyrics & Ideen...</span>
-            </div>
-            <textarea id="lyrics-text" class="lyrics-textarea" placeholder="..." spellcheck="false"></textarea>
-            <div class="notepad-footer">
-                <button class="btn btn-outline" onclick="downloadLyrics()">
-                    <span data-i18n="note_btn_download">Als .txt Speichern</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Drawer -->
+    <!-- Navigation Drawer (Mobile) -->
     <div id="drawer-overlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
     <div id="nav-drawer" class="nav-drawer">
         <div class="drawer-header">
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
-            <a href="#sequencer" onclick="toggleDrawer()" data-i18n="nav_studio" class="nav-app-link">STUDIO & BEATCLOUD</a>
-            <a href="player.html" data-i18n="nav_player" class="nav-app-link">V-PLAYER</a>
-            <a href="loops.html" data-i18n="nav_loops" class="nav-app-link">LOOP LIBRARY</a>
-            <a href="javascript:void(0)" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics" class="nav-app-link">LYRICS & NOTIZEN</a>
             <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
             <a href="about.html" data-i18n="nav_about">ABOUT</a>
@@ -104,7 +83,7 @@
         </nav>
     </div>
 
-    <!-- Top Navigation Header (Screen 1 Style) -->
+    <!-- Top Navigation Header (turntablism.waldemar-krucinski.com Navbar Style) -->
     <header class="app-header" id="header">
         <div class="header-main-row">
             <div class="header-left">
@@ -113,11 +92,21 @@
                     <span></span>
                     <span></span>
                 </button>
+                <a href="index.html" class="header-brand-logo" title="vir2oseSOUND Studio">
+                    <img src="NEUE_ASSETS_26/V_logo.png" alt="vir2ose" class="header-logo-icon">
+                    <span class="header-brand-text">vir2ose<span class="gold-text">SOUND</span></span>
+                </a>
             </div>
 
-            <div class="header-center">
-                <!-- Kleines Logo in Kopfleiste entfernt wie gewünscht -->
-            </div>
+            <nav class="desktop-navbar" aria-label="Hauptnavigation">
+                <ul class="nav-links">
+                    <li><a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a></li>
+                    <li><a href="services.html" data-i18n="nav_services">SERVICES</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">ABOUT</a></li>
+                    <li><a href="contact.html" data-i18n="nav_contact">KONTAKT</a></li>
+                    <li><a href="privacy.html" data-i18n="nav_privacy">DATENSCHUTZ</a></li>
+                </ul>
+            </nav>
 
             <div class="header-right">
                 <div class="language-switcher">
@@ -368,39 +357,6 @@
             </div>
         </section>
 
-        <!-- ──────────────── Dedicated LYRICS Trigger Button under Sequencer (Screen 3) ──────────────── -->
-        <div class="sequencer-lyrics-trigger-wrap">
-            <button id="btn-open-lyrics" class="rack-btn btn-external-lyrics" onclick="toggleLyricsMode()" title="Lyrics-Notizblock direkt unter dem Sequenzer aufklappen">
-                <svg class="rack-btn-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> LYRICS
-            </button>
-        </div>
-
-        <!-- ──────────────── In-Page LYRICS Glass Notepad (Unfolds Under Sequencer) ──────────────── -->
-        <section class="lyrics-card-section" id="lyrics-section">
-            <div class="lyrics-glass-box">
-                <div class="lyrics-header-row">
-                    <div class="lyrics-badge">
-                        <span class="lyrics-title">LYRICS</span>
-                        <span class="lyrics-pencil">✎</span>
-                    </div>
-                    <button class="btn-close-lyrics" onclick="toggleLyricsMode()" title="Lyrics schließen">✕</button>
-                </div>
-                <textarea id="inpage-lyrics-input" class="lyrics-glass-input" placeholder="Type your text here..." spellcheck="false"></textarea>
-                <div class="lyrics-toolbar-row">
-                    <button class="btn-lyrics-tool" onclick="copyInpageLyrics()" title="In Zwischenablage kopieren">
-                        <span>📋</span> <span data-i18n="lyrics_copy">Copy</span>
-                    </button>
-                    <button class="btn-lyrics-tool btn-pdf-tool" onclick="downloadLyricsPdf()" title="Als PDF speichern & herunterladen">
-                        <span>📄</span> <span data-i18n="lyrics_save_pdf">Save (PDF)</span>
-                    </button>
-                    <button class="btn-lyrics-tool" onclick="clearInpageLyrics()" title="Text leeren">
-                        <span>✕</span> <span data-i18n="lyrics_clear">Clear</span>
-                    </button>
-                    <span id="lyrics-status" class="lyrics-status">Gespeichert ✓</span>
-                </div>
-            </div>
-        </section>
-
         <!-- ──────────────── REC SAVE MODAL ("Sichern...") ──────────────── -->
         <div id="rec-save-modal" class="rec-modal-backdrop" style="display: none;">
             <div class="rec-modal-card glass-panel-generator">
@@ -519,8 +475,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11j" defer></script>
-    <script src="script.js?v=2026.11j" defer></script>
+    <script src="rec_buffer.js?v=2026.11k" defer></script>
+    <script src="script.js?v=2026.11k" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
