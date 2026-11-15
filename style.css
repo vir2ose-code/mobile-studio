@@ -4340,9 +4340,9 @@ a[href^="mailto:"]:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #030407;
+    background: transparent !important;
     overflow: hidden;
-    z-index: 10;
+    z-index: 2;
 }
 
 .v-hero-stage-container {
@@ -4354,6 +4354,7 @@ a[href^="mailto:"]:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent !important;
 }
 
 .v-hero-stage-frame {
@@ -4365,25 +4366,14 @@ a[href^="mailto:"]:hover {
     border: none;
     border-radius: 0;
     box-shadow: none;
-    background: transparent;
+    background: transparent !important;
     overflow: hidden;
     transform: translateZ(0); /* Hardware accelerated compositing */
 }
 
-/* Background wallpaper extension behind the stage on ultra-wide screens */
+/* Background wallpaper extension disabled in favor of live fixed video stage */
 .v-hero-stage-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.7) blur(4px);
-    z-index: 0;
-    pointer-events: none;
+    display: none !important;
 }
 
 .v-stage-layer {
@@ -4668,6 +4658,57 @@ body.is-mobile-device .header-brand-logo {
 
 /* ── Mode Routing: Desktop Landing vs Mobile Studio App ── */
 
+/* ──────────────── Living Cosmic Background Video Stage (Desktop Landing) ──────────────── */
+.landing-fixed-bg-stage {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 52px);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    display: none;
+}
+
+body.is-desktop-landing .landing-fixed-bg-stage {
+    display: block !important;
+}
+
+body.is-mobile-device .landing-fixed-bg-stage {
+    display: none !important;
+}
+
+.bg-fixed-layer-1,
+.bg-fixed-layer-2,
+.bg-fixed-scrim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+.bg-fixed-layer-1 {
+    z-index: 1;
+}
+
+.bg-fixed-layer-2 {
+    z-index: 2;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.bg-fixed-scrim {
+    z-index: 3;
+    background: radial-gradient(circle at 50% 50%, rgba(3, 4, 7, 0.08) 0%, rgba(3, 4, 7, 0.45) 85%);
+}
+
 /* DESKTOP LANDING (Screen 2: Pure Showroom VollBild + Scrollable Feature Showcase) */
 body.is-desktop-landing {
     overflow-x: hidden !important;
@@ -4678,8 +4719,7 @@ body.is-desktop-landing {
     height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
-    background: #030407 url('NEUE_ASSETS_26/Landig_Background_Clean.png') no-repeat center top fixed !important;
-    background-size: cover !important;
+    background: #030407 !important;
 }
 
 body.is-desktop-landing .studio-main-container {
@@ -4862,6 +4902,13 @@ body.is-desktop-landing .nav-app-link {
 .showcase-info {
     flex: 1 1 48%;
     max-width: 580px;
+    background: rgba(8, 9, 14, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(199, 181, 132, 0.22);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
 .feat-badge {
@@ -5107,6 +5154,9 @@ body.is-desktop-landing .nav-app-link {
     .showcase-info {
         max-width: 100%;
         flex: 1 1 100%;
+    }
+    .showcase-info {
+        padding: 24px 20px;
     }
     .landing-showcase-section {
         padding: 60px 20px 80px;

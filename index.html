@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11n">
+    <link rel="stylesheet" href="style.css?v=2026.11o">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -83,6 +83,15 @@
         </nav>
     </div>
 
+    <!-- ──────────────── Living Cosmic Background Video Stage (Desktop Landing) ──────────────── -->
+    <div class="landing-fixed-bg-stage" id="landing-fixed-bg" aria-hidden="true">
+        <img src="NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png" alt="" class="bg-fixed-layer-1">
+        <video class="bg-fixed-layer-2" autoplay loop muted playsinline preload="auto">
+            <source src="NEUE_ASSETS_26/Layer_2_video_New.mp4" type="video/mp4">
+        </video>
+        <div class="bg-fixed-scrim"></div>
+    </div>
+
     <!-- Top Navigation Header (turntablism.waldemar-krucinski.com Navbar Style) -->
     <header class="app-header" id="header">
         <div class="header-main-row">
@@ -127,24 +136,6 @@
             <div class="v-hero-stage-container">
                 <!-- 3-Layer Visual Stage Frame (2048x1080 Native Aspect Ratio) -->
                 <div class="v-hero-stage-frame">
-                    <!-- Layer 1: Static Cosmic Master Background (2K) -->
-                    <img src="NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png" 
-                         alt="V-Beatmaker Mobile Cosmic Studio Environment" 
-                         class="v-stage-layer v-layer-1" 
-                         loading="eager"
-                         decoding="async">
-
-                    <!-- Layer 2: Cosmic Video Animation Loop (Seamless Screen Blend) -->
-                    <video class="v-stage-layer v-layer-2" 
-                           autoplay 
-                           loop 
-                           muted 
-                           playsinline 
-                           preload="auto"
-                           aria-hidden="true">
-                        <source src="NEUE_ASSETS_26/Layer_2_video_New.mp4" type="video/mp4">
-                    </video>
-
                     <!-- Layer 3: Foreground Devices & 3D Typography (2K Elegant Layout) -->
                     <img src="NEUE_ASSETS_26/Layer_3_New.png" 
                          alt="V-Beatmaker Mobile - This Is Your Moment" 
@@ -695,8 +686,8 @@
     </div>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11n" defer></script>
-    <script src="script.js?v=2026.11n" defer></script>
+    <script src="rec_buffer.js?v=2026.11o" defer></script>
+    <script src="script.js?v=2026.11o" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

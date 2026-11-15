@@ -2389,6 +2389,12 @@ startxref
 
         // Is portrait mode? (Height > Width)
         const isPortrait = window.innerHeight > window.innerWidth;
+
+        // If the user turns into landscape at ANY point during the session, permanently remember it for this session!
+        if (!isPortrait) {
+            sessionStorage.setItem('vir2ose_dismiss_rotate', 'true');
+        }
+
         // On mobile/tablet or narrow browser window
         const isMobileOrNarrow = window.innerWidth <= 960 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
         const isDismissed = sessionStorage.getItem('vir2ose_dismiss_rotate') === 'true';
