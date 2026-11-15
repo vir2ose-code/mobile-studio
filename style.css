@@ -2363,6 +2363,7 @@ body.mobile-studio-landing {
     .step-ruler-bar {
         padding: 1px 8px !important;
         flex-shrink: 0;
+        grid-template-columns: 114px 1fr !important;
     }
     .sequencer-matrix {
         flex: 1;
@@ -2379,7 +2380,7 @@ body.mobile-studio-landing {
         max-height: 28px;
         margin-bottom: 1.5px;
         display: grid;
-        grid-template-columns: 100px 1fr !important;
+        grid-template-columns: 114px 1fr !important;
     }
     .matrix-pad {
         height: 100%;
