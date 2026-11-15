@@ -2232,26 +2232,37 @@ startxref
         const urlParams = new URLSearchParams(window.location.search);
         const forceApp = urlParams.get('app') === '1' || urlParams.get('studio') === '1';
         const forceLanding = urlParams.get('landing') === '1';
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
         const ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
-        const isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+        const isIPad = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) || /ipad/i.test(ua);
+        const isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua);
         const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-        const isMobileSize = window.innerWidth <= 1024;
+        const isMobileOrTablet = isStandalone || isMobileUA || isIPad || (isTouch && window.screen.width <= 1400);
 
-        const isMobile = forceApp || (!forceLanding && (isMobileUA || (isTouch && isMobileSize)));
+        const isMobile = forceApp || (!forceLanding && isMobileOrTablet);
 
         const heroStage = document.getElementById('hero-stage');
         const sequencer = document.getElementById('sequencer');
+        const showcase = document.querySelector('.landing-showcase-section');
+        const fixedBg = document.getElementById('landing-fixed-bg');
+        const footer = document.querySelector('.site-footer');
 
         if (isMobile) {
             body.classList.add('is-mobile-device');
             body.classList.remove('is-desktop-landing');
             if (heroStage) heroStage.style.display = 'none';
+            if (showcase) showcase.style.display = 'none';
+            if (fixedBg) fixedBg.style.display = 'none';
+            if (footer) footer.style.display = 'none';
             if (sequencer) sequencer.style.display = 'block';
         } else {
             body.classList.add('is-desktop-landing');
             body.classList.remove('is-mobile-device');
             if (heroStage) heroStage.style.display = 'flex';
+            if (showcase) showcase.style.display = 'block';
+            if (fixedBg) fixedBg.style.display = 'block';
+            if (footer) footer.style.display = 'block';
             if (sequencer) sequencer.style.display = 'none';
             setTimeout(updateHotspotsRect, 50);
         }

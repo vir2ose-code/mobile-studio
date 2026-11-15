@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11o">
+    <link rel="stylesheet" href="style.css?v=2026.11p">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -20,11 +20,18 @@
             var params = new URLSearchParams(window.location.search);
             var forceApp = params.get('app') === '1' || params.get('studio') === '1';
             var forceLanding = params.get('landing') === '1';
+            var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
             var ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
-            var isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+            
+            // iPadOS Safari reports 'MacIntel' with maxTouchPoints > 1:
+            var isIPad = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) || /ipad/i.test(ua);
+            var isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua);
             var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-            var isMobileSize = window.innerWidth <= 1024;
-            var isMobile = forceApp || (!forceLanding && (isMobileUA || (isTouch && isMobileSize)));
+            
+            // Any smartphone, tablet (iPad, Android Tablet) or standalone PWA:
+            var isMobileOrTablet = isStandalone || isMobileUA || isIPad || (isTouch && window.screen.width <= 1400);
+
+            var isMobile = forceApp || (!forceLanding && isMobileOrTablet);
             if (isMobile) {
                 document.body.classList.add('is-mobile-device');
                 document.body.classList.remove('is-desktop-landing');
@@ -75,6 +82,10 @@
             <span class="close-drawer" onclick="toggleDrawer()">✕</span>
         </div>
         <nav class="drawer-nav">
+            <a href="#sequencer" class="nav-app-link" onclick="toggleDrawer()" data-i18n="nav_studio">STUDIO & BEATCLOUD</a>
+            <a href="player.html" class="nav-app-link" data-i18n="nav_player">V-PLAYER</a>
+            <a href="loops.html" class="nav-app-link" data-i18n="nav_loops">LOOP LIBRARY</a>
+            <a href="javascript:void(0)" class="nav-app-link" onclick="toggleNotepad(); toggleDrawer();" data-i18n="nav_lyrics">LYRICS & NOTIZEN</a>
             <a href="portfolio.html" data-i18n="nav_portfolio">PORTFOLIO</a>
             <a href="services.html" data-i18n="nav_services">SERVICES</a>
             <a href="about.html" data-i18n="nav_about">ABOUT</a>
@@ -686,8 +697,8 @@
     </div>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11o" defer></script>
-    <script src="script.js?v=2026.11o" defer></script>
+    <script src="rec_buffer.js?v=2026.11p" defer></script>
+    <script src="script.js?v=2026.11p" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

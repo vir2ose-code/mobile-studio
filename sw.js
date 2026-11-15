@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026.11o';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.11p';
 const urlsToCache = [
     './',
     './index.html',
@@ -6,10 +6,10 @@ const urlsToCache = [
     './player.html',
     './loops.html',
     './fonts/fonts.css',
-    './style.css?v=2026.11o',
-    './script.js?v=2026.11o',
-    './player.js?v=2026.11o',
-    './rec_buffer.js?v=2026.11o',
+    './style.css?v=2026.11p',
+    './script.js?v=2026.11p',
+    './player.js?v=2026.11p',
+    './rec_buffer.js?v=2026.11p',
     './about.html',
     './portfolio.html',
     './services.html',

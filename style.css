@@ -4770,7 +4770,7 @@ body.is-desktop-landing .nav-app-link {
 
 /* ──────────────── Landing Page Feature Showcase ──────────────── */
 .landing-showcase-section {
-    display: block;
+    display: none;
     position: relative;
     z-index: 5;
     padding: 90px 24px 120px;
@@ -5167,7 +5167,10 @@ body.is-desktop-landing .nav-app-link {
 }
 
 /* MOBILE & TABLET (iOS & Android: Original Sequencer App) */
-body.is-mobile-device #hero-stage {
+body.is-mobile-device #hero-stage,
+body.is-mobile-device .landing-showcase-section,
+body.is-mobile-device .landing-fixed-bg-stage,
+body.is-mobile-device .site-footer {
     display: none !important;
 }
 
@@ -5180,7 +5183,10 @@ body.is-mobile-device .nav-app-link {
 }
 
 /* STUDIO WORKSTATION (studio.html or ?app=1 on PC) */
-body.is-studio-workstation #hero-stage {
+body.is-studio-workstation #hero-stage,
+body.is-studio-workstation .landing-showcase-section,
+body.is-studio-workstation .landing-fixed-bg-stage,
+body.is-studio-workstation .site-footer {
     display: none !important;
 }
 

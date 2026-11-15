@@ -36,5 +36,58 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "./NEUE_ASSETS_26/Start_Screen.webp",
+      "sizes": "2048x2732",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Mobile Studio 16-Step Sequencer"
+    },
+    {
+      "src": "./NEUE_ASSETS_26/Mixer_EQ_BitCloud.webp",
+      "sizes": "2048x2732",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "10-Band Equalizer & Master Mixer"
+    },
+    {
+      "src": "./NEUE_ASSETS_26/Library_&_Player.webp",
+      "sizes": "2048x2732",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "V-Player & High-End Audio Engine"
+    },
+    {
+      "src": "./NEUE_ASSETS_26/Text_Note_Pad.webp",
+      "sizes": "2048x2732",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Lyrics & Studio Notepad"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sequencer",
+      "short_name": "Sequencer",
+      "description": "16-Step Pattern Sequencer & Drum Machine",
+      "url": "./#sequencer",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "V-Player",
+      "short_name": "Player",
+      "description": "High-End Audio Player & Master Replay",
+      "url": "./player.html",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Loop Library",
+      "short_name": "Loops",
+      "description": "Soundset Loops & Sample Library",
+      "url": "./loops.html",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    }
   ]
 }
