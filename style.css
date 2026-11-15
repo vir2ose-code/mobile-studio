@@ -971,10 +971,10 @@ body.mobile-studio-landing {
     filter: drop-shadow(0 0 5px rgba(163, 143, 90, 0.5));
 }
 
-/* ──────────────── BEATCLOUD Sequencer Rack Chassis (Screen 1 Proportions) ──────────────── */
+/* ──────────────── BEATCLOUD Sequencer Rack Chassis (Pro Wide Hardware Dimensions) ──────────────── */
 .sequencer-rack-section {
     width: 100%;
-    max-width: 790px; /* Exact Screen 1 Compact Width */
+    max-width: min(96vw, 1040px); /* Pro Audio Master Width: fits all controls, badges & REC pills */
     margin: 0 auto;
 }
 
@@ -997,12 +997,21 @@ body.mobile-studio-landing {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.rack-header-bar::-webkit-scrollbar {
+    display: none;
 }
 
 .transport-group {
     display: flex;
     gap: 6px;
     align-items: center;
+    flex-shrink: 0;
 }
 
 /* ──────────────── Gold-Glänzend, Gebürstet & Poliert Transport Buttons (#c7b584 Style) ──────────────── */
@@ -1030,7 +1039,7 @@ body.mobile-studio-landing {
     white-space: nowrap;
 }
 
-/* Transport Buttons: Exakt gleiche Größe (Breite & Höhe) für einheitlichen Hardware-Look */
+/* Transport Buttons: Harmonische Hardware-Breite mit flexibler Anpassung */
 .btn-play-pause,
 .btn-play,
 .btn-stop,
@@ -1039,15 +1048,18 @@ body.mobile-studio-landing {
 .btn-ff,
 .btn-rec,
 .btn-loop {
-    width: 84px;
-    min-width: 84px;
-    max-width: 84px;
+    width: auto;
+    min-width: 66px;
+    padding: 0 10px;
+    flex-shrink: 0;
 }
 
 .btn-eq,
 .btn-mixer {
-    min-width: 96px;
-    padding: 0 12px;
+    width: auto;
+    min-width: 82px;
+    padding: 0 10px;
+    flex-shrink: 0;
 }
 
 .btn-lyrics-toggle {
@@ -1143,9 +1155,11 @@ body.mobile-studio-landing {
 .rack-badge-group {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     user-select: none;
-    margin-left: 8px;
+    margin-left: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .badge-text-col {
@@ -2346,7 +2360,23 @@ body.mobile-studio-landing {
     }
 }
 
-/* Explicit class-based groovebox overlay if activated on portrait/tablet */
+/* Model 2b: Tablet Landscape (iPad, iPad Pro, Android Tablets) */
+@media (min-width: 768px) and (orientation: landscape) {
+    .studio-main-container {
+        padding-top: clamp(140px, 19vh, 230px) !important;
+    }
+    .sequencer-rack-section {
+        max-width: min(96vw, 1040px) !important;
+    }
+    .rack-header-bar {
+        padding: 7px 12px !important;
+        gap: 12px;
+    }
+    .rack-badge-group {
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+    }
+}
 body.groovebox-mode .app-header,
 body.groovebox-mode .hero-brand-section,
 body.groovebox-mode .sequencer-launch-wrapper,
@@ -3521,7 +3551,9 @@ body.groovebox-mode .sequencer-matrix {
     letter-spacing: 0.8px;
     color: #c7b584;
     white-space: nowrap;
-    cursor: default;
+    flex-shrink: 0;
+    cursor: pointer;
+    user-select: none;
     transition: all 0.25s ease;
 }
 
