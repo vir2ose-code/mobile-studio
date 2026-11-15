@@ -4510,6 +4510,7 @@ a[href^="mailto:"]:hover {
 }
 
 .header-main-row {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4521,6 +4522,7 @@ a[href^="mailto:"]:hover {
     display: flex;
     align-items: center;
     gap: 14px;
+    z-index: 2;
 }
 
 .header-brand-logo {
@@ -4552,19 +4554,27 @@ a[href^="mailto:"]:hover {
 }
 
 .desktop-navbar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    margin-left: auto;
-    margin-right: 32px;
+    justify-content: center;
+    margin: 0;
+    z-index: 10;
+    pointer-events: auto;
 }
 
 .nav-links {
     display: flex;
-    gap: 28px;
+    gap: 32px;
     list-style: none;
     align-items: center;
+    justify-content: center;
     margin: 0;
     padding: 0;
+    white-space: nowrap;
 }
 
 .nav-links li {
@@ -4575,7 +4585,7 @@ a[href^="mailto:"]:hover {
 .nav-links a {
     color: #b5b5b5;
     text-decoration: none;
-    font-size: 0.80rem;
+    font-size: 0.82rem;
     font-weight: 600;
     letter-spacing: 1.8px;
     text-transform: uppercase;
@@ -4608,16 +4618,27 @@ a[href^="mailto:"]:hover {
 .header-right {
     display: flex;
     align-items: center;
+    z-index: 2;
+}
+
+@media (min-width: 1025px) and (max-width: 1250px) {
+    .nav-links {
+        gap: 20px;
+    }
+    .nav-links a {
+        font-size: 0.76rem;
+        letter-spacing: 1.4px;
+    }
 }
 
 @media (min-width: 1025px) {
-    .hamburger-menu {
+    .mobile-studio-landing:not(.is-mobile-device) .hamburger-menu {
         display: none !important;
     }
-    .desktop-navbar {
+    .mobile-studio-landing:not(.is-mobile-device) .desktop-navbar {
         display: flex !important;
     }
-    .header-brand-logo {
+    .mobile-studio-landing:not(.is-mobile-device) .header-brand-logo {
         display: flex !important;
     }
 }
@@ -4629,9 +4650,20 @@ a[href^="mailto:"]:hover {
     .desktop-navbar {
         display: none !important;
     }
-    .header-brand-logo {
+    .mobile-studio-landing .header-brand-logo {
         display: none !important;
     }
+}
+
+/* Explicit Mobile Device override (e.g. tablet landscape / touch devices) */
+body.is-mobile-device .hamburger-menu {
+    display: flex !important;
+}
+body.is-mobile-device .desktop-navbar {
+    display: none !important;
+}
+body.is-mobile-device .header-brand-logo {
+    display: none !important;
 }
 
 /* ── Mode Routing: Desktop Landing vs Mobile Studio App ── */
