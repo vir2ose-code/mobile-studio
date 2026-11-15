@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11m">
+    <link rel="stylesheet" href="style.css?v=2026.11n">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -179,6 +179,210 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- ──────────────── Landing Page Feature Showcase (Scrollable Section) ──────────────── -->
+        <section class="landing-showcase-section" id="landing-showcase">
+            <div class="showcase-container">
+                
+                <!-- Section Header -->
+                <div class="showcase-header">
+                    <span class="showcase-eyebrow" data-i18n="feat_header_tag">NATIVE MOBILE ARCHITECTURE</span>
+                    <h2 class="showcase-title" data-i18n="feat_header_title">HIGH-END AUDIO POWERHOUSE IM HOSENTASCHENFORMAT</h2>
+                    <p class="showcase-subtitle" data-i18n="feat_header_subtitle">
+                        Entwickelt aus 26 Jahren Studio-Expertise. 100% autark, latenzfrei und für präzise Touch-Bedienung auf Smartphones & Tablets optimiert.
+                    </p>
+                    <div class="showcase-divider-line"></div>
+                </div>
+
+                <!-- Feature Row 1: 16-Step Sequencer, 10-Band EQ & Hardware Mixer -->
+                <div class="showcase-row">
+                    <div class="showcase-visual">
+                        <div class="showcase-img-wrap" onclick="openShowcaseLightbox(this)" title="Klicken für Vollansicht">
+                            <picture>
+                                <source srcset="NEUE_ASSETS_26/Mixer_EQ_BitCloud.webp" type="image/webp">
+                                <img src="NEUE_ASSETS_26/Mixer_EQ_BitCloud.png" 
+                                     alt="Beatcloud 16-Step Sequencer, 10-Band EQ & Hardware Mixer" 
+                                     class="showcase-img" 
+                                     loading="lazy">
+                            </picture>
+                            <div class="img-zoom-hint"><span data-i18n="zoom_hint">🔍 Zum Vergrößern klicken</span></div>
+                        </div>
+                    </div>
+                    <div class="showcase-info">
+                        <span class="feat-badge" data-i18n="feat1_badge">PRO SEQUENCER & MIXING CONSOLE</span>
+                        <h3 class="feat-heading" data-i18n="feat1_title">16-STEP BEATCLOUD, 10-BAND EQ & HARDWARE-MIXER</h3>
+                        <p class="feat-desc" data-i18n="feat1_desc">
+                            Die vollständige mobile Beat-Workstation: 16 rhythmische Step-Pads, 10 simultane Spuren und analog modellierte Mischpult-Tools vereint auf einer übersichtlichen Touch-Oberfläche.
+                        </p>
+                        <ul class="feat-list">
+                            <li><strong data-i18n="feat1_b1_title">16-Step Pattern Grid:</strong> <span data-i18n="feat1_b1_txt">10 parallele Spuren für Kick, Snare, Claps, HiHats, Congas, Cowbell, Cymbal und druckvollen Sub 808 Bass.</span></li>
+                            <li><strong data-i18n="feat1_b2_title">5 Factory SoundSets:</strong> <span data-i18n="feat1_b2_txt">Direkt umschaltbare Signature-Kits (LoFi Retro, Organic, Urban Trap, POP & Classic Rock) von Waldemar Krucinski produziert.</span></li>
+                            <li><strong data-i18n="feat1_b3_title">10-Band Graphic Equalizer:</strong> <span data-i18n="feat1_b3_txt">Chirurgische Klangregelung von 32 Hz bis 16 kHz mit reaktionsschneller Stereo-Master-Pegelanzeige.</span></li>
+                            <li><strong data-i18n="feat1_b4_title">10-Kanal Hardware-Mixer:</strong> <span data-i18n="feat1_b4_txt">Präzise Einzelkanal-Fader mit Peak-LEDs für perfekte Pegelbalance und Transparenz im Gesamtmix.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature Row 2: Sound Portfolio & V-Player (Reversed) -->
+                <div class="showcase-row showcase-row-reverse">
+                    <div class="showcase-visual">
+                        <div class="showcase-img-wrap" onclick="openShowcaseLightbox(this)" title="Klicken für Vollansicht">
+                            <picture>
+                                <source srcset="NEUE_ASSETS_26/Library_&_Player.webp" type="image/webp">
+                                <img src="NEUE_ASSETS_26/Library_&_Player.png" 
+                                     alt="Exklusives Sound Portfolio & V-Player Audio Engine" 
+                                     class="showcase-img" 
+                                     loading="lazy">
+                            </picture>
+                            <div class="img-zoom-hint"><span data-i18n="zoom_hint">🔍 Zum Vergrößern klicken</span></div>
+                        </div>
+                    </div>
+                    <div class="showcase-info">
+                        <span class="feat-badge" data-i18n="feat2_badge">EXCLUSIVE SOUND LIBRARY & V-PLAYER</span>
+                        <h3 class="feat-heading" data-i18n="feat2_title">SOUND PORTFOLIO & VIR2OSE HIGH-END AUDIO ENGINE</h3>
+                        <p class="feat-desc" data-i18n="feat2_desc">
+                            Erstklassige Musikproduktionen und vielseitige Genre-Libraries treffen auf eine kompromisslose 16-Bit / 44.1 kHz Web Audio Engine.
+                        </p>
+                        <ul class="feat-list">
+                            <li><strong data-i18n="feat2_b1_title">12 Exklusive Genre-Libraries:</strong> <span data-i18n="feat2_b1_txt">Handverlesene Produktionen von Cinematic, Drill, EDM, Hip-Hop, House, LoFi bis Techno, Soul und Rock.</span></li>
+                            <li><strong data-i18n="feat2_b2_title">High-End Audio Player:</strong> <span data-i18n="feat2_b2_txt">Native Audio DSP mit Live-Wellenform, Playlisten-Management und kristallklarer Stereo-Wiedergabe.</span></li>
+                            <li><strong data-i18n="feat2_b3_title">Drag & Drop Import:</strong> <span data-i18n="feat2_b3_txt">Lade eigene Audiodateien und Ordner direkt in den Player – vollständig offline im Browser gespeichert.</span></li>
+                            <li><strong data-i18n="feat2_b4_title">250 MB Offline Audio Buffer:</strong> <span data-i18n="feat2_b4_txt">Maximale Performance ohne Nachladeverzögerungen für nahtlose Performance-Sessions.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature Row 3: REC Export, BPM-TAP & Groove Swing -->
+                <div class="showcase-row">
+                    <div class="showcase-visual">
+                        <div class="showcase-img-wrap" onclick="openShowcaseLightbox(this)" title="Klicken für Vollansicht">
+                            <picture>
+                                <source srcset="NEUE_ASSETS_26/Tempo-TAP.webp" type="image/webp">
+                                <img src="NEUE_ASSETS_26/Tempo-TAP.png" 
+                                     alt="Transport Bar, REC Export, BPM TAP & Swing" 
+                                     class="showcase-img" 
+                                     loading="lazy">
+                            </picture>
+                            <div class="img-zoom-hint"><span data-i18n="zoom_hint">🔍 Zum Vergrößern klicken</span></div>
+                        </div>
+                    </div>
+                    <div class="showcase-info">
+                        <span class="feat-badge" data-i18n="feat3_badge">STUDIO MASTERING & TIMING DSP</span>
+                        <h3 class="feat-heading" data-i18n="feat3_title">REC-MASTERING, TAP-TEMPO & GROOVE SWING</h3>
+                        <p class="feat-desc" data-i18n="feat3_desc">
+                            Von der Skizze zum fertigen Master: Präzises Timing und intuitive Master-Kontrolle für deinen Beat-Workflow.
+                        </p>
+                        <ul class="feat-list">
+                            <li><strong data-i18n="feat3_b1_title">1-Klick Studio Master REC:</strong> <span data-i18n="feat3_b1_txt">Echtzeit-Aufnahme deiner Sequenzen direkt in unkomprimierte Studio-Master WAV- & MP3-Dateien.</span></li>
+                            <li><strong data-i18n="feat3_b2_title">Dynamisches TAP Tempo & BPM:</strong> <span data-i18n="feat3_b2_txt">Ergonomische Tempo-Einstellung oder intuitives Einzählen des Tempos per rhythmischem TAP-Button.</span></li>
+                            <li><strong data-i18n="feat3_b3_title">Stufenloser Analog Swing:</strong> <span data-i18n="feat3_b3_txt">Regelbarer Swing-Fader (0% bis 100%) für organischen Shuffle und lebendiges Micro-Timing.</span></li>
+                            <li><strong data-i18n="feat3_b4_title">Optischer Step-Ruler:</strong> <span data-i18n="feat3_b4_txt">Reaktionsschnelle optische LED-Positionsanzeige für perfekte visuelle Orientierung im Takt.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature Row 4: Lyrics & Notizen Notepad (Reversed) -->
+                <div class="showcase-row showcase-row-reverse">
+                    <div class="showcase-visual">
+                        <div class="showcase-img-wrap" onclick="openShowcaseLightbox(this)" title="Klicken für Vollansicht">
+                            <picture>
+                                <source srcset="NEUE_ASSETS_26/Text_Note_Pad.webp" type="image/webp">
+                                <img src="NEUE_ASSETS_26/Text_Note_Pad.png" 
+                                     alt="Lyrics & Songwriting Notepad mit PDF Export" 
+                                     class="showcase-img" 
+                                     loading="lazy">
+                            </picture>
+                            <div class="img-zoom-hint"><span data-i18n="zoom_hint">🔍 Zum Vergrößern klicken</span></div>
+                        </div>
+                    </div>
+                    <div class="showcase-info">
+                        <span class="feat-badge" data-i18n="feat4_badge">CREATIVE SONGWRITER SUITE</span>
+                        <h3 class="feat-heading" data-i18n="feat4_title">LYRICS & NOTIZEN MIT PDF-EXPORT</h3>
+                        <p class="feat-desc" data-i18n="feat4_desc">
+                            Vom ersten Beat bis zur fertigen Songzeile: Halte Texte, Reime und Produktionsnotizen direkt beim Jammen fest – ohne den Beat zu stoppen.
+                        </p>
+                        <ul class="feat-list">
+                            <li><strong data-i18n="feat4_b1_title">Immer im Flow:</strong> <span data-i18n="feat4_b1_txt">Schreibe deine Songtexte direkt beim Hören deiner Beats – ohne App-Wechsel oder Ablenkung.</span></li>
+                            <li><strong data-i18n="feat4_b2_title">1-Klick PDF & TXT Export:</strong> <span data-i18n="feat4_b2_txt">Speichere deine Texte formatiert als sauberes, druckfertiges PDF oder Textdokument für Studio-Sessions.</span></li>
+                            <li><strong data-i18n="feat4_b3_title">Nahtlose Studio-Rückkehr:</strong> <span data-i18n="feat4_b3_txt">Der zentrale „Studio & Beatcloud“-Button bringt dich sofort wieder zurück in den Sequencer.</span></li>
+                            <li><strong data-i18n="feat4_b4_title">Automatische Speicherung:</strong> <span data-i18n="feat4_b4_txt">Deine Lyrics bleiben lokal sicher im Browser gesichert und gehen beim Schließen nicht verloren.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Feature Row 5: Mobile First & Querformat Ergonomie -->
+                <div class="showcase-row">
+                    <div class="showcase-visual">
+                        <div class="showcase-img-wrap" onclick="openShowcaseLightbox(this)" title="Klicken für Vollansicht">
+                            <picture>
+                                <source srcset="NEUE_ASSETS_26/Start_Screen.webp" type="image/webp">
+                                <img src="NEUE_ASSETS_26/Start_Screen.png" 
+                                     alt="Beatcloud im Querformat Mobile Ergonomie" 
+                                     class="showcase-img" 
+                                     loading="lazy">
+                            </picture>
+                            <div class="img-zoom-hint"><span data-i18n="zoom_hint">🔍 Zum Vergrößern klicken</span></div>
+                        </div>
+                    </div>
+                    <div class="showcase-info">
+                        <span class="feat-badge" data-i18n="feat5_badge">ERGONOMIC MOBILE WORKFLOW</span>
+                        <h3 class="feat-heading" data-i18n="feat5_title">VOLLE KONTROLLE IM BREITBILD-QUERFORMAT</h3>
+                        <p class="feat-desc" data-i18n="feat5_desc">
+                            Entwickelt für maximale Übersicht und taktile Kontrolle: Dein vollwertiges Studio für die Hosentasche auf iOS, iPadOS und Android.
+                        </p>
+                        <ul class="feat-list">
+                            <li><strong data-i18n="feat5_b1_title">Optimierte Breitbild-Ergonomie:</strong> <span data-i18n="feat5_b1_txt">Alle 16 Steps, 10 Fader und Master-Bedienelemente ohne horizontales Scrollen im direkten Zugriff.</span></li>
+                            <li><strong data-i18n="feat5_b2_title">Taktile Touch-Architektur:</strong> <span data-i18n="feat5_b2_txt">Großzügig dimensionierte Pad-Zonen für fingerfreundliches, reaktionsschnelles Beat-Jamming.</span></li>
+                            <li><strong data-i18n="feat5_b3_title">100% Offline PWA Technologie:</strong> <span data-i18n="feat5_b3_txt">Installierbar als native Web-App auf dem Homescreen – arbeitet vollständig ohne Internetverbindung.</span></li>
+                            <li><strong data-i18n="feat5_b4_title">Zero-Latency DSP:</strong> <span data-i18n="feat5_b4_txt">Direkte Hardware-Verarbeitung über die native HTML5 Web Audio API ohne spürbare Latenz.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Universal Purchase / App Store & Google Play CTA Box -->
+                <div class="showcase-purchase-card glass-panel-generator">
+                    <div class="purchase-card-content">
+                        <span class="purchase-eyebrow" data-i18n="cta_tag">UNIVERSAL PURCHASE • NO SUBSCRIPTION</span>
+                        <h3 class="purchase-title" data-i18n="cta_title">EINMAL KAUFEN. FÜR IMMER BESITZEN.</h3>
+                        <p class="purchase-subtitle" data-i18n="cta_subtitle">
+                            Auf iPad, iPhone und Android-Smartphones. Keine monatlichen Abonnements, keine versteckten Kosten. Volle kreative Freiheit für deine Musikproduktion.
+                        </p>
+                        <div class="purchase-specs-grid">
+                            <div class="spec-pill"><span>🎛️ 16-Step Beatcloud Matrix</span></div>
+                            <div class="spec-pill"><span>🎚️ 10-Band EQ & Hardware-Mixer</span></div>
+                            <div class="spec-pill"><span>🎧 16-Bit / 44.1 kHz Studio Master</span></div>
+                            <div class="spec-pill"><span>📁 12 Genre Sound-Libraries</span></div>
+                            <div class="spec-pill"><span>📝 Lyrics Notepad & PDF Export</span></div>
+                            <div class="spec-pill"><span>⚡ 100% Offline PWA</span></div>
+                        </div>
+                        <div class="purchase-badges-wrap">
+                            <a href="#store-google-play" onclick="openStoreNotice('Google Play Store', event)" class="store-badge-btn" aria-label="Google Play Store" title="Google Play Store">
+                                <svg width="165" height="50" viewBox="0 0 165 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="165" height="50" rx="8" fill="#0A0B10" stroke="#c7b584" stroke-width="1.2"/>
+                                    <path d="M22 13L35.5 25L22 37V13Z" fill="#00E5FF"/>
+                                    <path d="M22 13L31 22L35.5 25L22 13Z" fill="#00E575"/>
+                                    <path d="M22 37L31 28L35.5 25L22 37Z" fill="#FF3B30"/>
+                                    <path d="M31 22L38 18L35.5 25L31 22Z" fill="#FFCC00"/>
+                                    <path d="M31 28L38 32L35.5 25L31 28Z" fill="#FF9500"/>
+                                    <text x="48" y="20" fill="#A0A5B5" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600" letter-spacing="1">JETZT BEI</text>
+                                    <text x="48" y="34" fill="#FFFFFF" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700">Google Play</text>
+                                </svg>
+                            </a>
+                            <a href="#store-app-store" onclick="openStoreNotice('Apple App Store', event)" class="store-badge-btn" aria-label="Apple App Store" title="Apple App Store">
+                                <svg width="165" height="50" viewBox="0 0 165 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="165" height="50" rx="8" fill="#0A0B10" stroke="#c7b584" stroke-width="1.2"/>
+                                    <path d="M32.5 25.5C32.5 22.8 34.7 21.4 34.8 21.3C33.5 19.5 31.6 19.2 30.9 19.1C29.3 19 27.7 20.1 26.9 20.1C26.1 20.1 24.8 19.1 23.5 19.1C21.8 19.1 20.2 20.1 19.3 21.6C17.5 24.7 18.9 29.3 20.6 31.8C21.5 33 22.5 34.4 23.8 34.3C25.1 34.2 25.6 33.5 27.2 33.5C28.8 33.5 29.2 34.3 30.6 34.3C32 34.3 32.9 33 33.7 31.8C34.7 30.4 35.1 29 35.2 28.9C35.1 28.8 32.5 27.8 32.5 25.5Z" fill="#FFFFFF"/>
+                                    <path d="M29.8 17.5C30.5 16.6 31 15.4 30.8 14.2C29.8 14.2 28.5 14.9 27.8 15.7C27.2 16.4 26.7 17.6 26.9 18.8C28 18.9 29.1 18.3 29.8 17.5Z" fill="#FFFFFF"/>
+                                    <text x="48" y="20" fill="#A0A5B5" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600" letter-spacing="1">LADEN IM</text>
+                                    <text x="48" y="34" fill="#FFFFFF" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700">App Store</text>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -481,9 +685,18 @@
         </p>
     </footer>
 
+    <!-- Showcase Image Zoom Lightbox Modal -->
+    <div id="showcase-lightbox" class="showcase-lightbox" onclick="closeShowcaseLightbox()">
+        <div class="lightbox-dialog" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeShowcaseLightbox()" aria-label="Schließen">✕</button>
+            <img id="lightbox-img" src="" alt="Vergrößerte Ansicht">
+            <p id="lightbox-caption" class="lightbox-caption"></p>
+        </div>
+    </div>
+
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11m" defer></script>
-    <script src="script.js?v=2026.11m" defer></script>
+    <script src="rec_buffer.js?v=2026.11n" defer></script>
+    <script src="script.js?v=2026.11n" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
