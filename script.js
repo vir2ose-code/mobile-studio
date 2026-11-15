@@ -1966,6 +1966,24 @@ startxref
         }, 2200);
     }
 
+    // ──────────────── Fullscreen Toggle (für mobile Browser zur Ausblendung der Adressleiste) ────────────────
+    window.toggleAppFullscreen = function () {
+        const docEl = document.documentElement;
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            if (docEl.requestFullscreen) {
+                docEl.requestFullscreen().catch(() => {});
+            } else if (docEl.webkitRequestFullscreen) {
+                docEl.webkitRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+    };
+
     // ──────────────── 10-Band Graphic Equalizer & 10-Track Mixer (Screen 2, 3 & 4) ────────────────
     window.toggleEqualizer = function (forceState) {
         const eqPanel = document.getElementById('sequencer-eq-panel');

@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11r">
+    <link rel="stylesheet" href="style.css?v=2026.11s">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -416,6 +416,9 @@
                         <button id="btn-toggle-mixer" class="rack-btn btn-mixer" onclick="toggleMixer()" title="10-Kanal Mischpult einblenden">
                             MIXER
                         </button>
+                        <button id="btn-fullscreen" class="rack-btn btn-fullscreen" onclick="toggleAppFullscreen()" title="Vollbild-Modus (Suchleiste ausblenden)">
+                            ⛶
+                        </button>
                     </div>
 
                     <div class="rack-badge-group">
@@ -697,8 +700,8 @@
     </div>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11r" defer></script>
-    <script src="script.js?v=2026.11r" defer></script>
+    <script src="rec_buffer.js?v=2026.11s" defer></script>
+    <script src="script.js?v=2026.11s" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

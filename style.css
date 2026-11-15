@@ -1062,6 +1062,14 @@ body.mobile-studio-landing {
     flex-shrink: 0;
 }
 
+.btn-fullscreen {
+    min-width: 34px;
+    padding: 0 6px;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
 .btn-lyrics-toggle {
     min-width: 88px;
     padding: 0 12px;
@@ -1374,13 +1382,16 @@ body.mobile-studio-landing {
     background: rgba(30, 34, 44, 0.85);
 }
 
-.track-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.track-meta,
+.track-row .track-meta {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     gap: 4px;
     padding-right: 6px;
     overflow: hidden;
+    white-space: nowrap !important;
 }
 
 .track-name-btn {
@@ -2324,16 +2335,33 @@ body.mobile-studio-landing {
         flex-direction: column;
     }
     .rack-header-bar {
-        padding: 4px 8px !important;
+        padding: 3px 8px !important;
         flex-shrink: 0;
+        gap: 6px;
+    }
+    .rack-header-bar .rack-btn {
+        height: 26px !important;
+        font-size: 0.62rem !important;
+        padding: 0 6px !important;
+    }
+    .rack-header-bar .btn-fullscreen {
+        min-width: 24px !important;
+        font-size: 0.82rem !important;
+        padding: 0 4px !important;
     }
     .rack-sub-bar {
-        padding: 4px 8px !important;
+        padding: 2px 8px !important;
         flex-shrink: 0;
-        gap: 8px;
+        gap: 6px;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    .rack-sub-bar::-webkit-scrollbar {
+        display: none;
     }
     .step-ruler-bar {
-        padding: 2px 8px !important;
+        padding: 1px 8px !important;
         flex-shrink: 0;
     }
     .sequencer-matrix {
@@ -2341,34 +2369,43 @@ body.mobile-studio-landing {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        padding: 2px 8px 6px !important;
+        padding: 1px 8px 4px !important;
         overflow: hidden;
     }
     .track-row {
         height: auto;
         flex: 1;
-        min-height: 22px;
-        max-height: 32px;
-        margin-bottom: 2px;
+        min-height: 17px;
+        max-height: 28px;
+        margin-bottom: 1.5px;
+        display: grid;
+        grid-template-columns: 100px 1fr !important;
     }
     .matrix-pad {
         height: 100%;
-        border-radius: 3px;
+        border-radius: 2px;
     }
     .track-meta {
-        padding-right: 6px;
+        padding-right: 4px;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        white-space: nowrap !important;
     }
     .track-name-btn {
-        font-size: 0.68rem;
+        font-size: 0.62rem;
+        white-space: nowrap;
     }
     .sample-picker-select {
-        font-size: 0.62rem;
-        max-width: 58px;
+        font-size: 0.58rem;
+        max-width: 48px;
+        padding: 1px 2px;
     }
     .btn-clear-row {
-        font-size: 0.62rem;
-        width: 16px;
-        height: 16px;
+        font-size: 0.58rem;
+        width: 14px;
+        height: 14px;
     }
 }
 
@@ -3159,7 +3196,7 @@ body.groovebox-mode .sequencer-matrix {
     transform: scale(1.04);
 }
 
-.track-meta {
+.player-top-row .track-meta {
     flex: 1;
     min-width: 0;
     display: flex;
