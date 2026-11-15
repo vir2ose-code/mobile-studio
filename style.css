@@ -98,12 +98,16 @@ body.mobile-studio-landing {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(6, 7, 9, 0.75); /* Transparenz 75% */
+    background: rgba(6, 7, 9, 0.85); /* Transparenz 85% */
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(163, 143, 90, 0.18);
-    padding: 2px 28px; /* 12% breiter */
-    height: 38px;
+    padding-top: max(4px, env(safe-area-inset-top, 0px));
+    padding-bottom: 4px;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+    min-height: 38px;
+    height: auto;
     display: flex;
     align-items: center;
 }
