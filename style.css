@@ -2152,8 +2152,8 @@ body.mobile-studio-landing {
 
 /* ──────────────── Responsive Architecture (3 Models: Portrait, Landscape Groovebox, Desktop) ──────────────── */
 
-/* Model 1: Smartphone & Tablet Portrait (Screen 1 & User Mockup) */
-@media (max-width: 820px) and (orientation: portrait), (max-width: 600px) {
+/* Model 1: Smartphone Portrait (iPhone & Android Phones ONLY) */
+@media (max-width: 540px) and (orientation: portrait), (max-width: 540px) {
     .studio-main-container {
         padding-top: 10px !important;
         padding-left: 6px !important;
@@ -2297,7 +2297,20 @@ body.mobile-studio-landing {
     }
 }
 
-/* Model 2: Smartphone & iPad Landscape (Groovebox Hardware Mode like Quer_Komplett.png) */
+/* Model 1b: Tablet Portrait (iPad, iPad Air, iPad Pro, Android Tablets) */
+@media (min-width: 541px) and (max-width: 1024px) and (orientation: portrait) {
+    .studio-main-container {
+        padding-top: clamp(260px, 32vh, 400px) !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-bottom: 30px !important;
+    }
+    .sequencer-rack-section {
+        max-width: min(96vw, 980px) !important;
+    }
+}
+
+/* Model 2: Smartphone Landscape (Groovebox Hardware Mode like Quer_Komplett.png) */
 @media (orientation: landscape) and (max-height: 620px) {
     .app-header {
         display: none !important;
