@@ -4413,6 +4413,11 @@ a[href^="mailto:"]:hover {
     pointer-events: none;
 }
 
+.v-layer-shops {
+    z-index: 4;
+    pointer-events: none;
+}
+
 /* ── Interactive Hotspots for App Store Badges ── */
 .v-store-hotspots-layer {
     position: absolute;
@@ -4440,17 +4445,17 @@ a[href^="mailto:"]:hover {
 }
 
 .hotspot-google-play {
-    left: 10.94%;
-    top: 70.83%;
-    width: 14.31%;
-    height: 10.46%;
+    left: 13.96%;
+    top: 68.43%;
+    width: 7.67%;
+    height: 8.80%;
 }
 
 .hotspot-app-store {
-    left: 10.99%;
-    top: 81.39%;
-    width: 14.26%;
-    height: 10.65%;
+    left: 21.68%;
+    top: 68.52%;
+    width: 7.62%;
+    height: 8.70%;
 }
 
 .v-store-hotspot:hover,

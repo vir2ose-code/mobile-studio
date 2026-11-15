@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026.11k';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.11l';
 const urlsToCache = [
     './',
     './index.html',
@@ -6,10 +6,10 @@ const urlsToCache = [
     './player.html',
     './loops.html',
     './fonts/fonts.css',
-    './style.css?v=2026.11k',
-    './script.js?v=2026.11k',
-    './player.js?v=2026.11k',
-    './rec_buffer.js?v=2026.11k',
+    './style.css?v=2026.11l',
+    './script.js?v=2026.11l',
+    './player.js?v=2026.11l',
+    './rec_buffer.js?v=2026.11l',
     './about.html',
     './portfolio.html',
     './services.html',
@@ -53,7 +53,8 @@ const urlsToCache = [
     './SMARTPHONE_TABLET_ASSETS/fader_knob_for_swing.png',
     './NEUE_ASSETS_26/Landig_Background_Clean.png',
     './NEUE_ASSETS_26/Layer_1_Mobile_Beatmaker.png',
-    './NEUE_ASSETS_26/Layer_3_B_Mobile_Beatmaker.png',
+    './NEUE_ASSETS_26/Layer_3_New.png',
+    './NEUE_ASSETS_26/Shops_Buttons_Solo.png',
     './NEUE_ASSETS_26/V_logo.png',
     './NEUE_ASSETS_26/golden_head.png',
     './NEUE_ASSETS_26/V_Chopper.png',

@@ -11,7 +11,7 @@
     <meta name="description"
         content="Mobile Studio & 16-Track Web Audio Sequencer by Waldemar Krucinski. 100% Offline PWA, Spatial 3D Audio & Sounddesign.">
     <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="style.css?v=2026.11k">
+    <link rel="stylesheet" href="style.css?v=2026.11l">
 </head>
 
 <body class="mobile-studio-body mobile-studio-landing">
@@ -142,13 +142,20 @@
                            playsinline 
                            preload="auto"
                            aria-hidden="true">
-                        <source src="NEUE_ASSETS_26/Layer_2_Mobile_Beatmaker.mp4" type="video/mp4">
+                        <source src="NEUE_ASSETS_26/Layer_2_video_New.mp4" type="video/mp4">
                     </video>
 
-                    <!-- Layer 3: Foreground Devices & 3D Typography & Store Badges (2K) -->
-                    <img src="NEUE_ASSETS_26/Layer_3_B_Mobile_Beatmaker.png" 
+                    <!-- Layer 3: Foreground Devices & 3D Typography (2K Elegant Layout) -->
+                    <img src="NEUE_ASSETS_26/Layer_3_New.png" 
                          alt="V-Beatmaker Mobile - This Is Your Moment" 
                          class="v-stage-layer v-layer-3" 
+                         loading="eager"
+                         decoding="async">
+
+                    <!-- Layer 4: Smaller Refined Store Badges -->
+                    <img src="NEUE_ASSETS_26/Shops_Buttons_Solo.png" 
+                         alt="Google Play & App Store" 
+                         class="v-stage-layer v-layer-shops" 
                          loading="eager"
                          decoding="async">
 
@@ -475,8 +482,8 @@
     </footer>
 
     <!-- Core Scripts -->
-    <script src="rec_buffer.js?v=2026.11k" defer></script>
-    <script src="script.js?v=2026.11k" defer></script>
+    <script src="rec_buffer.js?v=2026.11l" defer></script>
+    <script src="script.js?v=2026.11l" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
