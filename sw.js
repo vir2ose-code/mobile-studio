@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mobile-studio-pwa-v2026.11q';
+const CACHE_NAME = 'mobile-studio-pwa-v2026.11r';
 const urlsToCache = [
     './',
     './index.html',
@@ -6,10 +6,10 @@ const urlsToCache = [
     './player.html',
     './loops.html',
     './fonts/fonts.css',
-    './style.css?v=2026.11q',
-    './script.js?v=2026.11q',
-    './player.js?v=2026.11q',
-    './rec_buffer.js?v=2026.11q',
+    './style.css?v=2026.11r',
+    './script.js?v=2026.11r',
+    './player.js?v=2026.11r',
+    './rec_buffer.js?v=2026.11r',
     './about.html',
     './portfolio.html',
     './services.html',
@@ -149,6 +149,29 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
 
+    // ──────────────── HTML & NAVIGATION: Network-First Strategy ────────────────
+    // Ensures devices (especially Android & iOS) always get the fresh layout instantly
+    if (event.request.mode === 'navigate' || event.request.destination === 'document' || event.request.url.endsWith('.html') || event.request.url.endsWith('/')) {
+        event.respondWith(
+            fetch(event.request)
+                .then(networkResponse => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        const responseToCache = networkResponse.clone();
+                        caches.open(CACHE_NAME).then(cache => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    }
+                    return networkResponse;
+                })
+                .catch(() => {
+                    return caches.match(event.request)
+                        .then(cached => cached || caches.match('./offline.html'));
+                })
+        );
+        return;
+    }
+
+    // ──────────────── STATIC ASSETS (Audio, Images, Fonts, CSS, JS): Cache-First ────────────────
     event.respondWith(
         caches.match(event.request)
             .then(cachedResponse => {
@@ -168,9 +191,7 @@ self.addEventListener('fetch', event => {
 
                     return networkResponse;
                 }).catch(() => {
-                    if (event.request.mode === 'navigate') {
-                        return caches.match('./offline.html');
-                    }
+                    // Fallback
                 });
             })
     );

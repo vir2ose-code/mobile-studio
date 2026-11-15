@@ -2143,6 +2143,12 @@ body.mobile-studio-landing {
 
 /* Model 1: Smartphone & Tablet Portrait (Screen 1 & User Mockup) */
 @media (max-width: 820px) and (orientation: portrait), (max-width: 600px) {
+    .studio-main-container {
+        padding-top: 10px !important;
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+        padding-bottom: 24px !important;
+    }
     .app-header {
         padding: 6px 14px;
     }
@@ -2222,14 +2228,20 @@ body.mobile-studio-landing {
     .btn-ff,
     .btn-rec,
     .btn-loop {
-        width: 70px;
-        min-width: 70px;
-        max-width: 70px;
+        width: auto !important;
+        min-width: 48px !important;
+        max-width: none !important;
+        padding: 0 6px !important;
     }
     .btn-eq,
     .btn-mixer {
-        min-width: 86px;
-        padding: 0 8px;
+        width: auto !important;
+        min-width: 62px !important;
+        padding: 0 7px !important;
+    }
+    .rack-badge-group {
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
     }
     .rack-badge-logo {
         width: 30px;
@@ -5230,9 +5242,13 @@ body.is-studio-workstation .nav-app-link {
     display: block !important;
 }
 
-/* CSS Media Query Fallbacks */
+/* CSS Media Query Fallbacks: Smart Auto-Switch on any Mobile, Tablet or Phone screen */
 @media (max-width: 1024px) {
-    body:not(.is-desktop-landing-forced) #hero-stage {
+    body:not(.is-desktop-landing-forced) #hero-stage,
+    body:not(.is-desktop-landing-forced) .v-hero-stage-section,
+    body:not(.is-desktop-landing-forced) .landing-showcase-section,
+    body:not(.is-desktop-landing-forced) .landing-fixed-bg-stage,
+    body:not(.is-desktop-landing-forced) .site-footer {
         display: none !important;
     }
     body:not(.is-desktop-landing-forced) #sequencer {
@@ -5240,6 +5256,12 @@ body.is-studio-workstation .nav-app-link {
     }
     body:not(.is-desktop-landing-forced) .nav-app-link {
         display: block !important;
+    }
+    body:not(.is-desktop-landing-forced) .desktop-navbar {
+        display: none !important;
+    }
+    body:not(.is-desktop-landing-forced) .hamburger-menu {
+        display: flex !important;
     }
 }
 
