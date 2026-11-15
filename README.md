@@ -27,4 +27,4 @@ Die dritte Säule bildet meine Leidenschaft für Netzwerk-Kunst und moderne Prog
 **Mein Anspruch:** Ob Akustik, Bild oder digitale Vernetzung – ich stehe für Projekte, die durch fundiertes Know-how, zweifach staatlich anerkannte Qualität und den Mut zu neuen Technologien überzeugen.
 
 ---
-*Powered by Waldemar Krucinski & Gemini 3 Flash*
+*Powered by Waldemar Krucinski*
